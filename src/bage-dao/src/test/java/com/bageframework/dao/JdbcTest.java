@@ -3,6 +3,7 @@ package com.bageframework.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.bageframework.model.User;
@@ -28,4 +29,14 @@ public class JdbcTest extends AbstractTestNGSpringContextTests {
 		System.out.println(user.getUsername() + ":" + user.getNickname());
 	}
 
+	@Test
+	public void testUpdate() {
+		User user = userDao.get("123");
+		String nickname = "nickname:" + System.currentTimeMillis();
+		user.setNickname(nickname);
+		userDao.update(user);
+		user = userDao.get("123");
+		Assert.assertEquals(user.getNickname(), nickname);
+		System.out.println("nickname:" + user.getNickname());
+	}
 }
