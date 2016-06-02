@@ -20,7 +20,7 @@
 		</property>
 	</bean>
 
-	<bean id="jdbc" class="com.bageframework.jdbc.JdbcImpl">
+	<bean id="jdbc" class="com.bageframework.dao.jdbc.JdbcImpl">
 		<property name="jdbcTemplate">
 			<ref bean="jdbcTemplate" />
 		</property>

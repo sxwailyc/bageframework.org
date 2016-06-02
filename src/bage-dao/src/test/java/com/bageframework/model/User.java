@@ -1,7 +1,10 @@
 package com.bageframework.model;
 
+import com.bageframework.dao.annotation.PrimaryKey;
+
 public class User {
 
+	@PrimaryKey
 	private String userId;
 
 	private String username;

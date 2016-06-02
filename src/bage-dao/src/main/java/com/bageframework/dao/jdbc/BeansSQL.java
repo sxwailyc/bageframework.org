@@ -1,4 +1,4 @@
-package com.bageframework.jdbc;
+package com.bageframework.dao.jdbc;
 
 import java.util.ArrayList;
 import java.util.List;

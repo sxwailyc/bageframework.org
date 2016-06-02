@@ -1,4 +1,4 @@
-package com.bageframework.helper;
+package com.bageframework.dao.helper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -8,15 +8,17 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.bageframework.annotation.Ignore;
-import com.bageframework.annotation.IgnoreInsert;
-import com.bageframework.annotation.Key;
-import com.bageframework.annotation.OrderAsc;
-import com.bageframework.annotation.OrderDesc;
-import com.bageframework.annotation.ParentID;
-import com.bageframework.annotation.TableHash;
-import com.bageframework.beans.QueryFilter;
-import com.bageframework.sql.InsertSQL;
+import com.bageframework.dao.annotation.Ignore;
+import com.bageframework.dao.annotation.IgnoreInsert;
+import com.bageframework.dao.annotation.OrderAsc;
+import com.bageframework.dao.annotation.OrderDesc;
+import com.bageframework.dao.annotation.ParentID;
+import com.bageframework.dao.annotation.PrimaryKey;
+import com.bageframework.dao.annotation.TableHash;
+import com.bageframework.dao.beans.QueryFilter;
+import com.bageframework.dao.exception.PrimaryKeyNotFoundException;
+import com.bageframework.dao.sql.InsertSQL;
+import com.bageframework.dao.sql.SelectSQL;
 
 public class DBHelper {
 
@@ -44,6 +46,35 @@ public class DBHelper {
 		return createSql(op, cls, table);
 	}
 
+	public static SelectSQL createGetSql(Class<?> cls, Object id) {
+		String table = getTable(cls);
+		return createGetSql(cls, table, id);
+	}
+
+	public static SelectSQL createGetSql(Class<?> cls, String table, Object id) {
+
+		SelectSQL sql = SelectSQL.create(table);
+
+		Field[] fields = cls.getDeclaredFields();
+
+		boolean hasPrimaryKey = false;
+		for (int i = 0; i < fields.length; i++) {
+			Field field = fields[i];
+			if (field.isAnnotationPresent(PrimaryKey.class)) {
+				sql.equal(fieldName2ColumnName(field.getName()), id);
+				// 主键只有一个
+				hasPrimaryKey = true;
+				break;
+			}
+		}
+
+		if (!hasPrimaryKey) {
+			throw new PrimaryKeyNotFoundException(table);
+		}
+
+		return sql;
+	}
+
 	/**
 	 * 
 	 * @param op
@@ -59,7 +90,7 @@ public class DBHelper {
 
 		for (int i = 0; i < fields.length; i++) {
 			Field field = fields[i];
-			if (field.isAnnotationPresent(Key.class)) {
+			if (field.isAnnotationPresent(PrimaryKey.class)) {
 				if (where == null) {
 					where = fieldName2ColumnName(field.getName()) + " = ? ";
 				} else {

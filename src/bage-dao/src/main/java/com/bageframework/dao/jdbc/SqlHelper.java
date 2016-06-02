@@ -1,4 +1,4 @@
-package com.bageframework.jdbc;
+package com.bageframework.dao.jdbc;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

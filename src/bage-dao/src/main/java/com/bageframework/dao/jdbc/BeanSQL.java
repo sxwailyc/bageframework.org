@@ -1,4 +1,4 @@
-package com.bageframework.jdbc;
+package com.bageframework.dao.jdbc;
 
 /**
  * 一个bean的sql转换

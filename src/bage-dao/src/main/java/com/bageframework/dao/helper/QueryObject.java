@@ -1,4 +1,4 @@
-package com.bageframework.helper;
+package com.bageframework.dao.helper;
 
 public class QueryObject {
 

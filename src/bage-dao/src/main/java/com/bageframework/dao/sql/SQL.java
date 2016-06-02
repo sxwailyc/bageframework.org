@@ -1,6 +1,6 @@
-package com.bageframework.sql;
+package com.bageframework.dao.sql;
 
-import com.bageframework.jdbc.SqlParameter;
+import com.bageframework.dao.jdbc.SqlParameter;
 
 public interface SQL {
 

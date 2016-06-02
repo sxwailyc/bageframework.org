@@ -1,9 +1,9 @@
-package com.bageframework.dao;
+package com.bageframework.dao.base;
 
 import java.util.List;
 
-import com.bageframework.beans.Page;
-import com.bageframework.beans.QueryFilter;
+import com.bageframework.dao.beans.Page;
+import com.bageframework.dao.beans.QueryFilter;
 
 public interface IDAO<BEAN, KEYTYPE> {
 

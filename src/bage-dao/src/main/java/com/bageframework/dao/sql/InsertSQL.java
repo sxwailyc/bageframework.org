@@ -1,10 +1,10 @@
-package com.bageframework.sql;
+package com.bageframework.dao.sql;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bageframework.jdbc.SqlParameter;
-import com.bageframework.util.SqlUtil;
+import com.bageframework.dao.jdbc.SqlParameter;
+import com.bageframework.dao.util.SqlUtil;
 
 public class InsertSQL implements SQL {
 

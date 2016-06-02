@@ -1,4 +1,4 @@
-package com.bageframework.helper;
+package com.bageframework.dao.helper;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.bageframework.annotation.Key;
+import com.bageframework.dao.annotation.PrimaryKey;
 
 public class BeanHelper {
 
@@ -27,7 +27,7 @@ public class BeanHelper {
 
 		for (int i = 0; i < fields.length; i++) {
 			Field field = fields[i];
-			if (field.isAnnotationPresent(Key.class)) {
+			if (field.isAnnotationPresent(PrimaryKey.class)) {
 				id = (String) getValueByField(obj, field.getName());
 			}
 		}

@@ -1,4 +1,4 @@
-package com.bageframework.jdbc;
+package com.bageframework.dao.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +12,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
-import com.bageframework.helper.DBHelper;
-import com.bageframework.sql.SQL;
+import com.bageframework.dao.helper.DBHelper;
+import com.bageframework.dao.sql.SQL;
 
 public class JdbcImpl implements Jdbc {
 

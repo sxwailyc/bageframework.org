@@ -1,4 +1,4 @@
-package com.bageframework.dao.mysql;
+package com.bageframework.dao.base.mysql;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -7,9 +7,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bageframework.beans.Page;
-import com.bageframework.beans.QueryFilter;
-import com.bageframework.jdbc.Jdbc;
+import com.bageframework.dao.beans.Page;
+import com.bageframework.dao.beans.QueryFilter;
+import com.bageframework.dao.helper.DBHelper;
+import com.bageframework.dao.jdbc.Jdbc;
+import com.bageframework.dao.sql.SelectSQL;
 
 public class BaseMysqlDao<T> {
 
@@ -35,7 +37,8 @@ public class BaseMysqlDao<T> {
 	}
 
 	public T get(String id) {
-		return null;
+		SelectSQL select = DBHelper.createGetSql(entityClass, id);
+		return jdbc.get(select.getSql(), entityClass, select.getParams());
 	}
 
 	public T get(Integer id) {

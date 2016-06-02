@@ -22,4 +22,10 @@ public class JdbcTest extends AbstractTestNGSpringContextTests {
 		userDao.add(user);
 	}
 
+	@Test
+	public void testGet() {
+		User user = userDao.get("123");
+		System.out.println(user.getUsername() + ":" + user.getNickname());
+	}
+
 }

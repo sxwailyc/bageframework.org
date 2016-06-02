@@ -1,4 +1,4 @@
-package com.bageframework.beans;
+package com.bageframework.dao.beans;
 
 public class Page<BEAN> {
 

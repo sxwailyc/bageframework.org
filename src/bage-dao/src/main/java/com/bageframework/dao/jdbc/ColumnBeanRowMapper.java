@@ -1,4 +1,4 @@
-package com.bageframework.jdbc;
+package com.bageframework.dao.jdbc;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
