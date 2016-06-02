@@ -81,4 +81,11 @@ public class SqlParameter {
 		return params;
 	}
 
+	public void merge(SqlParameter parameter) {
+		Map<Integer, Object> _params = parameter.getParams();
+		int size = _params.size();
+		for (int i = 1; i <= size; i++) {
+			setObject(_params.get(i));
+		}
+	}
 }

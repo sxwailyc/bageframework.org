@@ -32,8 +32,7 @@ public class BaseMysqlDao<T> {
 	}
 
 	public boolean update(T t) {
-		// TODO Auto-generated method stub
-		return false;
+		return jdbc.update(t) > 0;
 	}
 
 	public T get(String id) {

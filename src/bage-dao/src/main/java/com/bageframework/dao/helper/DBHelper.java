@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.bageframework.dao.annotation.Ignore;
 import com.bageframework.dao.annotation.IgnoreInsert;
+import com.bageframework.dao.annotation.IgnoreUpdate;
 import com.bageframework.dao.annotation.OrderAsc;
 import com.bageframework.dao.annotation.OrderDesc;
 import com.bageframework.dao.annotation.ParentID;
@@ -19,6 +20,7 @@ import com.bageframework.dao.beans.QueryFilter;
 import com.bageframework.dao.exception.PrimaryKeyNotFoundException;
 import com.bageframework.dao.sql.InsertSQL;
 import com.bageframework.dao.sql.SelectSQL;
+import com.bageframework.dao.sql.UpdateSQL;
 
 public class DBHelper {
 
@@ -193,48 +195,57 @@ public class DBHelper {
 		return queryObject;
 	}
 
+	public static UpdateSQL createUpdateSQL(Object obj) {
+		return createUpdateSQL(obj, getTable(obj));
+	}
+
 	/**
-	 * 创建更新builder
+	 * 创建更新Sql
 	 * 
 	 * @param obj
 	 * @param table
 	 * @return
 	 */
-	// public static UpdateBuilder createUpdateBuilder(Object obj, String table)
-	// {
-	//
-	// UpdateBuilder builder = new UpdateBuilder(table);
-	//
-	// Field[] fields = obj.getClass().getDeclaredFields();
-	//
-	// for (int i = 0; i < fields.length; i++) {
-	//
-	// Field field = fields[i];
-	// if ("serialVersionUID".equals(field.getName())) {
-	// continue;
-	// }
-	// int mod = field.getModifiers();
-	// if (Modifier.isFinal(mod)) {
-	// continue;
-	// }
-	//
-	// Object value = BeanHelper.getValueByField(obj, field.getName());
-	//
-	// if (field.isAnnotationPresent(Key.class)) {
-	// setWhere(builder, field, value);
-	// } else {
-	// if (field.isAnnotationPresent(Ignore.class) ||
-	// field.isAnnotationPresent(IgnoreUpdate.class)) {
-	// continue;
-	// }
-	// }
-	//
-	// set(builder, field, value);
-	//
-	// }
-	//
-	// return builder;
-	// }
+	public static UpdateSQL createUpdateSQL(Object obj, String table) {
+
+		UpdateSQL update = UpdateSQL.create(table);
+
+		Field[] fields = obj.getClass().getDeclaredFields();
+
+		boolean hasPrimaryKey = false;
+		for (int i = 0; i < fields.length; i++) {
+
+			Field field = fields[i];
+			if ("serialVersionUID".equals(field.getName())) {
+				continue;
+			}
+			int mod = field.getModifiers();
+			if (Modifier.isFinal(mod)) {
+				continue;
+			}
+
+			Object value = BeanHelper.getValueByField(obj, field.getName());
+
+			String column = fieldName2ColumnName(field.getName());
+			if (field.isAnnotationPresent(PrimaryKey.class)) {
+				update.equal(column, value);
+				hasPrimaryKey = true;
+			} else {
+				if (field.isAnnotationPresent(Ignore.class) || field.isAnnotationPresent(IgnoreUpdate.class)) {
+					continue;
+				}
+
+				update.set(column, value);
+			}
+
+		}
+
+		if (!hasPrimaryKey) {
+			throw new PrimaryKeyNotFoundException(table);
+		}
+
+		return update;
+	}
 
 	/**
 	 * 创建更新builder

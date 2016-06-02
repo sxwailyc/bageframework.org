@@ -74,6 +74,14 @@ public interface Jdbc {
 	 * @param t
 	 * @return
 	 */
+	public <T> int update(T t);
+
+	/**
+	 * 插入单个对象
+	 * 
+	 * @param t
+	 * @return
+	 */
 	public <T> int insert(T t);
 
 	/**

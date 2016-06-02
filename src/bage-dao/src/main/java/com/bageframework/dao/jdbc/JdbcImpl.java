@@ -174,6 +174,22 @@ public class JdbcImpl implements Jdbc {
 
 	}
 
+	public <T> int update(T t) {
+
+		long start = System.currentTimeMillis();
+
+		SQL sql = DBHelper.createUpdateSQL(t);
+		int effectCount = this.update(sql.getSql(), sql.getParams());
+
+		if (logger.isDebugEnabled()) {
+			long time = System.currentTimeMillis() - start;
+			logger.debug("execute.time[" + time + "], sql[" + getSql(sql.getSql(), sql.getParams()) + "]");
+		}
+
+		return effectCount;
+
+	}
+
 	public <T> int insert(String tableName, T t) {
 
 		long start = System.currentTimeMillis();
