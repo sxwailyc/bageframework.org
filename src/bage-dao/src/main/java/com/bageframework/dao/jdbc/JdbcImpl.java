@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
-import com.bageframework.dao.helper.DBHelper;
+import com.bageframework.dao.helper.SQLHelper;
 import com.bageframework.dao.sql.SQL;
 
 public class JdbcImpl implements Jdbc {
@@ -162,7 +162,7 @@ public class JdbcImpl implements Jdbc {
 
 		long start = System.currentTimeMillis();
 
-		SQL sql = DBHelper.createInsertSQL(t);
+		SQL sql = SQLHelper.createInsertSQL(t);
 		int effectCount = this.update(sql.getSql(), sql.getParams());
 
 		if (logger.isDebugEnabled()) {
@@ -178,7 +178,7 @@ public class JdbcImpl implements Jdbc {
 
 		long start = System.currentTimeMillis();
 
-		SQL sql = DBHelper.createUpdateSQL(t);
+		SQL sql = SQLHelper.createUpdateSQL(t);
 		int effectCount = this.update(sql.getSql(), sql.getParams());
 
 		if (logger.isDebugEnabled()) {
@@ -194,7 +194,7 @@ public class JdbcImpl implements Jdbc {
 
 		long start = System.currentTimeMillis();
 
-		SQL sql = DBHelper.createInsertSQL(t, tableName);
+		SQL sql = SQLHelper.createInsertSQL(t, tableName);
 		int effectCount = this.update(sql.getSql(), sql.getParams());
 
 		if (logger.isDebugEnabled()) {

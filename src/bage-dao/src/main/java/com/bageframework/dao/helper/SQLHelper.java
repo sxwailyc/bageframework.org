@@ -2,6 +2,10 @@ package com.bageframework.dao.helper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,14 +21,17 @@ import com.bageframework.dao.annotation.ParentID;
 import com.bageframework.dao.annotation.PrimaryKey;
 import com.bageframework.dao.annotation.TableHash;
 import com.bageframework.dao.beans.QueryFilter;
+import com.bageframework.dao.exception.ParentIdFieldNotFoundException;
 import com.bageframework.dao.exception.PrimaryKeyNotFoundException;
+import com.bageframework.dao.sql.DeleteSQL;
 import com.bageframework.dao.sql.InsertSQL;
+import com.bageframework.dao.sql.Order;
 import com.bageframework.dao.sql.SelectSQL;
 import com.bageframework.dao.sql.UpdateSQL;
 
-public class DBHelper {
+public class SQLHelper {
 
-	protected static Log logger = LogFactory.getLog(DBHelper.class);
+	protected static Log logger = LogFactory.getLog(SQLHelper.class);
 
 	/**
 	 * 分表字段缓存
@@ -34,19 +41,7 @@ public class DBHelper {
 	/**
 	 * 查询列表sql缓存
 	 */
-	private static Map<Class<?>, QueryObject> QUERY_LIST_SQL_CACHE = new ConcurrentHashMap<Class<?>, QueryObject>();
-
-	/**
-	 * 创建sql
-	 * 
-	 * @param op
-	 * @param cls
-	 * @return
-	 */
-	private static String createSql(String op, Class<?> cls) {
-		String table = getTable(cls);
-		return createSql(op, cls, table);
-	}
+	private static Map<Class<?>, SelectSQL> QUERY_LIST_SQL_CACHE = new ConcurrentHashMap<Class<?>, SelectSQL>();
 
 	public static SelectSQL createGetSql(Class<?> cls, Object id) {
 		String table = getTable(cls);
@@ -63,7 +58,7 @@ public class DBHelper {
 		for (int i = 0; i < fields.length; i++) {
 			Field field = fields[i];
 			if (field.isAnnotationPresent(PrimaryKey.class)) {
-				sql.equal(fieldName2ColumnName(field.getName()), id);
+				sql.equal(DBHelper.fieldName2ColumnName(field.getName()), id);
 				// 主键只有一个
 				hasPrimaryKey = true;
 				break;
@@ -78,59 +73,41 @@ public class DBHelper {
 	}
 
 	/**
-	 * 
-	 * @param op
-	 * @param cls
-	 * @param table
-	 * @return
-	 */
-	private static String createSql(String op, Class<?> cls, String table) {
-
-		Field[] fields = cls.getDeclaredFields();
-
-		String where = null;
-
-		for (int i = 0; i < fields.length; i++) {
-			Field field = fields[i];
-			if (field.isAnnotationPresent(PrimaryKey.class)) {
-				if (where == null) {
-					where = fieldName2ColumnName(field.getName()) + " = ? ";
-				} else {
-					where = where + " AND " + fieldName2ColumnName(field.getName()) + " = ? ";
-				}
-			}
-		}
-
-		String sql = op + table + " WHERE " + where;
-
-		return sql;
-	}
-
-	/**
 	 * 获取删除sql
 	 * 
 	 * @param cls
 	 * @return
 	 */
-	public static String createDeleteSql(Class<?> cls) {
-		return createSql("DELETE FROM ", cls);
+	public static DeleteSQL createDeleteSql(Class<?> cls, Object id) {
+		String table = getTable(cls);
+		return createDeleteSql(cls, table, id);
 	}
 
-	public static String createDeleteSql(Class<?> cls, String table) {
-		return createSql("DELETE FROM ", cls, table);
+	public static DeleteSQL createDeleteSql(Class<?> cls, String table, Object id) {
+
+		DeleteSQL sql = DeleteSQL.create(table);
+
+		Field[] fields = cls.getDeclaredFields();
+
+		boolean hasPrimaryKey = false;
+		for (int i = 0; i < fields.length; i++) {
+			Field field = fields[i];
+			if (field.isAnnotationPresent(PrimaryKey.class)) {
+				sql.equal(DBHelper.fieldName2ColumnName(field.getName()), id);
+				// 主键只有一个
+				hasPrimaryKey = true;
+				break;
+			}
+		}
+
+		if (!hasPrimaryKey) {
+			throw new PrimaryKeyNotFoundException(table);
+		}
+
+		return sql;
 	}
 
-	/**
-	 * 获取查询sql
-	 * 
-	 * @param cls
-	 * @return
-	 */
-	public static String createQuerySql(Class<?> cls) {
-		return createSql("SELECT * FROM ", cls);
-	}
-
-	public static QueryObject createQueryListSql(Class<?> cls) {
+	public static SelectSQL createQueryListSql(Class<?> cls) {
 		return createQueryListSql(cls, null);
 	}
 
@@ -140,25 +117,24 @@ public class DBHelper {
 	 * @param cls
 	 * @return
 	 */
-	public static QueryObject createQueryListSql(Class<?> cls, QueryFilter filter) {
+	public static SelectSQL createQueryListSql(Class<?> cls, QueryFilter filter) {
 
-		String sql;
-		StringBuilder order = new StringBuilder();
-		String parentId = null;
+		String table = getTable(cls);
+		SelectSQL select = SelectSQL.create(table);
+
+		List<OrderSort> l = new ArrayList<OrderSort>();
 
 		if (QUERY_LIST_SQL_CACHE.containsKey(cls)) {
 			return QUERY_LIST_SQL_CACHE.get(cls);
 		} else {
-
-			String table = getTable(cls);
-
-			sql = "SELECT * FROM " + table;
 
 			Field[] fields = cls.getDeclaredFields();
 
 			for (int i = 0; i < fields.length; i++) {
 
 				Field field = fields[i];
+				String column = DBHelper.fieldName2ColumnName(field.getName());
+
 				if ("serialVersionUID".equals(field.getName())) {
 					continue;
 				}
@@ -167,32 +143,42 @@ public class DBHelper {
 					continue;
 				}
 
-				if (field.isAnnotationPresent(ParentID.class)) {
-					parentId = fieldName2ColumnName(field.getName());
-				}
-
 				if (field.isAnnotationPresent(OrderAsc.class)) {
-					if (order.length() > 0) {
-						order.append(",");
-					}
-					order.append(fieldName2ColumnName(field.getName()) + " ASC ");
+					OrderAsc orderAsc = BeanHelper.getAnnotation(cls, field.getName(), OrderAsc.class);
+					l.add(new OrderSort(column, Order.ASC.getValue(), orderAsc.index()));
 				} else if (field.isAnnotationPresent(OrderDesc.class)) {
-					if (order.length() > 0) {
-						order.append(",");
-					}
-					order.append(fieldName2ColumnName(field.getName()) + " DESC ");
+					OrderDesc orderDesc = BeanHelper.getAnnotation(cls, field.getName(), OrderDesc.class);
+					l.add(new OrderSort(column, Order.DESC.getValue(), orderDesc.index()));
 				}
 
 			}
 
 		}
 
-		logger.debug("query sql[" + sql + "]");
+		Collections.sort(l, new Comparator<OrderSort>() {
 
-		QueryObject queryObject = new QueryObject(sql, order.toString(), parentId);
-		QUERY_LIST_SQL_CACHE.put(cls, queryObject);
+			@Override
+			public int compare(OrderSort o1, OrderSort o2) {
+				if (o1.index > o2.index) {
+					return 1;
+				} else if (o1.index < o2.index) {
+					return -1;
+				}
+				return 0;
+			}
+		});
 
-		return queryObject;
+		for (OrderSort orderSort : l) {
+			if (orderSort.type == Order.ASC.getValue()) {
+				select.asc(orderSort.column);
+			} else {
+				select.desc(orderSort.column);
+			}
+		}
+
+		QUERY_LIST_SQL_CACHE.put(cls, select);
+
+		return select;
 	}
 
 	public static UpdateSQL createUpdateSQL(Object obj) {
@@ -226,7 +212,7 @@ public class DBHelper {
 
 			Object value = BeanHelper.getValueByField(obj, field.getName());
 
-			String column = fieldName2ColumnName(field.getName());
+			String column = DBHelper.fieldName2ColumnName(field.getName());
 			if (field.isAnnotationPresent(PrimaryKey.class)) {
 				update.equal(column, value);
 				hasPrimaryKey = true;
@@ -246,16 +232,6 @@ public class DBHelper {
 
 		return update;
 	}
-
-	/**
-	 * 创建更新builder
-	 * 
-	 * @param obj
-	 * @return
-	 */
-	// public static UpdateBuilder createUpdateBuilder(Object obj) {
-	// return createUpdateBuilder(obj, getTable(obj));
-	// }
 
 	public static InsertSQL createInsertSQL(Object obj) {
 		return createInsertSQL(obj, getTable(obj));
@@ -291,7 +267,7 @@ public class DBHelper {
 
 			Object value = BeanHelper.getValueByField(obj, field.getName());
 
-			String column = fieldName2ColumnName(field.getName());
+			String column = DBHelper.fieldName2ColumnName(field.getName());
 			insert.set(column, value);
 
 		}
@@ -300,86 +276,13 @@ public class DBHelper {
 	}
 
 	/**
-	 * 设置builder参数
-	 * 
-	 * @param builder
-	 * @param field
-	 * @param value
-	 */
-	// private static void set(AbstractSqlBuilder builder, Field field, Object
-	// value) {
-	// String columnName = fieldName2ColumnName(field.getName());
-	// if (field.getType() == String.class) {
-	// builder.setString(columnName, (String) value);
-	// } else if (field.getType() == Long.class || field.getType() ==
-	// long.class) {
-	// builder.setLong(columnName, (Long) value);
-	// } else if (field.getType() == Double.class || field.getType() ==
-	// double.class) {
-	// builder.setDouble(columnName, (Double) value);
-	// } else if (field.getType() == Integer.class || field.getType() ==
-	// int.class) {
-	// builder.setInt(columnName, (Integer) value);
-	// } else if (field.getType() == Float.class || field.getType() ==
-	// float.class) {
-	// builder.setFloat(columnName, (Float) value);
-	// } else if (field.getType() == Date.class) {
-	// builder.setDate(columnName, (Date) value);
-	// } else if (field.getType() == Timestamp.class) {
-	// builder.setTimestamp(columnName, (Timestamp) value);
-	// } else {
-	// throw new RuntimeException("未知的参数类型[" + field.getType() + "]");
-	// }
-	// }
-
-	/**
-	 * 设置where参数
-	 * 
-	 * @param builder
-	 * @param field
-	 * @param value
-	 */
-	// private static void setWhere(UpdateBuilder builder, Field field, Object
-	// value) {
-	// String columnName = fieldName2ColumnName(field.getName());
-	// if (field.getType() == String.class) {
-	// builder.where.setString(columnName, (String) value);
-	// } else if (field.getType() == Long.class || field.getType() ==
-	// long.class) {
-	// builder.where.setLong(columnName, (Long) value);
-	// } else if (field.getType() == Double.class || field.getType() ==
-	// double.class) {
-	// builder.where.setDouble(columnName, (Double) value);
-	// } else if (field.getType() == Integer.class || field.getType() ==
-	// int.class) {
-	// builder.where.setInt(columnName, (Integer) value);
-	// } else if (field.getType() == Float.class || field.getType() ==
-	// float.class) {
-	// builder.where.setFloat(columnName, (Float) value);
-	// } else if (field.getType() == Date.class) {
-	// builder.where.setDate(columnName, (Date) value);
-	// } else if (field.getType() == Timestamp.class) {
-	// builder.where.setTimestamp(columnName, (Timestamp) value);
-	// } else {
-	// throw new RuntimeException("未知的参数类型[" + field.getType() + "]");
-	// }
-	// }
-
-	// /**
-	// * 创建添加builder
-	// *
-	// * @param obj
-	// * @return
-	// */
-
-	/**
 	 * 根据class获取表名
 	 * 
 	 * @param cls
 	 * @return
 	 */
 	public static String getTable(Class<?> cls) {
-		String table = className2TableName(cls);
+		String table = DBHelper.className2TableName(cls);
 		return "`" + table + "`";
 	}
 
@@ -395,7 +298,7 @@ public class DBHelper {
 	 */
 	private static String getTable(Object obj) {
 
-		String table = className2TableName(obj.getClass());
+		String table = DBHelper.className2TableName(obj.getClass());
 
 		if (SPLIT_TABLE_CACHE.containsKey(obj.getClass())) {
 			String field = SPLIT_TABLE_CACHE.get(obj.getClass());
@@ -433,55 +336,56 @@ public class DBHelper {
 	}
 
 	/**
-	 * 属性名(对象)转字段名(db)
-	 * 
-	 * @param fieldName
-	 * @return
-	 */
-	private static String fieldName2ColumnName(String fieldName) {
-
-		char[] chs = fieldName.toCharArray();
-
-		StringBuffer columnName = new StringBuffer();
-		columnName.append(chs[0]);
-		for (int i = 1; i < chs.length; i++) {
-			byte bt = (byte) chs[i];
-			if (bt >= 65 && bt <= 90) {
-				columnName.append("_");
-				columnName.append(chs[i]);
-			} else {
-				columnName.append(chs[i]);
-			}
-		}
-		return columnName.toString().toLowerCase();
-	}
-
-	/**
-	 * 类名转表名
+	 * 获取父表字段
 	 * 
 	 * @param cls
 	 * @return
 	 */
-	private static String className2TableName(Class<?> cls) {
+	public static String getParentColumn(Class<?> cls) {
 
-		String className = cls.getName();
-		className = className.substring(className.lastIndexOf(".") + 1, className.length());
+		Field[] fields = cls.getDeclaredFields();
 
-		char[] chs = className.toCharArray();
+		String parentColumn = "";
+		boolean hasParentColumn = false;
+		for (int i = 0; i < fields.length; i++) {
 
-		StringBuffer tableName = new StringBuffer();
-		tableName.append(chs[0]);
-		for (int i = 1; i < chs.length; i++) {
-			byte bt = (byte) chs[i];
-			if (bt >= 65 && bt <= 90) {
-				tableName.append("_");
-				tableName.append(chs[i]);
-			} else {
-				tableName.append(chs[i]);
+			Field field = fields[i];
+			if ("serialVersionUID".equals(field.getName())) {
+				continue;
+			}
+			int mod = field.getModifiers();
+			if (Modifier.isFinal(mod)) {
+				continue;
+			}
+
+			String column = DBHelper.fieldName2ColumnName(field.getName());
+			if (field.isAnnotationPresent(ParentID.class)) {
+				parentColumn = column;
+				hasParentColumn = true;
 			}
 		}
 
-		return tableName.toString().toLowerCase();
+		if (!hasParentColumn) {
+			throw new ParentIdFieldNotFoundException(cls.getName());
+		}
+
+		return parentColumn;
+	}
+
+	static class OrderSort {
+
+		public OrderSort(String column, String type, int index) {
+			this.type = type;
+			this.column = column;
+			this.index = index;
+		}
+
+		public String type;
+
+		public String column;
+
+		public int index;
+
 	}
 
 }

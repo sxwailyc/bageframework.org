@@ -1,5 +1,8 @@
 package com.bageframework.model;
 
+import com.bageframework.dao.annotation.OrderAsc;
+import com.bageframework.dao.annotation.OrderDesc;
+import com.bageframework.dao.annotation.ParentID;
 import com.bageframework.dao.annotation.PrimaryKey;
 
 public class User {
@@ -10,6 +13,15 @@ public class User {
 	private String username;
 
 	private String nickname;
+
+	@OrderAsc(index = 2)
+	private int age;
+
+	@OrderDesc(index = 3)
+	private int money;
+
+	@ParentID
+	private int sex;
 
 	public String getUserId() {
 		return userId;
@@ -33,6 +45,22 @@ public class User {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public int getMoney() {
+		return money;
+	}
+
+	public void setMoney(int money) {
+		this.money = money;
 	}
 
 }

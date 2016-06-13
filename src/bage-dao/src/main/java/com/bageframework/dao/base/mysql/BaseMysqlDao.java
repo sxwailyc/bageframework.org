@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bageframework.dao.beans.Page;
 import com.bageframework.dao.beans.QueryFilter;
-import com.bageframework.dao.helper.DBHelper;
+import com.bageframework.dao.helper.SQLHelper;
 import com.bageframework.dao.jdbc.Jdbc;
+import com.bageframework.dao.sql.DeleteSQL;
 import com.bageframework.dao.sql.SelectSQL;
 
 public class BaseMysqlDao<T> {
@@ -36,24 +37,28 @@ public class BaseMysqlDao<T> {
 	}
 
 	public T get(String id) {
-		SelectSQL select = DBHelper.createGetSql(entityClass, id);
+		SelectSQL select = SQLHelper.createGetSql(entityClass, id);
 		return jdbc.get(select.getSql(), entityClass, select.getParams());
 	}
 
 	public T get(Integer id) {
-		return null;
+		SelectSQL select = SQLHelper.createGetSql(entityClass, id);
+		return jdbc.get(select.getSql(), entityClass, select.getParams());
 	}
 
 	public boolean delete(Integer key) {
-		return false;
+		DeleteSQL delete = SQLHelper.createDeleteSql(entityClass, key);
+		return jdbc.update(delete.getSql(), delete.getParams()) > 0;
 	}
 
 	public boolean delete(String key) {
-		return false;
+		DeleteSQL delete = SQLHelper.createDeleteSql(entityClass, key);
+		return jdbc.update(delete.getSql(), delete.getParams()) > 0;
 	}
 
 	public boolean delete(String table, String key) {
-		return false;
+		DeleteSQL delete = SQLHelper.createDeleteSql(entityClass, table, key);
+		return jdbc.update(delete.getSql(), delete.getParams()) > 0;
 	}
 
 	public Page<T> getPage(int start, int size) {
@@ -72,13 +77,17 @@ public class BaseMysqlDao<T> {
 	}
 
 	public List<T> getList(int start, int size) {
-		// TODO Auto-generated method stub
-		return null;
+		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
+		select.limit(start, size);
+		return jdbc.getList(select.getSql(), entityClass, select.getParams());
 	}
 
 	public List<T> getList(int parentId, int start, int size) {
-		// TODO Auto-generated method stub
-		return null;
+		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
+		String parentColumn = SQLHelper.getParentColumn(entityClass);
+		select.equal(parentColumn, parentId);
+		select.limit(start, size);
+		return jdbc.getList(select.getSql(), entityClass, select.getParams());
 	}
 
 }

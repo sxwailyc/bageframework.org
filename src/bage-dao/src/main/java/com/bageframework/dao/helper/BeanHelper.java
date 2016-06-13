@@ -67,6 +67,18 @@ public class BeanHelper {
 		return t;
 	}
 
+	public static <T extends Annotation> T getAnnotation(Class<?> cls, String name, Class<T> annotationClass) {
+		T t = null;
+		try {
+			Field field = cls.getDeclaredField(name);
+			t = field.getAnnotation(annotationClass);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new RuntimeException(e.getMessage());
+		}
+		return t;
+	}
+
 	/**
 	 * 字段名转get方法
 	 * 

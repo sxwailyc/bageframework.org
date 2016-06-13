@@ -9,6 +9,10 @@ public class SelectSQL implements SQL {
 
 	private WhereSQL where = new WhereSQL();
 
+	private OrderSQL order = new OrderSQL();
+
+	private LimitSQL limit = new LimitSQL();
+
 	private String table;
 
 	private List<String> columns = new ArrayList<String>();
@@ -47,6 +51,26 @@ public class SelectSQL implements SQL {
 		return this;
 	}
 
+	public SelectSQL asc(String column) {
+		order.order(column, Order.ASC);
+		return this;
+	}
+
+	public SelectSQL desc(String column) {
+		order.order(column, Order.DESC);
+		return this;
+	}
+
+	public SelectSQL limit(int start, int size) {
+		limit.limit(start, size);
+		return this;
+	}
+
+	public SelectSQL limit(int size) {
+		limit.limit(size);
+		return this;
+	}
+
 	public static SelectSQL create(String table) {
 		SelectSQL insertSQL = new SelectSQL(table);
 		return insertSQL;
@@ -67,6 +91,17 @@ public class SelectSQL implements SQL {
 		if (w.length() > 0) {
 			sb.append(" WHERE ");
 			sb.append(w);
+		}
+
+		String o = order.getSql();
+		if (o.length() > 0) {
+			sb.append(" ORDER BY ");
+			sb.append(o);
+		}
+
+		String l = limit.getSql();
+		if (l.length() > 0) {
+			sb.append(l);
 		}
 
 		return sb.toString();

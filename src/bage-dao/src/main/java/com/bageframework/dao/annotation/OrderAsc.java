@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface OrderAsc {
 
-	public int sort() default 1;
+	public int index() default 1;
 
 }

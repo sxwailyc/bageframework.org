@@ -11,6 +11,10 @@
 		<property name="username" value="2e33dc87e444"></property>
 		<property name="password" value="aac79514a8a187b1"></property>
 	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+       <property name="dataSource" ref="dataSource"/>  
+    </bean> 
 
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
 		abstract="false" lazy-init="false" autowire="default"
