@@ -20,7 +20,7 @@ import com.bageframework.dao.annotation.OrderDesc;
 import com.bageframework.dao.annotation.ParentID;
 import com.bageframework.dao.annotation.PrimaryKey;
 import com.bageframework.dao.annotation.TableHash;
-import com.bageframework.dao.beans.QueryFilter;
+import com.bageframework.dao.beans.Query;
 import com.bageframework.dao.exception.ParentIdFieldNotFoundException;
 import com.bageframework.dao.exception.PrimaryKeyNotFoundException;
 import com.bageframework.dao.sql.DeleteSQL;
@@ -37,11 +37,6 @@ public class SQLHelper {
 	 * 分表字段缓存
 	 */
 	private static Map<Class<?>, String> SPLIT_TABLE_CACHE = new ConcurrentHashMap<Class<?>, String>();
-
-	/**
-	 * 查询列表sql缓存
-	 */
-	private static Map<Class<?>, SelectSQL> QUERY_LIST_SQL_CACHE = new ConcurrentHashMap<Class<?>, SelectSQL>();
 
 	public static SelectSQL createGetSql(Class<?> cls, Object id) {
 		String table = getTable(cls);
@@ -117,43 +112,50 @@ public class SQLHelper {
 	 * @param cls
 	 * @return
 	 */
-	public static SelectSQL createQueryListSql(Class<?> cls, QueryFilter filter) {
+	public static SelectSQL createQueryListSql(Class<?> cls, Query filter) {
 
 		String table = getTable(cls);
 		SelectSQL select = SelectSQL.create(table);
 
 		List<OrderSort> l = new ArrayList<OrderSort>();
 
-		if (QUERY_LIST_SQL_CACHE.containsKey(cls)) {
-			return QUERY_LIST_SQL_CACHE.get(cls);
-		} else {
+		Field[] fields = cls.getDeclaredFields();
 
-			Field[] fields = cls.getDeclaredFields();
+		for (int i = 0; i < fields.length; i++) {
 
-			for (int i = 0; i < fields.length; i++) {
+			Field field = fields[i];
+			String column = DBHelper.fieldName2ColumnName(field.getName());
 
-				Field field = fields[i];
-				String column = DBHelper.fieldName2ColumnName(field.getName());
+			if ("serialVersionUID".equals(field.getName())) {
+				continue;
+			}
+			int mod = field.getModifiers();
+			if (Modifier.isFinal(mod)) {
+				continue;
+			}
 
-				if ("serialVersionUID".equals(field.getName())) {
-					continue;
-				}
-				int mod = field.getModifiers();
-				if (Modifier.isFinal(mod)) {
-					continue;
-				}
-
-				if (field.isAnnotationPresent(OrderAsc.class)) {
-					OrderAsc orderAsc = BeanHelper.getAnnotation(cls, field.getName(), OrderAsc.class);
-					l.add(new OrderSort(column, Order.ASC.getValue(), orderAsc.index()));
-				} else if (field.isAnnotationPresent(OrderDesc.class)) {
-					OrderDesc orderDesc = BeanHelper.getAnnotation(cls, field.getName(), OrderDesc.class);
-					l.add(new OrderSort(column, Order.DESC.getValue(), orderDesc.index()));
-				}
-
+			if (field.isAnnotationPresent(OrderAsc.class)) {
+				OrderAsc orderAsc = BeanHelper.getAnnotation(cls, field.getName(), OrderAsc.class);
+				l.add(new OrderSort(column, Order.ASC.getValue(), orderAsc.index()));
+			} else if (field.isAnnotationPresent(OrderDesc.class)) {
+				OrderDesc orderDesc = BeanHelper.getAnnotation(cls, field.getName(), OrderDesc.class);
+				l.add(new OrderSort(column, Order.DESC.getValue(), orderDesc.index()));
 			}
 
 		}
+
+		setOrder(select, l);
+
+		return select;
+	}
+
+	/**
+	 * 设置排序
+	 * 
+	 * @param select
+	 * @param l
+	 */
+	private static void setOrder(SelectSQL select, List<OrderSort> l) {
 
 		Collections.sort(l, new Comparator<OrderSort>() {
 
@@ -176,9 +178,6 @@ public class SQLHelper {
 			}
 		}
 
-		QUERY_LIST_SQL_CACHE.put(cls, select);
-
-		return select;
 	}
 
 	public static UpdateSQL createUpdateSQL(Object obj) {

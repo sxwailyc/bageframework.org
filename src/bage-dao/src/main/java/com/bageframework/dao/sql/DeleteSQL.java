@@ -2,9 +2,7 @@ package com.bageframework.dao.sql;
 
 import com.bageframework.dao.jdbc.SqlParameter;
 
-public class DeleteSQL implements SQL {
-
-	private WhereSQL where = new WhereSQL();
+public class DeleteSQL extends WhereBaseSQL implements SQL {
 
 	private String table;
 

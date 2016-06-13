@@ -3,7 +3,7 @@ package com.bageframework.dao.base;
 import java.util.List;
 
 import com.bageframework.dao.beans.Page;
-import com.bageframework.dao.beans.QueryFilter;
+import com.bageframework.dao.beans.Query;
 
 public interface IDAO<BEAN, KEYTYPE> {
 
@@ -19,7 +19,7 @@ public interface IDAO<BEAN, KEYTYPE> {
 
 	public Page<BEAN> getPage(int parentId, int start, int size);
 
-	public Page<BEAN> getPage(QueryFilter filter, int start, int size);
+	public Page<BEAN> getPage(Query filter, int start, int size);
 
 	public List<BEAN> getList(int start, int size);
 

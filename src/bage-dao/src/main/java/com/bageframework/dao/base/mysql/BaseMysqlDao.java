@@ -1,6 +1,7 @@
 package com.bageframework.dao.base.mysql;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -8,7 +9,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bageframework.dao.beans.Page;
-import com.bageframework.dao.beans.QueryFilter;
+import com.bageframework.dao.beans.Query;
+import com.bageframework.dao.beans.QueryItem;
 import com.bageframework.dao.helper.SQLHelper;
 import com.bageframework.dao.jdbc.Jdbc;
 import com.bageframework.dao.sql.DeleteSQL;
@@ -62,18 +64,34 @@ public class BaseMysqlDao<T> {
 	}
 
 	public Page<T> getPage(int start, int size) {
-		// TODO Auto-generated method stub
-		return null;
+		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
+		select.limit(start, size);
+		List<T> data = jdbc.getList(select.getSql(), entityClass, select.getParams());
+		int count = jdbc.getInt(select.getCountSql(), select.getParams());
+		return new Page<T>(data, count);
 	}
 
 	public Page<T> getPage(int parentId, int start, int size) {
-		// TODO Auto-generated method stub
-		return null;
+		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
+		String parentColumn = SQLHelper.getParentColumn(entityClass);
+		select.equal(parentColumn, parentId);
+		select.limit(start, size);
+		List<T> data = jdbc.getList(select.getSql(), entityClass, select.getParams());
+		int count = jdbc.getInt(select.getCountSql(), select.getParams());
+		return new Page<T>(data, count);
 	}
 
-	public Page<T> getPage(QueryFilter filter, int start, int size) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<T> getPage(Query query, int start, int size) {
+		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
+		select.limit(start, size);
+		Iterator<QueryItem> iterator = query.iterator();
+		while (iterator.hasNext()) {
+			QueryItem queryItem = iterator.next();
+			select.condition(queryItem.getColumn(), queryItem.getOperate(), queryItem.getValue());
+		}
+		List<T> data = jdbc.getList(select.getSql(), entityClass, select.getParams());
+		int count = jdbc.getInt(select.getCountSql(), select.getParams());
+		return new Page<T>(data, count);
 	}
 
 	public List<T> getList(int start, int size) {

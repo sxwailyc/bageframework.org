@@ -51,6 +51,11 @@ public class SelectSQL implements SQL {
 		return this;
 	}
 
+	public SelectSQL condition(String column, String operate, Object value) {
+		where.condition(column, Operate.parse(operate), value);
+		return this;
+	}
+
 	public SelectSQL asc(String column) {
 		order.order(column, Order.ASC);
 		return this;
@@ -74,6 +79,26 @@ public class SelectSQL implements SQL {
 	public static SelectSQL create(String table) {
 		SelectSQL insertSQL = new SelectSQL(table);
 		return insertSQL;
+	}
+
+	/**
+	 * 返加查询行数的SQL
+	 * 
+	 * @return
+	 */
+	public String getCountSql() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT count(1) FROM ");
+		sb.append(table);
+
+		String w = where.getSql();
+		if (w.length() > 0) {
+			sb.append(" WHERE ");
+			sb.append(w);
+		}
+
+		return sb.toString();
 	}
 
 	public String getSql() {

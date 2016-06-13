@@ -14,4 +14,12 @@ public enum Operate {
 		return value;
 	}
 
+	public static Operate parse(String s) {
+		for (Operate operate : values()) {
+			if (operate.getValue().equals(s)) {
+				return operate;
+			}
+		}
+		return null;
+	}
 }
