@@ -10,6 +10,7 @@
 		<module>bage-util</module>
 		<module>bage-dao</module>
 		<module>bage-service</module>
+		<module>bage-mvc</module>
 	</modules>
 
 	
