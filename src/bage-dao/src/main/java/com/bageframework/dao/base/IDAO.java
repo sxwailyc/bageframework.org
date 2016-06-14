@@ -19,7 +19,7 @@ public interface IDAO<BEAN, KEYTYPE> {
 
 	public Page<BEAN> getPage(int parentId, int start, int size);
 
-	public Page<BEAN> getPage(Query filter, int start, int size);
+	public Page<BEAN> getPage(Query query, int start, int size);
 
 	public List<BEAN> getList(int start, int size);
 

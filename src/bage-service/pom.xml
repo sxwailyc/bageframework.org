@@ -9,7 +9,11 @@
 	<artifactId>bage-service</artifactId>
 
 	<dependencies>
-	
+		<dependency>
+			<groupId>com.bageframework</groupId>
+			<artifactId>bage-dao</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 
 	</dependencies>
 </project>
