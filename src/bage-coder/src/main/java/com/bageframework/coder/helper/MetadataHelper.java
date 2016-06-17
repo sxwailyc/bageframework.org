@@ -144,6 +144,10 @@ public class MetadataHelper {
 		field.setSetMethod(fieldName2SetMethod(field.getAttribute()));
 		field.setType(Type.parse(column.getType()).getValue());
 
+		if ("PRI".equals(column.getKey())) {
+			field.setKey(true);
+		}
+
 		return field;
 	}
 

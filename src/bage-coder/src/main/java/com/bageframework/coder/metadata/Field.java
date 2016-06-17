@@ -18,6 +18,8 @@ public class Field {
 
 	private String attribute;
 
+	private boolean isKey = false;
+
 	private List<String> annotations = new ArrayList<String>();
 
 	public String getType() {
@@ -58,6 +60,14 @@ public class Field {
 
 	public void setAnnotations(List<String> annotations) {
 		this.annotations = annotations;
+	}
+
+	public boolean isKey() {
+		return isKey;
+	}
+
+	public void setKey(boolean isKey) {
+		this.isKey = isKey;
 	}
 
 }

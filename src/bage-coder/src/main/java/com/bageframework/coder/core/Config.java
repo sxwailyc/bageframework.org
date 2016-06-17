@@ -4,6 +4,12 @@ public class Config {
 
 	public final static String DEFAULT_MODEL_TEMPLATE = "model.ftl";
 
+	public final static String DEFAULT_VO_TEMPLATE = "vo.ftl";
+
+	public final static String DEFAULT_ADMIN_VO_TEMPLATE = "admin_vo.ftl";
+
+	public final static String DEFAULT_SERVICE_TEMPLATE = "service.ftl";
+
 	/**
 	 * 是否拆分子项目
 	 */
@@ -32,6 +38,12 @@ public class Config {
 
 	private String modelPackage;
 
+	private String servicePackage;
+
+	private String voPackage;
+
+	private String adminVoPackage;
+
 	public static Config create() {
 		return new Config();
 	}
@@ -51,6 +63,21 @@ public class Config {
 		return this;
 	}
 
+	public Config servicePackage(String servicePackage) {
+		this.servicePackage = servicePackage;
+		return this;
+	}
+
+	public Config voPackage(String voPackage) {
+		this.voPackage = voPackage;
+		return this;
+	}
+
+	public Config adminVoPackage(String adminVoPackage) {
+		this.adminVoPackage = adminVoPackage;
+		return this;
+	}
+
 	public String getAuthor() {
 		return author;
 	}
@@ -61,6 +88,18 @@ public class Config {
 
 	public String getModelTemplate() {
 		return this.templateDir + "/" + DEFAULT_MODEL_TEMPLATE;
+	}
+
+	public String getServiceTemplate() {
+		return this.templateDir + "/" + DEFAULT_SERVICE_TEMPLATE;
+	}
+
+	public String getVOTemplate() {
+		return this.templateDir + "/" + DEFAULT_VO_TEMPLATE;
+	}
+
+	public String getAdminVOTemplate() {
+		return this.templateDir + "/" + DEFAULT_ADMIN_VO_TEMPLATE;
 	}
 
 	public String getProjectDir() {
@@ -112,6 +151,27 @@ public class Config {
 		return modelPackage;
 	}
 
+	public String getVOPackage() {
+		if (voPackage == null) {
+			return packagePrefix + ".vo";
+		}
+		return voPackage;
+	}
+
+	public String getAdminVOPackage() {
+		if (adminVoPackage == null) {
+			return packagePrefix + ".vo.admin";
+		}
+		return adminVoPackage;
+	}
+
+	public String getServicePackage() {
+		if (servicePackage == null) {
+			return packagePrefix + ".service";
+		}
+		return servicePackage;
+	}
+
 	/**
 	 * 获取model的保存路径
 	 * 
@@ -121,5 +181,38 @@ public class Config {
 	public String getModelClassPath(String className) {
 		String modelClassPath = this.getModelProjectDir() + "src" + "/main/java/" + getPackagePrefix().replaceAll("\\.", "/") + "/model/" + className + ".java";
 		return modelClassPath;
+	}
+
+	/**
+	 * 获取model的保存路径
+	 * 
+	 * @param className
+	 * @return
+	 */
+	public String getVOClassPath(String className) {
+		String modelClassPath = this.getModelProjectDir() + "src" + "/main/java/" + getPackagePrefix().replaceAll("\\.", "/") + "/vo/" + className + ".java";
+		return modelClassPath;
+	}
+
+	/**
+	 * 获取model的保存路径
+	 * 
+	 * @param className
+	 * @return
+	 */
+	public String getAdminVOClassPath(String className) {
+		String modelClassPath = this.getModelProjectDir() + "src" + "/main/java/" + getPackagePrefix().replaceAll("\\.", "/") + "/vo/admin/" + className + ".java";
+		return modelClassPath;
+	}
+
+	/**
+	 * 获取service的保存路径
+	 * 
+	 * @param className
+	 * @return
+	 */
+	public String getServiceClassPath(String className) {
+		String serviceClassPath = this.getServiceProjectDir() + "src" + "/main/java/" + getPackagePrefix().replaceAll("\\.", "/") + "/service/" + className + "Service.java";
+		return serviceClassPath;
 	}
 }

@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.model;
+package com.bageframework.demo.web.vo.admin;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import java.util.Date;
  * @author shixiangwen03@gmail.com
  * 
  */
-public class Role {
+public class RoleAdminVO {
 
     private Integer id;
     
