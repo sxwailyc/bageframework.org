@@ -1,8 +1,8 @@
 package ${packageName};
 
-<#list imports as item>
+<#list modelImports as import>
 
-import ${item};
+import ${import};
 
 </#list>
 

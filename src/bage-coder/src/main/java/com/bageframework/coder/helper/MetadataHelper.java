@@ -142,9 +142,16 @@ public class MetadataHelper {
 		field.setAttribute(columnName2FieldName(column.getField()));
 		field.setGetMethod(fieldName2GetMethod(field.getAttribute()));
 		field.setSetMethod(fieldName2SetMethod(field.getAttribute()));
-		field.setType(Type.parse(column.getType()));
+		field.setType(Type.parse(column.getType()).getValue());
 
 		return field;
+	}
+
+	public static String getImport(Column column) {
+
+		Type type = Type.parse(column.getType());
+		return Type.getImport(type);
+
 	}
 
 	public static void main(String[] args) {

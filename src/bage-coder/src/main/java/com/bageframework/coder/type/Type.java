@@ -14,16 +14,26 @@ public enum Type {
 		return value;
 	}
 
-	public static String parse(String type) {
+	public static Type parse(String type) {
 
 		if (type.startsWith("tinyint") || type.startsWith("int") || type.startsWith("smallint") || type.startsWith("bigint")) {
-			return INT.value;
+			return INT;
 		} else if (type.startsWith("varchar") || type.startsWith("char") || type.startsWith("longtext") || type.startsWith("text")) {
-			return STRING.value;
+			return STRING;
 		} else if (type.startsWith("datetime")) {
-			return DATE.value;
+			return DATE;
 		} else {
-			return UNKNOW.value;
+			return UNKNOW;
+		}
+	}
+
+	public static String getImport(Type type) {
+
+		switch (type) {
+		case DATE:
+			return "java.util.Date";
+		default:
+			return null;
 		}
 	}
 

@@ -2,11 +2,8 @@ package com.bageframework.coder;
 
 import com.bageframework.coder.core.Config;
 import com.bageframework.coder.factory.BeanFactory;
-import com.bageframework.coder.metadata.ModelMetadata;
-import com.bageframework.coder.render.Render;
-import com.bageframework.coder.render.RenderFactory;
-import com.bageframework.coder.service.MetadataService;
-import com.bageframework.coder.service.impl.MetadataServiceImpl;
+import com.bageframework.coder.service.CoderService;
+import com.bageframework.coder.service.impl.CoderServiceImpl;
 
 public class Test {
 
@@ -14,15 +11,14 @@ public class Test {
 
 		String author = "shixiangwen03@gmail.com";
 
-		Config config = Config.create().author(author).packagePrefix("com.bageframework.demo");
+		Config config = Config.create().author(author).packagePrefix("com.bageframework.demo.web");
 
-		MetadataService metadataService = BeanFactory.getInstance().getBean(MetadataServiceImpl.class);
-		ModelMetadata modelMetadata = metadataService.createModelMetadata(config, "user");
+		CoderService coderService = BeanFactory.getInstance().getBean(CoderServiceImpl.class);
 
-		Render render = RenderFactory.getInstance().getRender();
+		String projectDir = "/Users/jackyshi/Documents/develop/workspace_common/bageframework/demo/demo-web/";
 
-		String content = render.doRender("template/model.ftl", modelMetadata);
-		System.out.println(content);
+		config.projectDir(projectDir);
 
+		coderService.generate(config, "role");
 	}
 }

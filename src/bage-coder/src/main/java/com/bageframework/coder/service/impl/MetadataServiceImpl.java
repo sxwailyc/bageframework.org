@@ -9,9 +9,10 @@ import com.bageframework.coder.core.Config;
 import com.bageframework.coder.dao.MetadataDao;
 import com.bageframework.coder.helper.MetadataHelper;
 import com.bageframework.coder.metadata.Field;
-import com.bageframework.coder.metadata.ModelMetadata;
+import com.bageframework.coder.metadata.Metadata;
 import com.bageframework.coder.model.Column;
 import com.bageframework.coder.service.MetadataService;
+import com.bageframework.coder.type.Type;
 
 @Service
 public class MetadataServiceImpl implements MetadataService {
@@ -20,13 +21,17 @@ public class MetadataServiceImpl implements MetadataService {
 	private MetadataDao metadataDao;
 
 	@Override
-	public ModelMetadata createModelMetadata(Config config, String table) {
+	public Metadata createMetadata(Config config, String table) {
 
-		ModelMetadata modelMetadata = new ModelMetadata();
+		Metadata modelMetadata = new Metadata();
 		List<Column> columns = metadataDao.getColumns(table);
 		for (Column column : columns) {
 			Field field = MetadataHelper.column2Field(column);
 			modelMetadata.appendField(field);
+			String impt = MetadataHelper.getImport(column);
+			if (impt != null) {
+				modelMetadata.appendModelImport(impt);
+			}
 		}
 
 		modelMetadata.setAuthor(config.getAuthor());
