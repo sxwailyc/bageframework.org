@@ -10,8 +10,11 @@ import com.bageframework.coder.dao.MetadataDao;
 import com.bageframework.coder.helper.MetadataHelper;
 import com.bageframework.coder.metadata.AdminVOMetadata;
 import com.bageframework.coder.metadata.BaseClassMetadata;
+import com.bageframework.coder.metadata.DaoMetadata;
+import com.bageframework.coder.metadata.DaoMysqlImplMetadata;
 import com.bageframework.coder.metadata.Field;
 import com.bageframework.coder.metadata.ModelMetadata;
+import com.bageframework.coder.metadata.ServiceImplMetadata;
 import com.bageframework.coder.metadata.ServiceMetadata;
 import com.bageframework.coder.metadata.VOMetadata;
 import com.bageframework.coder.model.Column;
@@ -73,9 +76,16 @@ public class MetadataServiceImpl implements MetadataService {
 
 		handleColumn(metadata, table);
 
+		String modelClassName = MetadataHelper.tableName2ClassName(table);
+
 		metadata.setAuthor(config.getAuthor());
-		metadata.setClassName(MetadataHelper.tableName2ClassName(table) + "AdminVO");
+		metadata.setClassName(modelClassName + "AdminVO");
 		metadata.setPackageName(config.getAdminVOPackage());
+
+		metadata.setModelClassName(modelClassName);
+
+		metadata.appendImport("org.springframework.beans.BeanUtils");
+		metadata.appendImport(config.getModelPackage() + "." + metadata.getModelClassName());
 
 		return metadata;
 	}
@@ -90,6 +100,88 @@ public class MetadataServiceImpl implements MetadataService {
 		metadata.setClassName(MetadataHelper.tableName2ClassName(table) + "Service");
 		metadata.setPackageName(config.getServicePackage());
 
+		metadata.appendImport("com.bageframework.service.IService");
+		metadata.appendImport(config.getModelPackage() + "." + metadata.getModelClassName());
+		metadata.appendImport(config.getVOPackage() + "." + metadata.getModelClassName() + "VO");
+		metadata.appendImport(config.getAdminVOPackage() + "." + metadata.getModelClassName() + "AdminVO");
+
+		String keyType = getKeyType(table);
+		metadata.setKeyType(keyType);
+
+		return metadata;
+	}
+
+	@Override
+	public ServiceImplMetadata createServiceImplMetadata(Config config, String table) {
+
+		ServiceImplMetadata metadata = new ServiceImplMetadata();
+
+		metadata.setAuthor(config.getAuthor());
+		metadata.setModelClassName(MetadataHelper.tableName2ClassName(table));
+		metadata.setClassName(MetadataHelper.tableName2ClassName(table) + "ServiceImpl");
+		metadata.setPackageName(config.getServiceImplPackage());
+
+		metadata.appendImport("org.springframework.beans.factory.annotation.Autowired");
+		metadata.appendImport("org.springframework.stereotype.Service");
+		metadata.appendImport("com.bageframework.service.base.BaseService");
+		metadata.appendImport("com.bageframework.dao.base.IDAO");
+		metadata.appendImport(config.getModelPackage() + "." + metadata.getModelClassName());
+		metadata.appendImport(config.getVOPackage() + "." + metadata.getModelClassName() + "VO");
+		metadata.appendImport(config.getAdminVOPackage() + "." + metadata.getModelClassName() + "AdminVO");
+		metadata.appendImport(config.getDaoPackage() + "." + metadata.getModelClassName() + "Dao");
+		metadata.appendImport(config.getServicePackage() + "." + metadata.getModelClassName() + "Service");
+
+		String daoClassName = metadata.getModelClassName() + "Dao";
+		metadata.setDaoObjectName(daoClassName.substring(0, 1).toLowerCase() + daoClassName.substring(1));
+
+		String keyType = getKeyType(table);
+		metadata.setKeyType(keyType);
+
+		return metadata;
+	}
+
+	@Override
+	public DaoMetadata createDaoMetadata(Config config, String table) {
+
+		DaoMetadata metadata = new DaoMetadata();
+
+		metadata.setAuthor(config.getAuthor());
+		metadata.setModelClassName(MetadataHelper.tableName2ClassName(table));
+		metadata.setClassName(MetadataHelper.tableName2ClassName(table) + "Dao");
+		metadata.setPackageName(config.getDaoPackage());
+
+		metadata.appendImport("com.bageframework.dao.base.IDAO");
+		metadata.appendImport(config.getModelPackage() + "." + metadata.getModelClassName());
+
+		String keyType = getKeyType(table);
+		metadata.setKeyType(keyType);
+
+		return metadata;
+	}
+
+	@Override
+	public DaoMysqlImplMetadata createDaoMysqlImplMetadata(Config config, String table) {
+
+		DaoMysqlImplMetadata metadata = new DaoMysqlImplMetadata();
+
+		metadata.setAuthor(config.getAuthor());
+		metadata.setModelClassName(MetadataHelper.tableName2ClassName(table));
+		metadata.setClassName(MetadataHelper.tableName2ClassName(table) + "DaoMysqlImpl");
+		metadata.setPackageName(config.getDaoMysqlImplPackage());
+
+		metadata.appendImport("org.springframework.stereotype.Repository");
+		metadata.appendImport("com.bageframework.dao.base.mysql.BaseMysqlDao");
+		metadata.appendImport(config.getModelPackage() + "." + metadata.getModelClassName());
+		metadata.appendImport(config.getDaoPackage() + "." + metadata.getModelClassName() + "Dao");
+
+		String keyType = getKeyType(table);
+		metadata.setKeyType(keyType);
+
+		return metadata;
+	}
+
+	private String getKeyType(String table) {
+
 		List<Column> columns = metadataDao.getColumns(table);
 		String priKey = null;
 		String uniKey = null;
@@ -103,16 +195,10 @@ public class MetadataServiceImpl implements MetadataService {
 		}
 
 		if (uniKey != null) {
-			metadata.setKeyType(uniKey);
+			return uniKey;
 		} else {
-			metadata.setKeyType(priKey);
+			return priKey;
 		}
 
-		metadata.appendImport("com.bageframework.service.IService");
-		metadata.appendImport(config.getModelPackage() + "." + metadata.getModelClassName());
-		metadata.appendImport(config.getVOPackage() + "." + metadata.getModelClassName() + "VO");
-		metadata.appendImport(config.getAdminVOPackage() + "." + metadata.getModelClassName() + "AdminVO");
-
-		return metadata;
 	}
 }

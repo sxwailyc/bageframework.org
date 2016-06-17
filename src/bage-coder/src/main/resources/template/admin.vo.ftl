@@ -30,4 +30,10 @@ public class ${className} {
     }
 </#list>
 
+    public static ${className} create(${modelClassName} bean) {
+		${className} vo = new ${className}();
+		BeanUtils.copyProperties(bean, vo);
+		return vo;
+	}
+
 }

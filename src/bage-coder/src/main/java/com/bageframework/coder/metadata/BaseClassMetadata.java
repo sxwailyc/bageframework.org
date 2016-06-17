@@ -15,6 +15,8 @@ public class BaseClassMetadata {
 
 	private String className;
 
+	private String modelClassName;
+
 	private List<Field> fields = new ArrayList<Field>();
 
 	public List<Field> getFields() {
@@ -55,6 +57,14 @@ public class BaseClassMetadata {
 
 	public void setClassName(String className) {
 		this.className = className;
+	}
+
+	public String getModelClassName() {
+		return modelClassName;
+	}
+
+	public void setModelClassName(String modelClassName) {
+		this.modelClassName = modelClassName;
 	}
 
 	public void appendImport(String impt) {

@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.bageframework.coder.core.Config;
 import com.bageframework.coder.helper.CoderHelper;
 import com.bageframework.coder.metadata.AdminVOMetadata;
+import com.bageframework.coder.metadata.DaoMetadata;
+import com.bageframework.coder.metadata.DaoMysqlImplMetadata;
 import com.bageframework.coder.metadata.ModelMetadata;
+import com.bageframework.coder.metadata.ServiceImplMetadata;
 import com.bageframework.coder.metadata.ServiceMetadata;
 import com.bageframework.coder.metadata.VOMetadata;
 import com.bageframework.coder.render.Render;
@@ -31,6 +34,14 @@ public class CoderServiceImpl implements CoderService {
 		ModelMetadata metadata = metadataService.createModelMetadata(config, table);
 		generateModel(config, metadata);
 
+		// generate dao
+		DaoMetadata daoMetadata = metadataService.createDaoMetadata(config, table);
+		generateDao(config, daoMetadata);
+
+		// generate dao mysql impl
+		DaoMysqlImplMetadata daoMysqlImplMetadata = metadataService.createDaoMysqlImplMetadata(config, table);
+		generateDaoMysqlImpl(config, daoMysqlImplMetadata);
+
 		// generate vo
 		VOMetadata voMetadata = metadataService.createVOMetadata(config, table);
 		generateVO(config, voMetadata);
@@ -39,9 +50,13 @@ public class CoderServiceImpl implements CoderService {
 		AdminVOMetadata adminVoMetadata = metadataService.createAdminVOMetadata(config, table);
 		generateAdminVO(config, adminVoMetadata);
 
-		// generateService
+		// generate service
 		ServiceMetadata serviceMetadata = metadataService.createServiceMetadata(config, table);
 		generateService(config, serviceMetadata);
+
+		// generate service impl
+		ServiceImplMetadata serviceImplMetadata = metadataService.createServiceImplMetadata(config, table);
+		generateServiceImpl(config, serviceImplMetadata);
 	}
 
 	private void generateModel(Config config, ModelMetadata metadata) {
@@ -80,6 +95,36 @@ public class CoderServiceImpl implements CoderService {
 		String content = render.doRender(config.getServiceTemplate(), metadata);
 
 		String savePath = config.getServiceClassPath(metadata.getClassName());
+		logger.debug("save class[" + metadata.getClassName() + "], to[" + savePath + "]");
+		CoderHelper.save(savePath, content);
+	}
+
+	private void generateServiceImpl(Config config, ServiceImplMetadata metadata) {
+
+		Render render = RenderFactory.getInstance().getRender();
+		String content = render.doRender(config.getServiceImplTemplate(), metadata);
+
+		String savePath = config.getServiceImplClassPath(metadata.getClassName());
+		logger.debug("save class[" + metadata.getClassName() + "], to[" + savePath + "]");
+		CoderHelper.save(savePath, content);
+	}
+
+	private void generateDao(Config config, DaoMetadata metadata) {
+
+		Render render = RenderFactory.getInstance().getRender();
+		String content = render.doRender(config.getDaoTemplate(), metadata);
+
+		String savePath = config.getDaoClassPath(metadata.getClassName());
+		logger.debug("save class[" + metadata.getClassName() + "], to[" + savePath + "]");
+		CoderHelper.save(savePath, content);
+	}
+
+	private void generateDaoMysqlImpl(Config config, DaoMysqlImplMetadata metadata) {
+
+		Render render = RenderFactory.getInstance().getRender();
+		String content = render.doRender(config.getDaoMysqlImplTemplate(), metadata);
+
+		String savePath = config.getDaoMysqlImplClassPath(metadata.getClassName());
 		logger.debug("save class[" + metadata.getClassName() + "], to[" + savePath + "]");
 		CoderHelper.save(savePath, content);
 	}
