@@ -1,0 +1,14 @@
+/demo/demo-web/*.project
+/src/bage-mvc/.settings/*.prefs
+/demo/demo-web/.settings
+/src/.settings
+/src/*.project
+/src/bage-core/*.project
+/src/bage-core/.settings/*.prefs
+/src/bage-dao/*.project
+/src/bage-dao/.settings/*.prefs
+/src/bage-mvc/*.project
+/src/bage-service/*.project
+/src/bage-service/.settings/*.prefs
+/src/bage-util/*.project
+/src/bage-util/.settings/*.prefs
