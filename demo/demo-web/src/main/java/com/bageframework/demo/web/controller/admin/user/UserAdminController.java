@@ -29,4 +29,12 @@ public class UserAdminController {
 
 	}
 
+	@RequestMapping
+	public ModelAndView list2(HttpServletRequest req) {
+
+		ModelAndView model = new ModelAndView("/admin/user/list2");
+		return model;
+
+	}
+
 }

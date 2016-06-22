@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value = IndexAdminController.DIR)
+//@RequestMapping(value = IndexAdminController.DIR)
 public class IndexAdminController {
 
 	public static final String DIR = "/admin/";
 
 	private static Logger LOG = Logger.getLogger(IndexAdminController.class);
 
-	@RequestMapping
+	//@RequestMapping
 	public ModelAndView index(HttpServletRequest req) {
 
 		ModelAndView model = new ModelAndView("/admin/index");

@@ -19,8 +19,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 public class BageRequestMappingHandlerMapping extends RequestMappingHandlerMapping {
 
-	private boolean useSuffixPatternMatch = true;
-
 	private boolean useTrailingSlashMatch = true;
 
 	private ContentNegotiationManager contentNegotiationManager = new ContentNegotiationManager();
@@ -45,10 +43,11 @@ public class BageRequestMappingHandlerMapping extends RequestMappingHandlerMappi
 
 	protected RequestMappingInfo createRequestMappingInfo(RequestMapping annotation, RequestCondition<?> customCondition, Method method) {
 		String[] patterns = resolveEmbeddedValuesInPatterns(annotation.value());
-		if (patterns != null && (patterns.length == 0)) {
-			patterns = new String[] { method.getName().toLowerCase() };
+		if (patterns == null || patterns.length == 0) {
+			patterns = new String[] { method.getName() + ".do" };
 		}
-		return new RequestMappingInfo(new PatternsRequestCondition(patterns, getUrlPathHelper(), getPathMatcher(), this.useSuffixPatternMatch, this.useTrailingSlashMatch, this.fileExtensions),
+
+		return new RequestMappingInfo(new PatternsRequestCondition(patterns, getUrlPathHelper(), getPathMatcher(), false, this.useTrailingSlashMatch, this.fileExtensions),
 				new RequestMethodsRequestCondition(annotation.method()), new ParamsRequestCondition(annotation.params()), new HeadersRequestCondition(annotation.headers()),
 				new ConsumesRequestCondition(annotation.consumes(), annotation.headers()), new ProducesRequestCondition(annotation.produces(), annotation.headers(), this.contentNegotiationManager),
 				customCondition);

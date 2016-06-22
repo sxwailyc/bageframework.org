@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(UserController.DIR)
+//@RequestMapping(UserController.DIR)
 public class UserController {
 
 	public static final String DIR = "/api/user";
 
 	private static Logger LOG = Logger.getLogger(UserController.class);
 
-	@RequestMapping
+	//@RequestMapping
 	public ModelAndView list(HttpServletRequest req) {
 
 		ModelAndView modelView = new ModelAndView();

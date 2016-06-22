@@ -1,13 +1,42 @@
 
 
+var Grid = function(tableId, config, jqGridConfig){
+    this.tableId = tableId;
+    this.config = config;
+    this.jqGridConfig = jqGridConfig;
+    
+    this.init();
+}
 
-	// create the module and name it jqGridApp
-	var app = angular.module('app', []);
+Grid.prototype.initService = function(){
 
-	// create the controller and inject Angular's $scope
-	app.controller('ctrl', function($scope) {
+    
+
+}
+
+Grid.prototype.initCtrl = function(){
+
+   var that = this;
+
+   this.app.controller('ctrl', function($scope) {
 	   
 	   $scope.title = "我是标题";
+
+	   $scope.query = function () {
+	        	 
+           var postData = {
+                pageNo: $scope.paginationConf.currentPage,
+                pageSize: $scope.paginationConf.itemsPerPage
+           }
+           var filter = angular.copy($scope.filter);
+           BusinessService.list(filter, postData, function(response){
+                $scope.data = response.data;
+                $scope.totalItems = response.count;
+           }, function(){
+           	    //handle error
+           });
+	 
+	    };
 	   
 	   // Examle data for jqGrid
         var mydata = [
@@ -42,7 +71,7 @@
 
 
         var getData = function(postdata){
-            var thegrid = $("#table_list_2")[0];  
+            var thegrid = $("#" + that.tableId)[0];  
             var data = {
               total: 10,
               page: postdata.page,
@@ -98,6 +127,15 @@
             $('#table_list_2').setGridWidth(width);
         });
 
-    });
-	
-	
+    }); 
+}
+
+Grid.prototype.init = function(){
+
+   this.app = angular.module('app', []);
+
+   //init angularjs controller
+   this.initCtrl();
+   
+}
+    
