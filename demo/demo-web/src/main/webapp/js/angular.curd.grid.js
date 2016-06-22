@@ -296,7 +296,7 @@ var createTable = function(config){
 	
 	var app = angular.module(__config.app, ['ui.bootstrap']);
     app.remote = remote;
-    
+
     //filter define
     for(var i = __config.filters.length; i--;){
     	var filter = __config.filters[i];

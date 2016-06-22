@@ -1,47 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<div class="accordion" fillSpace="sidebar">
-		<div class="accordionHeader">
-			<h2><span>Folder</span>代码生成</h2>
-		</div>
-		<div class="accordionContent">
-			<ul class="tree treeFolder">
-				<li><a href="tabsPage.html" target="navTab">主框架面板</a>
-					<ul>
-						<li><a href="main.html" target="navTab" rel="main">我的主页</a></li>
-					</ul>
-				</li>
-				
-				<li><a>常用组件</a>
-					<ul>
-						<li><a href="w_panel.html" target="navTab" rel="w_panel">面板</a></li>
-					</ul>
-				</li>
-						
-				<li><a>表单组件</a>
-					<ul>
-						<li><a href="w_validation.html" target="navTab" rel="w_validation">表单验证</a></li>
-					</ul>
-				</li>
-				<li><a>组合应用</a>
-					<ul>
-						<li><a href="demo/pagination/layout1.html" target="navTab" rel="pagination1">局部刷新分页1</a></li>
-					</ul>
-				</li>
-				<li><a>图表</a>
-					<ul>
-						<li><a href="chart/test/barchart.html" target="navTab" rel="chart">柱状图(垂直)</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-		<div class="accordionHeader">
-			<h2><span>Folder</span>权限管理</h2>
-		</div>
-		<div class="accordionContent">
-			<ul class="tree">
-				<li><a href="/admin/user/list.do" target="navTab" rel="chart">用户管理</a></li>
-				<li><a href="chart/test/barchart.html" target="navTab" rel="chart">柱状图(垂直)</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
+<nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <span>
+                            <img alt="image" class="img-circle" src="/img/logo.jpeg" />
+                        </span>
+                    </div>
+                    <div class="logo-element">
+                        IN+
+                    </div>
+                </li>
+                <li class="active">
+                    <a href="#"><i class="fa fa-table"></i> <span class="nav-label">权限管理</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li class="active"><a href="/admin/user/list.do">用户管理</a></li>
+                        <li class=""><a href="jq_grid.html">页面管理</a></li>
+                        <li class=""><a href="jq_grid.html">角色管理</a></li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="#"><i class="fa fa-table"></i> <span class="nav-label">代码生成</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li class=""><a href="jq_grid.html">全局配置</a></li>
+                        <li class=""><a href="jq_grid.html">代码生成</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+</nav>
+

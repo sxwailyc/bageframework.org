@@ -24,8 +24,6 @@ public class UserAdminController {
 	@RequestMapping
 	public ModelAndView list(HttpServletRequest req) {
 
-		userService.getList(0, 10);
-
 		ModelAndView model = new ModelAndView("/admin/user/list");
 		return model;
 

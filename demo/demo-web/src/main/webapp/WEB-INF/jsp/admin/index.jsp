@@ -59,6 +59,7 @@
 <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.js"></script>
 <script src="/js/rpc.js"></script>
 <script src="/js/angular.curd.grid.js"></script>
+<script src="http://cdn.bootcss.com/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.js"></script>
 
 <!-- 可以用dwz.min.js替换前面全部dwz.*.js (注意：替换时下面dwz.regional.zh.js还需要引入)
 <script src="bin/dwz.min.js" type="text/javascript"></script>
