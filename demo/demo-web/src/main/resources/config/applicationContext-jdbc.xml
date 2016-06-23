@@ -11,7 +11,7 @@
 		</property>
 	</bean>
 
-<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver">
 		</property>
 		<property name="url"
@@ -19,9 +19,9 @@
 		</property>
 		<property name="username" value="2e33dc87e444"></property>
 		<property name="password" value="aac79514a8a187b1"></property>
-	</bean-->
+	</bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver">
 		</property>
 		<property name="url"
@@ -29,7 +29,7 @@
 		</property>
 		<property name="username" value="bage"></property>
 		<property name="password" value="bage123"></property>
-	</bean>
+	</bean> -->
 
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />

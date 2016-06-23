@@ -1,114 +1,150 @@
 
 
-var Grid = function(tableId, config, jqGridConfig){
-    this.tableId = tableId;
-    this.config = config;
-    this.jqGridConfig = jqGridConfig;
-    
+var Grid = function(tableId, config, gridConfig){
+    this._tableId = tableId;
+    this._config = config;
+
     this.init();
+    this._setGridConfig(gridConfig);
+}
+
+Grid.prototype._setGridConfig = function(gridConfig){
+
+
+
+    this._gridConfig = {
+        height: 450,
+        autowidth: true,
+        shrinkToFit: true,
+        rowNum: 20,
+        rowList: [10, 20, 30],
+        colNames:[],
+        colModel:[],
+        pager: "#pager_list_2",
+        viewrecords: false,
+        caption: "",
+        add: true,
+        edit: true,
+        addtext: '添加',
+        edittext: '修改',
+        hidegrid: false,
+        pagerpos: 'right'
+    }
+
+    for(var k in this._gridConfig){
+    	if(gridConfig.hasOwnProperty(k)){
+    		this._gridConfig[k] = gridConfig[k];
+    	}
+    }
 }
 
 Grid.prototype.initService = function(){
 
-    
+	var that = this;
 
+    this.app.factory('Service', [function(){
+
+
+            var methods = ['page', 'update', 'delete', 'add'];
+            console.log('path' + that._config.path);
+			var remote = new rpc.ServiceProxy("/services/" + that._config.path, {
+				asynchronous : false,
+				methods : methods
+			});
+
+          	var list = function (query, pageNo, pageSize, successCallback, errorCallback) {
+	    	   //var localFilter = config.filterHandler(filter);
+	    	    var localQuery = query;
+	    	    var response = remote.page(localQuery, pageNo, pageSize);
+	    	    successCallback(response);
+	        };
+
+	        var ret =  {
+               list: list
+	        }
+
+	        return ret;
+
+     }]);
 }
 
 Grid.prototype.initCtrl = function(){
 
-   var that = this;
+    var that = this;
 
-   this.app.controller('ctrl', function($scope) {
+    this.app.controller('ctrl', ['$scope', 'Service', function($scope, service) {
 	   
-	   $scope.title = "我是标题";
+	    $scope.title = "用户管理";
+	    $scope.query = {};
 
-	   $scope.query = function () {
+	    that.app.scope = $scope;
+
+        $scope.pageNo = 1; 
+
+	    $scope.pagination = {
+		    pageNo: 1,
+		    pageSize: 10
+		};
+
+         $scope.search = function(){
+         	list();
+         }
+
+	    var list = function () {
 	        	 
-           var postData = {
-                pageNo: $scope.paginationConf.currentPage,
-                pageSize: $scope.paginationConf.itemsPerPage
-           }
-           var filter = angular.copy($scope.filter);
-           BusinessService.list(filter, postData, function(response){
+            var pageNo = $scope.pagination.pageNo;
+            var pageSize = $scope.pagination.pageSize;
+            var query = [];
+            for(var k in $scope.query){
+               var value = $scope.query[k];
+               if(!value){
+                    continue;
+               }
+               var item = {
+               	  column: k,
+               	  value: value,
+               	  operate: '='
+               }
+               query.push(item);
+            }
+            service.list({data: query}, pageNo, pageSize, function(response){
                 $scope.data = response.data;
-                $scope.totalItems = response.count;
-           }, function(){
+                $scope.total = response.count;
+                var pageCount = ($scope.total - 1) / pageSize + 1;
+                var grid = $("#" + that._tableId)[0];  
+                var data = {
+	              total: pageCount,
+	              page: $scope.pagination.pageNo,
+	              recoreds: $scope.total,
+	              rows: $scope.data
+	            } 
+	            grid.addJSONData(data);
+            }, function(){
            	    //handle error
-           });
+            });
 	 
 	    };
-	   
-	   // Examle data for jqGrid
-        var mydata = [
-            {id: "1", invdate: "2010-05-24", name: "test", note: "note", tax: "10.00", total: "2111.00"} ,
-            {id: "2", invdate: "2010-05-25", name: "test2", note: "note2", tax: "20.00", total: "320.00"},
-            {id: "3", invdate: "2007-09-01", name: "test3", note: "note3", tax: "30.00", total: "430.00"},
-            {id: "4", invdate: "2007-10-04", name: "test", note: "note", tax: "10.00", total: "210.00"},
-            {id: "5", invdate: "2007-10-05", name: "test2", note: "note2", tax: "20.00", total: "320.00"},
-            {id: "6", invdate: "2007-09-06", name: "test3", note: "note3", tax: "30.00", total: "430.00"},
-            {id: "7", invdate: "2007-10-04", name: "test", note: "note", tax: "10.00", total: "210.00"},
-            {id: "8", invdate: "2007-10-03", name: "test2", note: "note2", amount: "300.00", tax: "21.00", total: "320.00"},
-            {id: "9", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
-            {id: "11", invdate: "2007-10-01", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
-            {id: "12", invdate: "2007-10-02", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
-            {id: "13", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
-            {id: "14", invdate: "2007-10-04", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
-            {id: "15", invdate: "2007-10-05", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
-            {id: "16", invdate: "2007-09-06", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
-            {id: "17", invdate: "2007-10-04", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
-            {id: "18", invdate: "2007-10-03", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
-            {id: "19", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
-            {id: "21", invdate: "2007-10-01", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
-            {id: "22", invdate: "2007-10-02", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
-            {id: "23", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
-            {id: "24", invdate: "2007-10-04", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
-            {id: "25", invdate: "2007-10-05", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
-            {id: "26", invdate: "2007-09-06", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"},
-            {id: "27", invdate: "2007-10-04", name: "test", note: "note", amount: "200.00", tax: "10.00", total: "210.00"},
-            {id: "28", invdate: "2007-10-03", name: "test2", note: "note2", amount: "300.00", tax: "20.00", total: "320.00"},
-            {id: "29", invdate: "2007-09-01", name: "test3", note: "note3", amount: "400.00", tax: "30.00", total: "430.00"}
-        ];
 
+	    $scope.addPage = function(){
+	    	 console.log("add page");
+	    	//$scope.pageNo = $scope.pageNo + 1;
+	
+	    	
+	    }
+	 
+        // query data from server
+        that._gridConfig.datatype =  function(postdata){
 
-        var getData = function(postdata){
-            var thegrid = $("#" + that.tableId)[0];  
-            var data = {
-              total: 10,
-              page: postdata.page,
-              recoreds: 10,
-              rows: mydata
-            } 
-            thegrid.addJSONData(data);
-        }
+            if(!$scope.$$phase) {
+			    $scope.$apply(function(){
+			    	$scope.pagination.pageNo = postdata.page;
+			    });
+			}else{
+				$scope.pagination.pageNo = postdata.page;
+			}
+        };
 
-        // Configuration for jqGrid Example 2
-        $("#table_list_2").jqGrid({
-            //data: mydata,
-            datatype: getData,
-            height: 450,
-            autowidth: true,
-            shrinkToFit: true,
-            rowNum: 20,
-            rowList: [10, 20, 30],
-            colNames:['Inv No','Date', 'Client', 'Amount','Tax','Total','Notes'],
-            colModel:[
-                {name:'id',index:'id', editable: true, width:60, sorttype:"int",search:true},
-                {name:'invdate',index:'invdate', editable: true, width:90, sorttype:"date", formatter:"date"},
-                {name:'name',index:'name', editable: true, width:100},
-                {name:'amount',index:'amount', editable: true, width:80, align:"right",sorttype:"float", formatter:"number"},
-                {name:'tax',index:'tax', editable: true, width:80, align:"right",sorttype:"float"},
-                {name:'total',index:'total', editable: true, width:80,align:"right",sorttype:"float"},
-                {name:'note',index:'note', editable: true, width:100, sortable:false}
-            ],
-            pager: "#pager_list_2",
-            viewrecords: true,
-            caption: "Example jqGrid 2",
-            add: true,
-            edit: true,
-            addtext: '添加',
-            edittext: '修改',
-            hidegrid: false
-        });
+        $("#table_list_2").jqGrid(that._gridConfig);
 
         // Add selection
         $("#table_list_2").setSelection(4, true);
@@ -116,9 +152,11 @@ Grid.prototype.initCtrl = function(){
 
         // Setup buttons
         $("#table_list_2").jqGrid('navGrid', '#pager_list_2',
-                {edit: true, add: true, del: true, search: true},
-                {height: 200, reloadAfterSubmit: true}
+              {edit: true, add: true, del: true, search: true},
+              {height: 200, reloadAfterSubmit: true}
         );
+
+        $scope.$watch('pagination.pageNo + pagination.pageSize', list);
 
         // Add responsive to jqGrid
         $(window).bind('resize', function () {
@@ -127,12 +165,15 @@ Grid.prototype.initCtrl = function(){
             $('#table_list_2').setGridWidth(width);
         });
 
-    }); 
+    }]); 
 }
 
 Grid.prototype.init = function(){
 
    this.app = angular.module('app', []);
+
+   //init angularjs service
+   this.initService();
 
    //init angularjs controller
    this.initCtrl();

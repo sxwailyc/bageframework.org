@@ -43,10 +43,32 @@
 
     <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.js"></script>
+     <script src="/js/rpc.js"></script>
     <script src="/js/angular.bage.grid.js"></script>
+    <style>
+       .ui-jqgrid-htable tr.ui-jqgrid-labels th { height: 35px; padding-top: 0px;}
+       .ui-jqgrid tr.jqgrow td { height: 35px; padding-top: 0px;}
+       
+    </style>
     <script>
     
-        var grid = new Grid('table_list_2');
+
+        var config = {
+            path: 'user'
+        }
+
+        var jqGridConfig = {
+            colNames: ['id', '用户ID', '用户名', '用户昵称', '操作'],
+            colModel:[
+                {name:'id',index:'id', editable: true, width:90, sorttype:"int", formatter:"int"},
+                {name:'userId',index:'user_id', editable: true, width:100},
+                {name:'username',index:'username', editable: true, width:80, align:"right",sorttype:"float", formatter:"string"},
+                {name:'nickname',index:'nickname', editable: true, width:80, align:"right",sorttype:"string"},
+                {width:100}
+            ]
+        }
+
+        var grid = new Grid('table_list_2', config, jqGridConfig);
         
       
     </script>
@@ -54,7 +76,7 @@
 
 <body>
 
-    <div id="wrapper">
+    <div id="wrapper" ng-app="app" ng-controller="ctrl">
 
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
@@ -63,14 +85,16 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox ">
-                        <div class="ibox-title" ng-app="app" ng-controller="ctrl">
-                            <h5>{{ title }}</h5>
+                        <div class="ibox-title">
+                            <h5>
+                               {{ title }}
+                            </h5>
                         </div>
                         <div class="ibox-content">
-                            
-                            <h4>Advanced example</h4>
                             <p>
-
+                               用户名: <input type="text" ng-model="query.username"/> 
+                               昵称: <input type="text" ng-model="query.nickname"/>
+                               <input type="button" value="查找" ng-click="search()" />
                             </p>
 
                             <div class="jqGrid_wrapper">

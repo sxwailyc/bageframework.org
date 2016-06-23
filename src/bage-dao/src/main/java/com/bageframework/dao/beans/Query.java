@@ -6,12 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.bageframework.dao.sql.Operate;
+import com.bageframework.util.Json;
 
 public class Query implements Serializable, Iterable<QueryItem> {
 
 	private static final long serialVersionUID = 1L;
 
-	public List<QueryItem> data = new ArrayList<QueryItem>();;
+	private List<QueryItem> data = new ArrayList<QueryItem>();;
 
 	public List<QueryItem> getData() {
 		return data;
@@ -56,4 +57,10 @@ public class Query implements Serializable, Iterable<QueryItem> {
 		return data.iterator();
 	}
 
+	public static void main(String[] args) throws Exception {
+
+		String s = "{\"data\":[{\"column\":\"username\",\"value\":\"username-24\",\"operate\":\"=\"}]}";
+		System.out.println(Json.toObject(s, Query.class));
+
+	}
 }

@@ -6,6 +6,8 @@ import com.bageframework.demo.web.model.User;
 
 public class UserAdminVO {
 
+	private int id;
+
 	private String userId;
 
 	private String username;
@@ -64,6 +66,14 @@ public class UserAdminVO {
 
 	public void setSex(int sex) {
 		this.sex = sex;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public static UserAdminVO create(User user) {

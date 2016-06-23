@@ -2,33 +2,36 @@ package com.bageframework.dao;
 
 import java.util.List;
 
+import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.bageframework.dao.beans.Page;
 import com.bageframework.dao.beans.Query;
 import com.bageframework.model.User;
+import com.bageframework.util.UUIDGenerator;
 
 @ContextConfiguration(locations = { "classpath:applicationContext-test.xml" })
-public class JdbcTest extends AbstractTransactionalTestNGSpringContextTests {
+// AbstractTransactionalTestNGSpringContextTests
+public class JdbcTest extends AbstractTestNGSpringContextTests {
 
 	@Autowired
 	private UserDao userDao;
 
 	@Test
 	public void testAdd() {
-		// for (int i = 0; i < 100; i++) {
-		// User user = new User();
-		// user.setUserId(UUIDGenerator.getUUID());
-		// user.setUsername("username-" + i);
-		// user.setNickname("nickname-" + i);
-		// user.setAge(RandomUtils.nextInt(50));
-		// user.setMoney(RandomUtils.nextInt(1000000));
-		// userDao.add(user);
-		// }
+		for (int i = 0; i < 100; i++) {
+			User user = new User();
+			user.setUserId(UUIDGenerator.getUUID());
+			user.setUsername("username-" + i);
+			user.setNickname("nickname-" + i);
+			user.setAge(RandomUtils.nextInt(50));
+			user.setMoney(RandomUtils.nextInt(1000000));
+			userDao.add(user);
+		}
 	}
 
 	@Test

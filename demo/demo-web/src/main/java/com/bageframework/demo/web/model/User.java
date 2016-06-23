@@ -7,6 +7,8 @@ import com.bageframework.dao.annotation.PrimaryKey;
 
 public class User {
 
+	private int id;
+
 	@PrimaryKey
 	private String userId;
 
@@ -69,6 +71,14 @@ public class User {
 
 	public void setSex(int sex) {
 		this.sex = sex;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

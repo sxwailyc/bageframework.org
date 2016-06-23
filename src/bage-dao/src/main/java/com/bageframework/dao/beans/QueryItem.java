@@ -4,6 +4,10 @@ import com.bageframework.dao.sql.Operate;
 
 public class QueryItem {
 
+	public QueryItem() {
+
+	}
+
 	public QueryItem(String column, String operate, Object value) {
 		this.column = column;
 		this.operate = operate;
@@ -16,11 +20,11 @@ public class QueryItem {
 		this.value = value;
 	}
 
-	public String column;
+	private String column;
 
-	public String operate;
+	private String operate;
 
-	public Object value;
+	private Object value;
 
 	public String getColumn() {
 		return column;
