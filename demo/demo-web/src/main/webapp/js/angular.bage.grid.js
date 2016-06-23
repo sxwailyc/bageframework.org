@@ -1,16 +1,28 @@
 
 
 var Grid = function(tableId, config, gridConfig){
+ 
     this._tableId = tableId;
-    this._config = config;
-
     this.init();
+    this._setConfig(config);
     this._setGridConfig(gridConfig);
 }
 
+Grid.prototype._setConfig = function(config){
+
+	this._config = {
+       keyName: 'id',
+       path: '',
+	}
+
+	for(var k in this._config){
+    	if(config.hasOwnProperty(k)){
+    		this._config[k] = config[k];
+    	}
+    }
+}
+
 Grid.prototype._setGridConfig = function(gridConfig){
-
-
 
     this._gridConfig = {
         height: 450,
@@ -20,11 +32,15 @@ Grid.prototype._setGridConfig = function(gridConfig){
         rowList: [10, 20, 30],
         colNames:[],
         colModel:[],
-        pager: "#pager_list_2",
+        pager: "#pager",
         viewrecords: false,
         caption: "",
         add: true,
-        edit: true,
+	    add: true,
+	    edit: false,
+	    del: false,
+	    search: false,
+	    refresh: false,
         addtext: '添加',
         edittext: '修改',
         hidegrid: false,
@@ -45,37 +61,70 @@ Grid.prototype.initService = function(){
     this.app.factory('Service', [function(){
 
 
-            var methods = ['page', 'update', 'delete', 'add'];
-            console.log('path' + that._config.path);
-			var remote = new rpc.ServiceProxy("/services/" + that._config.path, {
-				asynchronous : false,
-				methods : methods
-			});
+        var methods = ['page', 'update', 'delete', 'add'];
+        console.log('path' + that._config.path);
+		var remote = new rpc.ServiceProxy("/services/" + that._config.path, {
+			asynchronous : false,
+			methods : methods
+		});
 
-          	var list = function (query, pageNo, pageSize, successCallback, errorCallback) {
-	    	   //var localFilter = config.filterHandler(filter);
-	    	    var localQuery = query;
-	    	    var response = remote.page(localQuery, pageNo, pageSize);
-	    	    successCallback(response);
-	        };
+      	var list = function (query, pageNo, pageSize, successCallback, errorCallback) {
+    	   //var localFilter = config.filterHandler(filter);
+    	    var localQuery = query;
+    	    var response = remote.page(localQuery, pageNo, pageSize);
+    	    successCallback(response);
+        };
 
-	        var ret =  {
-               list: list
-	        }
 
-	        return ret;
+        var del = function(key, successCallback, errorCallback){
+        	try{
+	    		var response = remote['delete'](key);
+	            successCallback(response);
+	    	}catch(e){
+	    		errorCallback(e);
+	    	}	
+        }
 
-     }]);
+        var submit = function(item, successCallback, errorCallback) {
+	    	var response;
+	    	var add = false;
+	    	if(item.__add){
+	    		add = true;
+	    	}
+	    	delete item.__add;
+	    	try{
+	    		if(add){
+	    	        remote.add(item);
+	            }else{
+	        	    remote.update(item);
+	            }
+	            successCallback(response);
+	    	}catch(e){
+	    		item.__add = add;
+	    		errorCallback(e);
+	    	}	
+	    };
+
+        var ret =  {
+           list: list,
+           submit: submit,
+           del: del
+        }
+
+        return ret;
+
+    }]);
 }
 
 Grid.prototype.initCtrl = function(){
 
     var that = this;
 
-    this.app.controller('ctrl', ['$scope', 'Service', function($scope, service) {
+    this.app.controller('ctrl', ['$scope', '$compile', 'Service', function($scope, $compile, service) {
 	   
 	    $scope.title = "用户管理";
 	    $scope.query = {};
+	    $scope.item = {};
 
 	    that.app.scope = $scope;
 
@@ -88,7 +137,48 @@ Grid.prototype.initCtrl = function(){
 
          $scope.search = function(){
          	list();
-         }
+         };
+
+        //add row
+        $scope.add = function(){
+        	$scope.item = {
+        		__add: true
+        	}
+            $('#addModal').modal();   	
+        }
+
+         //edit row
+         $scope.edit = function(key){
+  
+            angular.forEach($scope.data, function(data){
+                if(data[that._config.keyName] === key){
+                    $scope.item = angular.copy(data);
+                    $scope.item.__add = false;
+            	}
+            });
+            $('#addModal').modal();
+        };
+
+        //delete row 
+        $scope.delete = function(key, successCallback, errorCallback){
+             
+            confirm_call('确认是否删除该条记录?', function(){
+                service.del(key, function(){
+                    $scope.$apply(function(){
+		    		    $scope.search();
+			        });
+                });
+            })
+        };
+
+        $scope.submit = function(){
+            service.submit($scope.item, function(){
+	    		$('#addModal').modal("hide"); 
+	    		$scope.search();
+	    	}, function(e){
+	    	  	alert(e);
+	    	});
+        }
 
 	    var list = function () {
 	        	 
@@ -124,13 +214,6 @@ Grid.prototype.initCtrl = function(){
             });
 	 
 	    };
-
-	    $scope.addPage = function(){
-	    	 console.log("add page");
-	    	//$scope.pageNo = $scope.pageNo + 1;
-	
-	    	
-	    }
 	 
         // query data from server
         that._gridConfig.datatype =  function(postdata){
@@ -144,25 +227,55 @@ Grid.prototype.initCtrl = function(){
 			}
         };
 
-        $("#table_list_2").jqGrid(that._gridConfig);
+        that._gridConfig.gridComplete = function() {
 
-        // Add selection
-        $("#table_list_2").setSelection(4, true);
+            var objs = angular.element('.bage-action'); 
+            angular.forEach(objs, function(obj){
+                $compile(obj)($scope);
+            });
+        };
 
+        var opCol = {
+        	name: 'op', 
+        	align: 'center',
+        	width: 30, 
+        	formatter: function(cellvalue, options, rowObject){
+        		var key = rowObject[that._config.keyName];
+                var edit = "<button type=\"button\" class=\"btn-xs btn-primary\" style=\"margin-left:5px;margin-right:5px;\" ng-click=edit('" + key + "')>编辑</button>";
+                var del = "<button type=\"button\" class=\"btn-xs btn-danger\" style=\"margin-left:5px;margin-right:5px;\" ng-click=delete('" + key + "')>删除</button>";
+                var s = edit + del ;
+                return "<span class=\"bage-action\">"  + s + "</span>";
+                //return s;
+            }
+        } 
 
-        // Setup buttons
-        $("#table_list_2").jqGrid('navGrid', '#pager_list_2',
-              {edit: true, add: true, del: true, search: true},
-              {height: 200, reloadAfterSubmit: true}
-        );
+        that._gridConfig.colModel.push(opCol);
 
+        $("#" + that._tableId).jqGrid(that._gridConfig);
+
+        $("#" + that._tableId).jqGrid('navGrid', '#pager', {
+		    view: false,
+		    add: false,
+		    edit: false,
+		    del: false,
+		    search: false,
+		    refresh: false,
+		}).navButtonAdd('#pager',{
+		    caption:"ADD", 
+		    buttonicon:"ui-icon-plusthick", 
+		    onClickButton: function(){ 
+		        $scope.add();
+		    }, 
+		    position:"last"
+		});
+        
+  
         $scope.$watch('pagination.pageNo + pagination.pageSize', list);
 
         // Add responsive to jqGrid
         $(window).bind('resize', function () {
-            var width = $('.jqGrid_wrapper').width();
-            $('#table_list_1').setGridWidth(width);
-            $('#table_list_2').setGridWidth(width);
+            var width = $('.table_wrapper').width();
+            $("#" + that._tableId).setGridWidth(width);
         });
 
     }]); 

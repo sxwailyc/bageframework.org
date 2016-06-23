@@ -99,23 +99,23 @@ var initController = function(app, config){
 	
 	app.controller(config.controller, ['$scope', '$sce', 'BusinessService', function($scope, $sce, BusinessService) {
 		 
-	       $scope.query = function () {
+	        $scope.query = function () {
 	        	 
-	           var postData = {
+	            var postData = {
 	                pageNo: $scope.paginationConf.currentPage,
 	                pageSize: $scope.paginationConf.itemsPerPage
-	           }
-	           var filter = angular.copy($scope.filter);
-	           BusinessService.list(filter, postData, function(response){
+	            }
+	            var filter = angular.copy($scope.filter);
+	            BusinessService.list(filter, postData, function(response){
 	                $scope.data = response.data;
 	                $scope.totalItems = response.count;
-	           }, function(){
+	            }, function(){
 	           	    //handle error
-	           });
+	            });
 	 
-	      };
+	        };
 			 	     
-		  $scope.del = function(obj){
+		    $scope.del = function(obj){
 		    	
 		      BusinessService.del(obj, function(){
 		    	  
@@ -157,6 +157,8 @@ var initController = function(app, config){
 		      });
 		  };
 	    
+        
+
 		  $scope.updateLocalData = function(){
 			  var find = false;
 			  for(var i = $scope.data.length; i--;){
