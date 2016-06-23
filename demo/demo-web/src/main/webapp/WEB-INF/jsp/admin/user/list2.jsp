@@ -124,28 +124,20 @@
                     <h4 class="modal-title" id="exampleModalLabel">ADD&EDIT</h4>
                 </div>
                 <div class="modal-body">
-                  <form class="form-horizontal">
-                            <p>欢迎登录本站(⊙o⊙)</p>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">用户名：</label>
-
-                                <div class="col-sm-8">
-                                    <input type="email" placeholder="用户名" class="form-control"> <span class="help-block m-b-none">请输入您注册时所填的E-mail</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">密码：</label>
-
-                                <div class="col-sm-8">
-                                    <input type="password" placeholder="密码" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-8">
-                                    <button class="btn btn-sm btn-white" type="submit">登 录</button>
-                                </div>
-                            </div>
-                        </form>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">用户名：</label>
+                        <div class="col-sm-9">
+                            <input type="text" placeholder="" class="form-control" ng-model="item.username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">昵称：</label>
+                        <div class="col-sm-9">
+                            <input type="text" placeholder="" class="form-control" ng-model="item.nickname">
+                        </div>
+                    </div>
+                </form>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal" id="close">关闭</button>
