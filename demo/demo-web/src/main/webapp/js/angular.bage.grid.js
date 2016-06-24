@@ -141,9 +141,17 @@ Grid.prototype.initCtrl = function(){
 
         //add row
         $scope.add = function(){
-        	$scope.item = {
-        		__add: true
-        	}
+        	if(!$scope.$$phase) {
+			    $scope.$apply(function(){
+			    	$scope.item = {
+        		        __add: true
+        	        }
+			    });
+			}else{
+				$scope.item = {
+        		    __add: true
+        	    }
+			}
             $('#addModal').modal();   	
         }
 

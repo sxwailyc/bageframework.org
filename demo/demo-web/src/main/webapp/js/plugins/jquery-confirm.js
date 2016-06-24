@@ -470,6 +470,7 @@ var jconfirm, Jconfirm;
             var windowHeight = $(window).height();
             var boxHeight = this.$b.outerHeight() - paneHeight + contentHeight;
             var topMargin = (windowHeight - boxHeight) / 2;
+            var topMargin = 200;
             var minMargin = 100;
             if (boxHeight > (windowHeight - minMargin)) {
                 var style = {
@@ -479,7 +480,7 @@ var jconfirm, Jconfirm;
                 $('body').addClass('jconfirm-noscroll');
             } else {
                 var style = {
-                    'margin-top': topMargin
+                    'margin-top': topMargin 
                 }
                 $('body').removeClass('jconfirm-noscroll');
             }

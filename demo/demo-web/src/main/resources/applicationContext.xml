@@ -13,7 +13,12 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	
+	<context:component-scan base-package="com.bageframework.demo"></context:component-scan>
+	<context:component-scan base-package="com.dt.sample.js.rpc.controller"></context:component-scan>
+
+
+	<bean id="exceptionHandler" class="com.bageframework.demo.web.exceptionHandler.ExceptionHandler" />
+
 	<import resource="config/applicationContext-dao.xml" />
 	<import resource="config/applicationContext-jdbc.xml" />
 	<import resource="config/applicationContext-service.xml" />
