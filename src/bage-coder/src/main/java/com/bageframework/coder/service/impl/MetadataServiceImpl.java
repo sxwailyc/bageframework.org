@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.bageframework.coder.core.Config;
 import com.bageframework.coder.dao.MetadataDao;
 import com.bageframework.coder.helper.MetadataHelper;
+import com.bageframework.coder.metadata.AdminControllerMetadata;
 import com.bageframework.coder.metadata.AdminVOMetadata;
 import com.bageframework.coder.metadata.BaseClassMetadata;
 import com.bageframework.coder.metadata.DaoMetadata;
@@ -17,6 +18,8 @@ import com.bageframework.coder.metadata.ModelMetadata;
 import com.bageframework.coder.metadata.ServiceImplMetadata;
 import com.bageframework.coder.metadata.ServiceMetadata;
 import com.bageframework.coder.metadata.VOMetadata;
+import com.bageframework.coder.metadata.WebServiceImplMetadata;
+import com.bageframework.coder.metadata.WebServiceMetadata;
 import com.bageframework.coder.model.Column;
 import com.bageframework.coder.service.MetadataService;
 
@@ -136,6 +139,80 @@ public class MetadataServiceImpl implements MetadataService {
 
 		String keyType = getKeyType(table);
 		metadata.setKeyType(keyType);
+
+		return metadata;
+	}
+
+	@Override
+	public WebServiceMetadata createWebServiceMetadata(Config config, String table) {
+
+		WebServiceMetadata metadata = new WebServiceMetadata();
+
+		metadata.setAuthor(config.getAuthor());
+		metadata.setModelClassName(MetadataHelper.tableName2ClassName(table));
+		metadata.setClassName(MetadataHelper.tableName2ClassName(table) + "WebService");
+		metadata.setPackageName(config.getWebServicePackage());
+
+		metadata.appendImport("com.bageframework.dao.beans.Page");
+		metadata.appendImport("com.bageframework.dao.beans.Query");
+		metadata.appendImport(config.getModelPackage() + "." + metadata.getModelClassName());
+		metadata.appendImport(config.getAdminVOPackage() + "." + metadata.getModelClassName() + "AdminVO");
+
+		String keyType = getKeyType(table);
+		metadata.setKeyType(keyType);
+
+		return metadata;
+	}
+
+	@Override
+	public WebServiceImplMetadata createWebServiceImplMetadata(Config config, String table) {
+
+		WebServiceImplMetadata metadata = new WebServiceImplMetadata();
+
+		metadata.setAuthor(config.getAuthor());
+		metadata.setModelClassName(MetadataHelper.tableName2ClassName(table));
+		metadata.setClassName(MetadataHelper.tableName2ClassName(table) + "WebServiceImpl");
+		metadata.setPackageName(config.getWebServiceImplPackage());
+
+		metadata.appendImport("org.springframework.beans.factory.annotation.Autowired");
+		metadata.appendImport("org.springframework.stereotype.Service");
+		metadata.appendImport("com.bageframework.service.IService");
+		metadata.appendImport("com.bageframework.service.web.base.BaseWebService");
+		metadata.appendImport(config.getModelPackage() + "." + metadata.getModelClassName());
+		metadata.appendImport(config.getVOPackage() + "." + metadata.getModelClassName() + "VO");
+		metadata.appendImport(config.getAdminVOPackage() + "." + metadata.getModelClassName() + "AdminVO");
+		metadata.appendImport(config.getServicePackage() + "." + metadata.getModelClassName() + "Service");
+		metadata.appendImport(config.getWebServicePackage() + "." + metadata.getModelClassName() + "WebService");
+
+		String serviceClassName = metadata.getModelClassName() + "Service";
+		metadata.setServiceObjectName(serviceClassName.substring(0, 1).toLowerCase() + serviceClassName.substring(1));
+
+		String keyType = getKeyType(table);
+		metadata.setKeyType(keyType);
+
+		return metadata;
+	}
+
+	@Override
+	public AdminControllerMetadata createAdminControllerMetadata(Config config, String table) {
+
+		AdminControllerMetadata metadata = new AdminControllerMetadata();
+
+		String modelClassName = MetadataHelper.tableName2ClassName(table);
+
+		metadata.setAuthor(config.getAuthor());
+		metadata.setModelClassName(modelClassName);
+		metadata.setClassName(modelClassName + "AdminController");
+		metadata.setPackageName(config.getAdminControllerlPackage());
+
+		metadata.appendImport("javax.servlet.http.HttpServletRequest");
+		metadata.appendImport("org.apache.log4j.Logger");
+		metadata.appendImport("org.springframework.stereotype.Controller");
+		metadata.appendImport("org.springframework.web.bind.annotation.RequestMapping");
+		metadata.appendImport("org.springframework.web.servlet.ModelAndView");
+
+		metadata.setPathPrefix("/admin/" + modelClassName.substring(0, 1).toLowerCase() + modelClassName.substring(1));
+		metadata.setTemplatePath("/admin/" + modelClassName.toLowerCase());
 
 		return metadata;
 	}

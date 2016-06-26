@@ -12,10 +12,10 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver">
 		</property>
 		<property name="url"
-			value="jdbc:mysql://172.245.126.22:3306/bage?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=TRUE">
+			value="jdbc:mysql://127.0.0.1:3306/bage?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=TRUE">
 		</property>
-		<property name="username" value="bage"></property>
-		<property name="password" value="bage123"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123456"></property>
 	</bean>
 
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

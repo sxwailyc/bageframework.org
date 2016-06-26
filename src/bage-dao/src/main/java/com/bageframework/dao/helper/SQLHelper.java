@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.bageframework.dao.annotation.AutoDate;
+import com.bageframework.dao.annotation.AutoUUID;
 import com.bageframework.dao.annotation.Ignore;
 import com.bageframework.dao.annotation.IgnoreInsert;
 import com.bageframework.dao.annotation.IgnoreUpdate;
@@ -28,6 +31,8 @@ import com.bageframework.dao.sql.InsertSQL;
 import com.bageframework.dao.sql.Order;
 import com.bageframework.dao.sql.SelectSQL;
 import com.bageframework.dao.sql.UpdateSQL;
+import com.bageframework.util.DateTimeUtil;
+import com.bageframework.util.UUIDGenerator;
 
 public class SQLHelper {
 
@@ -265,6 +270,14 @@ public class SQLHelper {
 			}
 
 			Object value = BeanHelper.getValueByField(obj, field.getName());
+
+			if (field.isAnnotationPresent(AutoUUID.class) && (value == null || StringUtils.isEmpty(value.toString()))) {
+				value = UUIDGenerator.getUUID();
+			}
+
+			if (field.isAnnotationPresent(AutoDate.class) && value == null) {
+				value = DateTimeUtil.now();
+			}
 
 			String column = DBHelper.fieldName2ColumnName(field.getName());
 			insert.set(column, value);

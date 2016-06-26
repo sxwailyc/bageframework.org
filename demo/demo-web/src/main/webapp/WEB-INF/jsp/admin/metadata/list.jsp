@@ -9,22 +9,39 @@
     <script>
      
         var config = {
-            path: 'user',
-            keyName: 'userId'
+            path: 'metadata',
+            keyName: 'id',
+            buttons: '<button type=\"button\" class=\"btn-xs btn-info\" style=\"margin-left:5px;margin-right:5px;\" ng-click=syncFromDb(\'$id\')>同步数据库</button>',
+            functions: ['syncFromDb'],
+            services: function(service, remote){
+                service.syncFromDb = function(id, successCallback){
+                    var ret = remote.syncFromDb(id);
+                    successCallback(ret);
+                }
+            },
+            controllers: function($scope, service){
+                $scope.syncFromDb = function(id){
+                    confirm_call('确认是否从数据库同步表定义?', function(){
+                        service.syncFromDb(id, function(res){
+                            alert(res);
+                        });
+                    });
+                };
+            }
         }
         
         var gridConfig = {
-            colNames: ['id', '用户ID', '用户名', '用户昵称', '操作'],
+            colNames: ['id', '表名', '类名', '注释', '操作'],
             colModel:[
-                {name:'id',index:'id', editable: true, width:90, sorttype:"int", formatter:"int"},
-                {name:'userId',index:'user_id', editable: true, width:100},
-                {name:'username',index:'username', editable: true, width:80, align:"right",sorttype:"float", formatter:"string"},
-                {name:'nickname',index:'nickname', editable: true, width:80, align:"right",sorttype:"string"}
-                
+                {name:'id',index:'id', editable: true, width:10, sorttype:"string", formatter:"string"},
+                {name:'table',index:'table', editable: true, width:10},
+                {name:'javaClass',index:'java_class', width:10, align:"right", formatter:"string"},
+                {name:'remark', editable: true, width:10},
             ]
         }
 
         var grid = new Grid('bage-table', config, gridConfig);
+        grid.init();
         
       
     </script>
@@ -85,13 +102,9 @@
                         <div class="ibox-content">
                             <div class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-md-1 control-label"> 用户名: </label>
+                                    <label class="col-md-1 control-label"> 表名: </label>
                                     <div class="col-md-2">
-                                       <input type="text" ng-model="query.username" class="form-control" placeholder="" />
-                                    </div>
-                                    <label class="col-md-1 control-label"> 昵称: </label>
-                                    <div class="col-md-2">
-                                       <input type="text" ng-model="query.nickname" class="form-control" placeholder="" />
+                                       <input type="text" ng-model="query.table" class="form-control" placeholder="" />
                                     </div>
                                     <button type="button" class="btn btn-primary" ng-click="search()">查询</button>
                                 </div>
@@ -123,15 +136,21 @@
                 <div class="modal-body">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">用户名：</label>
+                        <label class="col-sm-2 control-label">表名：</label>
                         <div class="col-sm-9">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.username">
+                            <input type="text" placeholder="" class="form-control" ng-model="item.table">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">昵称：</label>
+                        <label class="col-sm-2 control-label">类名：</label>
                         <div class="col-sm-9">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.nickname">
+                            <input type="text" placeholder="" class="form-control" ng-model="item.javaClass">
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">注释：</label>
+                        <div class="col-sm-9">
+                            <input type="text" placeholder="" class="form-control" ng-model="item.remark">
                         </div>
                     </div>
                 </form>

@@ -24,7 +24,7 @@
                     <a href="#"><i class="fa fa-table"></i> <span class="nav-label">代码生成</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li class=""><a href="jq_grid.html">全局配置</a></li>
-                        <li class=""><a href="jq_grid.html">代码生成</a></li>
+                        <li class=""><a href="/admin/metadata/list.do">代码生成</a></li>
                     </ul>
                 </li>
             </ul>

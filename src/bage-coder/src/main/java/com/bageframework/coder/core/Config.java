@@ -8,13 +8,19 @@ public class Config {
 
 	public final static String DEFAULT_ADMIN_VO_TEMPLATE = "admin.vo.ftl";
 
+	public final static String DEFAULT_DAO_TEMPLATE = "dao.ftl";
+
+	public final static String DEFAULT_DAO_MYSQL_IMPL_TEMPLATE = "dao.mysql.impl.ftl";
+
 	public final static String DEFAULT_SERVICE_TEMPLATE = "service.ftl";
 
 	public final static String DEFAULT_SERVICE_IMPL_TEMPLATE = "service.impl.ftl";
 
-	public final static String DEFAULT_DAO_TEMPLATE = "dao.ftl";
+	public final static String DEFAULT_WEB_SERVICE_TEMPLATE = "web.service.ftl";
 
-	public final static String DEFAULT_DAO_MYSQL_IMPL_TEMPLATE = "dao.mysql.impl.ftl";
+	public final static String DEFAULT_WEB_SERVICE_IMPL_TEMPLATE = "web.service.impl.ftl";
+
+	public final static String DEFAULT_ADMIN_CONTROLLER_TEMPLATE = "web.admin.controller.ftl";
 
 	/**
 	 * 是否拆分子项目
@@ -48,6 +54,10 @@ public class Config {
 
 	private String serviceImplPackage;
 
+	private String webServicePackage;
+
+	private String webServiceImplPackage;
+
 	private String daoPackage;
 
 	private String daoMysqlImplPackage;
@@ -55,6 +65,8 @@ public class Config {
 	private String voPackage;
 
 	private String adminVoPackage;
+
+	private String adminControllerPackage;
 
 	public static Config create() {
 		return new Config();
@@ -102,14 +114,6 @@ public class Config {
 		return this.templateDir + "/" + DEFAULT_MODEL_TEMPLATE;
 	}
 
-	public String getServiceTemplate() {
-		return this.templateDir + "/" + DEFAULT_SERVICE_TEMPLATE;
-	}
-
-	public String getServiceImplTemplate() {
-		return this.templateDir + "/" + DEFAULT_SERVICE_IMPL_TEMPLATE;
-	}
-
 	public String getVOTemplate() {
 		return this.templateDir + "/" + DEFAULT_VO_TEMPLATE;
 	}
@@ -124,6 +128,26 @@ public class Config {
 
 	public String getDaoMysqlImplTemplate() {
 		return this.templateDir + "/" + DEFAULT_DAO_MYSQL_IMPL_TEMPLATE;
+	}
+
+	public String getServiceTemplate() {
+		return this.templateDir + "/" + DEFAULT_SERVICE_TEMPLATE;
+	}
+
+	public String getServiceImplTemplate() {
+		return this.templateDir + "/" + DEFAULT_SERVICE_IMPL_TEMPLATE;
+	}
+
+	public String getWebServiceTemplate() {
+		return this.templateDir + "/" + DEFAULT_WEB_SERVICE_TEMPLATE;
+	}
+
+	public String getWebServiceImplTemplate() {
+		return this.templateDir + "/" + DEFAULT_WEB_SERVICE_IMPL_TEMPLATE;
+	}
+
+	public String getAdminControllerTemplate() {
+		return this.templateDir + "/" + DEFAULT_ADMIN_CONTROLLER_TEMPLATE;
 	}
 
 	public String getProjectDir() {
@@ -203,6 +227,27 @@ public class Config {
 		return serviceImplPackage;
 	}
 
+	public String getWebServicePackage() {
+		if (servicePackage == null) {
+			return packagePrefix + ".controller.service";
+		}
+		return webServicePackage;
+	}
+
+	public String getWebServiceImplPackage() {
+		if (serviceImplPackage == null) {
+			return packagePrefix + ".controller.service.impl";
+		}
+		return webServiceImplPackage;
+	}
+
+	public String getAdminControllerlPackage() {
+		if (adminControllerPackage == null) {
+			return packagePrefix + ".controller.admin";
+		}
+		return adminControllerPackage;
+	}
+
 	public String getDaoPackage() {
 		if (daoPackage == null) {
 			return packagePrefix + ".dao";
@@ -224,30 +269,27 @@ public class Config {
 	 * @return
 	 */
 	public String getModelClassPath(String className) {
-		String modelClassPath = this.getModelProjectDir() + "src" + "/main/java/" + getPackagePrefix().replaceAll("\\.", "/") + "/model/" + className + ".java";
-		return modelClassPath;
+		return getClassSavePath(getModelProjectDir(), getModelPackage(), className);
 	}
 
 	/**
-	 * 获取model的保存路径
+	 * 获取vo的保存路径
 	 * 
 	 * @param className
 	 * @return
 	 */
 	public String getVOClassPath(String className) {
-		String modelClassPath = this.getModelProjectDir() + "src" + "/main/java/" + getPackagePrefix().replaceAll("\\.", "/") + "/vo/" + className + ".java";
-		return modelClassPath;
+		return getClassSavePath(getServiceProjectDir(), getVOPackage(), className);
 	}
 
 	/**
-	 * 获取model的保存路径
+	 * 获取admin vo的保存路径
 	 * 
 	 * @param className
 	 * @return
 	 */
 	public String getAdminVOClassPath(String className) {
-		String modelClassPath = this.getModelProjectDir() + "src" + "/main/java/" + getPackagePrefix().replaceAll("\\.", "/") + "/vo/admin/" + className + ".java";
-		return modelClassPath;
+		return this.getClassSavePath(getServiceProjectDir(), this.getAdminVOPackage(), className);
 	}
 
 	/**
@@ -257,8 +299,7 @@ public class Config {
 	 * @return
 	 */
 	public String getServiceClassPath(String className) {
-		String classSavePath = this.getServiceProjectDir() + "src" + "/main/java/" + getPackagePrefix().replaceAll("\\.", "/") + "/service/" + className + ".java";
-		return classSavePath;
+		return this.getClassSavePath(getServiceProjectDir(), this.getServicePackage(), className);
 	}
 
 	/**
@@ -268,8 +309,7 @@ public class Config {
 	 * @return
 	 */
 	public String getServiceImplClassPath(String className) {
-		String classSavePath = this.getDaoProjectDir() + "src" + "/main/java/" + getServiceImplPackage().replaceAll("\\.", "/") + "/" + className + ".java";
-		return classSavePath;
+		return this.getClassSavePath(getServiceProjectDir(), this.getServiceImplPackage(), className);
 	}
 
 	/**
@@ -279,8 +319,7 @@ public class Config {
 	 * @return
 	 */
 	public String getDaoClassPath(String className) {
-		String classSavePath = this.getDaoProjectDir() + "src" + "/main/java/" + getPackagePrefix().replaceAll("\\.", "/") + "/dao/" + className + ".java";
-		return classSavePath;
+		return this.getClassSavePath(getDaoProjectDir(), this.getDaoPackage(), className);
 	}
 
 	/**
@@ -290,7 +329,42 @@ public class Config {
 	 * @return
 	 */
 	public String getDaoMysqlImplClassPath(String className) {
-		String classSavePath = this.getDaoProjectDir() + "src" + "/main/java/" + getDaoMysqlImplPackage().replaceAll("\\.", "/") + "/" + className + ".java";
+		return this.getClassSavePath(getDaoProjectDir(), this.getDaoMysqlImplPackage(), className);
+	}
+
+	/**
+	 * 获取webservice的保存路径
+	 * 
+	 * @param className
+	 * @return
+	 */
+	public String getWebServiceClassPath(String className) {
+		return this.getClassSavePath(getWebProjectDir(), this.getWebServicePackage(), className);
+	}
+
+	/**
+	 * 获取webservice impl 的保存路径
+	 * 
+	 * @param className
+	 * @return
+	 */
+	public String getWebServiceImplClassPath(String className) {
+		return this.getClassSavePath(getWebProjectDir(), this.getWebServiceImplPackage(), className);
+	}
+
+	/**
+	 * 获取admin controller 的保存路径
+	 * 
+	 * @param className
+	 * @return
+	 */
+	public String getAdminControllerClassPath(String className) {
+		return this.getClassSavePath(getWebProjectDir(), this.getAdminControllerlPackage(), className);
+	}
+
+	public String getClassSavePath(String projectDir, String packageName, String className) {
+		String classSavePath = projectDir + "src" + "/main/java/" + packageName.replaceAll("\\.", "/") + "/" + className + ".java";
 		return classSavePath;
 	}
+
 }

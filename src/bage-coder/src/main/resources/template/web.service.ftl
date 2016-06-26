@@ -10,6 +10,15 @@ import ${import};
  * @author ${author}
  * 
  */
-public interface ${className} extends IService<${modelClassName}, ${modelClassName}VO, ${modelClassName}AdminVO, ${keyType}> {
+public interface ${className}{
 
+    public Page<${modelClassName}AdminVO> page(Query query, int pageNo, int pageSize);
+
+	public ${modelClassName} get(${keyType} id);
+
+	public boolean update(${modelClassName} bean);
+
+	public boolean add(${modelClassName} bean);
+
+	public boolean delete(${keyType} id);
 }

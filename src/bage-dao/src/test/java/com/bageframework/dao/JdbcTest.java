@@ -27,7 +27,7 @@ public class JdbcTest extends AbstractTestNGSpringContextTests {
 			User user = new User();
 			user.setUserId(UUIDGenerator.getUUID());
 			user.setUsername("username-" + i);
-			user.setNickname("nickname-" + i);
+			user.setNickname("昵称-" + i);
 			user.setAge(RandomUtils.nextInt(50));
 			user.setMoney(RandomUtils.nextInt(1000000));
 			userDao.add(user);

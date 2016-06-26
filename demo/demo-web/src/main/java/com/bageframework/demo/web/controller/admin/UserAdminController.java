@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.controller.admin.user;
+package com.bageframework.demo.web.controller.admin;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -18,7 +18,7 @@ public class ${className} extends BaseService<${modelClassName}, ${modelClassNam
 	private ${modelClassName}Dao ${daoObjectName}Dao;
 
 	@Override
-	public IDAO<${modelClassName}, String> getDao() {
+	public IDAO<${modelClassName}, ${keyType}> getDao() {
 		return ${daoObjectName}Dao;
 	}
 

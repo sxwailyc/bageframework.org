@@ -3,9 +3,19 @@
 var Grid = function(tableId, config, gridConfig){
  
     this._tableId = tableId;
-    this.init();
     this._setConfig(config);
     this._setGridConfig(gridConfig);
+}
+
+Grid.prototype.createButtons = function(row){
+   var buttons = this._config.buttons;
+   if(typeof buttons === 'undefined'){
+       return '';
+   }else if(typeof buttons === 'function'){
+       return buttons();
+   }else{
+       return buttons;
+   }
 }
 
 Grid.prototype._setConfig = function(config){
@@ -13,6 +23,10 @@ Grid.prototype._setConfig = function(config){
 	this._config = {
        keyName: 'id',
        path: '',
+       buttons: undefined,
+       functions: {},
+       services: {},
+       controllers: {},
 	}
 
 	for(var k in this._config){
@@ -20,6 +34,14 @@ Grid.prototype._setConfig = function(config){
     		this._config[k] = config[k];
     	}
     }
+
+    this._config.remoteMethods = ['page', 'update', 'delete', 'add'];
+
+    for(var i = this._config.functions.length; i--;){
+        var funName = this._config.functions[i];
+        this._config.remoteMethods.push(funName);
+    }
+        
 }
 
 Grid.prototype._setGridConfig = function(gridConfig){
@@ -61,11 +83,10 @@ Grid.prototype.initService = function(){
     this.app.factory('Service', [function(){
 
 
-        var methods = ['page', 'update', 'delete', 'add'];
         console.log('path' + that._config.path);
 		var remote = new rpc.ServiceProxy("/services/" + that._config.path, {
 			asynchronous : false,
-			methods : methods
+			methods : that._config.remoteMethods
 		});
 
       	var list = function (query, pageNo, pageSize, successCallback, errorCallback) {
@@ -110,6 +131,9 @@ Grid.prototype.initService = function(){
            submit: submit,
            del: del
         }
+
+        //add funciton
+        that._config.services(ret, remote);
 
         return ret;
 
@@ -246,14 +270,15 @@ Grid.prototype.initCtrl = function(){
         var opCol = {
         	name: 'op', 
         	align: 'center',
-        	width: 30, 
+        	width: 10, 
         	formatter: function(cellvalue, options, rowObject){
         		var key = rowObject[that._config.keyName];
                 var edit = "<button type=\"button\" class=\"btn-xs btn-primary\" style=\"margin-left:5px;margin-right:5px;\" ng-click=edit('" + key + "')>编辑</button>";
                 var del = "<button type=\"button\" class=\"btn-xs btn-danger\" style=\"margin-left:5px;margin-right:5px;\" ng-click=delete('" + key + "')>删除</button>";
-                var s = edit + del ;
+                var customer = that.createButtons();
+                customer = customer.replace(/\$id/, key);
+                var s = edit + del + customer;
                 return "<span class=\"bage-action\">"  + s + "</span>";
-                //return s;
             }
         } 
 
@@ -276,8 +301,11 @@ Grid.prototype.initCtrl = function(){
 		    }, 
 		    position:"last"
 		});
+
+
+        //add funciton
+        that._config.controllers($scope, service);
         
-  
         $scope.$watch('pagination.pageNo + pagination.pageSize', list);
 
         // Add responsive to jqGrid

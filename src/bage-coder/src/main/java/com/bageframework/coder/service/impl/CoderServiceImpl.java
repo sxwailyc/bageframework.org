@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bageframework.coder.core.Config;
 import com.bageframework.coder.helper.CoderHelper;
+import com.bageframework.coder.metadata.AdminControllerMetadata;
 import com.bageframework.coder.metadata.AdminVOMetadata;
 import com.bageframework.coder.metadata.DaoMetadata;
 import com.bageframework.coder.metadata.DaoMysqlImplMetadata;
@@ -14,6 +15,8 @@ import com.bageframework.coder.metadata.ModelMetadata;
 import com.bageframework.coder.metadata.ServiceImplMetadata;
 import com.bageframework.coder.metadata.ServiceMetadata;
 import com.bageframework.coder.metadata.VOMetadata;
+import com.bageframework.coder.metadata.WebServiceImplMetadata;
+import com.bageframework.coder.metadata.WebServiceMetadata;
 import com.bageframework.coder.render.Render;
 import com.bageframework.coder.render.RenderFactory;
 import com.bageframework.coder.service.CoderService;
@@ -57,6 +60,18 @@ public class CoderServiceImpl implements CoderService {
 		// generate service impl
 		ServiceImplMetadata serviceImplMetadata = metadataService.createServiceImplMetadata(config, table);
 		generateServiceImpl(config, serviceImplMetadata);
+
+		// generate web service
+		WebServiceMetadata webServiceMetadata = metadataService.createWebServiceMetadata(config, table);
+		generateWebService(config, webServiceMetadata);
+
+		// generate web service impl
+		WebServiceImplMetadata webServiceImplMetadata = metadataService.createWebServiceImplMetadata(config, table);
+		generateWebServiceImpl(config, webServiceImplMetadata);
+
+		// generate admin controller
+		AdminControllerMetadata adminControllerMetadata = metadataService.createAdminControllerMetadata(config, table);
+		generateAdminController(config, adminControllerMetadata);
 	}
 
 	private void generateModel(Config config, ModelMetadata metadata) {
@@ -105,6 +120,36 @@ public class CoderServiceImpl implements CoderService {
 		String content = render.doRender(config.getServiceImplTemplate(), metadata);
 
 		String savePath = config.getServiceImplClassPath(metadata.getClassName());
+		logger.debug("save class[" + metadata.getClassName() + "], to[" + savePath + "]");
+		CoderHelper.save(savePath, content);
+	}
+
+	private void generateWebService(Config config, WebServiceMetadata metadata) {
+
+		Render render = RenderFactory.getInstance().getRender();
+		String content = render.doRender(config.getWebServiceTemplate(), metadata);
+
+		String savePath = config.getWebServiceClassPath(metadata.getClassName());
+		logger.debug("save class[" + metadata.getClassName() + "], to[" + savePath + "]");
+		CoderHelper.save(savePath, content);
+	}
+
+	private void generateWebServiceImpl(Config config, WebServiceImplMetadata metadata) {
+
+		Render render = RenderFactory.getInstance().getRender();
+		String content = render.doRender(config.getWebServiceImplTemplate(), metadata);
+
+		String savePath = config.getWebServiceImplClassPath(metadata.getClassName());
+		logger.debug("save class[" + metadata.getClassName() + "], to[" + savePath + "]");
+		CoderHelper.save(savePath, content);
+	}
+
+	private void generateAdminController(Config config, AdminControllerMetadata metadata) {
+
+		Render render = RenderFactory.getInstance().getRender();
+		String content = render.doRender(config.getAdminControllerTemplate(), metadata);
+
+		String savePath = config.getAdminControllerClassPath(metadata.getClassName());
 		logger.debug("save class[" + metadata.getClassName() + "], to[" + savePath + "]");
 		CoderHelper.save(savePath, content);
 	}

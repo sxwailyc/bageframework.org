@@ -37,7 +37,7 @@ public class UpdateSQL extends WhereBaseSQL implements SQL {
 			} else {
 				sb.append(" SET ");
 			}
-			sb.append(column);
+			sb.append(SqlUtil.getSafeName(column));
 			sb.append(" = ? ");
 		}
 		return sb.toString();
