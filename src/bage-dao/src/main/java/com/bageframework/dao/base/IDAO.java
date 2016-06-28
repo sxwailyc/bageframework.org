@@ -24,4 +24,10 @@ public interface IDAO<BEAN, KEYTYPE> {
 	public List<BEAN> getList(int start, int size);
 
 	public List<BEAN> getList(int parentId, int start, int size);
+
+	public List<BEAN> getList(int parentId);
+
+	public List<BEAN> getList(String parentId);
+
+	public List<BEAN> getList();
 }

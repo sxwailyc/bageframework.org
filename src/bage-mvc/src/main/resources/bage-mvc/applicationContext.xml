@@ -14,6 +14,14 @@
 	<mvc:resources mapping="/plugin/**" location="/plugin/" />
 	<mvc:resources mapping="/fonts/**" location="/fonts/" />
 
+	<context:component-scan base-package="com.bageframework.mvc.session"></context:component-scan>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.bageframework.mvc.interceptor.AuthorityInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 	<bean name='handlerMapping' class='com.bageframework.mvc.method.annotation.BageRequestMappingHandlerMapping'>
 	</bean>

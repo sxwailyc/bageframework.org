@@ -11,6 +11,12 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.bageframework</groupId>
 			<artifactId>bage-util</artifactId>
 			<version>1.0-SNAPSHOT</version>

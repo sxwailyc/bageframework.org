@@ -1,17 +1,22 @@
 package com.bageframework.demo.web.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bageframework.coder.model.Column;
+import com.bageframework.coder.type.FormType;
+import com.bageframework.coder.type.Type;
+import com.bageframework.dao.base.IDAO;
 import com.bageframework.demo.web.dao.MetadataDao;
+import com.bageframework.demo.web.dao.PropertyDao;
+import com.bageframework.demo.web.model.Metadata;
+import com.bageframework.demo.web.model.Property;
 import com.bageframework.demo.web.service.MetadataService;
 import com.bageframework.demo.web.vo.MetadataVO;
 import com.bageframework.demo.web.vo.admin.MetadataAdminVO;
 import com.bageframework.service.base.BaseService;
-import com.bageframework.demo.web.model.Metadata;
-
-import org.springframework.stereotype.Service;
-
-import com.bageframework.dao.base.IDAO;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 
@@ -25,6 +30,9 @@ public class MetadataServiceImpl extends BaseService<Metadata, MetadataVO, Metad
 
 	@Autowired
 	private MetadataDao metadataDaoDao;
+
+	@Autowired
+	private PropertyDao propertyDao;
 
 	@Override
 	public IDAO<Metadata, String> getDao() {
@@ -43,7 +51,26 @@ public class MetadataServiceImpl extends BaseService<Metadata, MetadataVO, Metad
 
 	@Override
 	public boolean syncFromDb(String id) {
-		System.out.println(id);
+
+		Metadata metadata = metadataDaoDao.get(id);
+
+		propertyDao.getList(id);
+
+		List<Column> columns = metadataDaoDao.getColumns(metadata.getTable());
+		for (Column column : columns) {
+			Property property = new Property();
+			property.setEdit(1);
+			property.setFormType(FormType.TEXT.getValue());
+			property.setMetadataId(id);
+			property.setName(column.getField());
+			property.setRemark(column.getComment());
+			property.setSearch(1);
+			property.setShow(1);
+			property.setSort(1);
+			property.setType(Type.parse(column.getType()).getValue());
+			propertyDao.add(property);
+		}
+
 		return true;
 	}
 }

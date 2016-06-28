@@ -21,11 +21,11 @@ public class PropertyAdminController {
 	public static Logger logger = Logger.getLogger(PropertyAdminController.class);
 
 	@RequestMapping
-	public ModelAndView list(HttpServletRequest req) {
+	public ModelAndView list(HttpServletRequest req, String metadataId) {
 
 		ModelAndView model = new ModelAndView("/admin/property/list");
+		model.addObject("metadataId", metadataId);
 		return model;
 
 	}
-
 }

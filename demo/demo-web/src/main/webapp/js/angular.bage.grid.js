@@ -25,8 +25,11 @@ Grid.prototype._setConfig = function(config){
        path: '',
        buttons: undefined,
        functions: {},
-       services: {},
-       controllers: {},
+       services: function(service, remote){},
+       controllers: function($scope, service){},
+       filters: function(app, $scope){},
+       datas: function($scope){},
+       afterEdit: function(data){},
 	}
 
 	for(var k in this._config){
@@ -126,10 +129,20 @@ Grid.prototype.initService = function(){
 	    	}	
 	    };
 
+        var saveCall = function(fun, successCallback){
+            try{
+                var ret = fun();
+                successCallback(ret);
+            }catch(e){
+                Bage.errorMsg(e.message);
+            }
+        }
+
         var ret =  {
            list: list,
            submit: submit,
-           del: del
+           del: del,
+           saveCall: saveCall
         }
 
         //add funciton
@@ -144,7 +157,7 @@ Grid.prototype.initCtrl = function(){
 
     var that = this;
 
-    this.app.controller('ctrl', ['$scope', '$compile', 'Service', function($scope, $compile, service) {
+    this.app.controller('ctrl', ['$scope', '$filter', '$compile', 'Service', function($scope, $filter, $compile, service) {
 	   
 	    $scope.title = "用户管理";
 	    $scope.query = {};
@@ -181,12 +194,12 @@ Grid.prototype.initCtrl = function(){
 
          //edit row
          $scope.edit = function(key){
-  
             angular.forEach($scope.data, function(data){
-                if(data[that._config.keyName] === key){
+                if(data[that._config.keyName] == key){
                     $scope.item = angular.copy(data);
                     $scope.item.__add = false;
-            	}
+                    that._config.afterEdit($scope.item); 
+                }
             });
             $('#addModal').modal();
         };
@@ -194,7 +207,7 @@ Grid.prototype.initCtrl = function(){
         //delete row 
         $scope.delete = function(key, successCallback, errorCallback){
              
-            confirm_call('确认是否删除该条记录?', function(){
+            Bage.confirm_call('确认是否删除该条记录?', function(){
                 service.del(key, function(){
                     $scope.$apply(function(){
 		    		    $scope.search();
@@ -276,11 +289,31 @@ Grid.prototype.initCtrl = function(){
                 var edit = "<button type=\"button\" class=\"btn-xs btn-primary\" style=\"margin-left:5px;margin-right:5px;\" ng-click=edit('" + key + "')>编辑</button>";
                 var del = "<button type=\"button\" class=\"btn-xs btn-danger\" style=\"margin-left:5px;margin-right:5px;\" ng-click=delete('" + key + "')>删除</button>";
                 var customer = that.createButtons();
-                customer = customer.replace(/\$id/, key);
+                customer = customer.replace(/\$id/g, key);
                 var s = edit + del + customer;
                 return "<span class=\"bage-action\">"  + s + "</span>";
             }
         } 
+
+
+        //add funciton
+        that._config.controllers($scope, service);
+        
+        //add data
+        that._config.datas($scope);
+
+        for(var i = that._gridConfig.colModel.length; i--;){
+            if(that._gridConfig.colModel[i].formatter === undefined){
+                var filter = that._gridConfig.colModel[i].filter;
+                if(filter != undefined){
+                    that._gridConfig.colModel[i].formatter = (function(filter){
+                        return function(cellvalue, options, rowObject){
+                            return $filter(filter)(cellvalue);
+                        }
+                    })(filter);
+                }
+            }
+        }
 
         that._gridConfig.colModel.push(opCol);
 
@@ -302,10 +335,6 @@ Grid.prototype.initCtrl = function(){
 		    position:"last"
 		});
 
-
-        //add funciton
-        that._config.controllers($scope, service);
-        
         $scope.$watch('pagination.pageNo + pagination.pageSize', list);
 
         // Add responsive to jqGrid
@@ -319,13 +348,16 @@ Grid.prototype.initCtrl = function(){
 
 Grid.prototype.init = function(){
 
-   this.app = angular.module('app', []);
+    this.app = angular.module('app', []);
 
-   //init angularjs service
-   this.initService();
+    //add filter
+    this._config.filters(this.app);
 
-   //init angularjs controller
-   this.initCtrl();
+    //init angularjs service
+    this.initService();
+
+    //init angularjs controller
+    this.initCtrl();
    
 }
     

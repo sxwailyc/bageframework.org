@@ -7,23 +7,27 @@
     <%@include file="../css.inc.jsp"%>
     <%@include file="../js.inc.jsp"%>
     <script>
-     
+
+        var buttons = '<button type="button" class="btn-xs btn-info" style="margin-left:5px;margin-right:5px;" ng-click=syncFromDb(\'$id\')>同步数据库</button>';
+        buttons = buttons + '<a href="/admin/property/list.do?metadataId=$id" ><button type="button" class="btn-xs btn-info" style="margin-left:5px;margin-right:5px;" )>字段</button></a>'
+
         var config = {
             path: 'metadata',
             keyName: 'id',
-            buttons: '<button type=\"button\" class=\"btn-xs btn-info\" style=\"margin-left:5px;margin-right:5px;\" ng-click=syncFromDb(\'$id\')>同步数据库</button>',
+            buttons: buttons,
             functions: ['syncFromDb'],
             services: function(service, remote){
                 service.syncFromDb = function(id, successCallback){
-                    var ret = remote.syncFromDb(id);
-                    successCallback(ret);
+                    service.saveCall(function(){
+                       return remote.syncFromDb(id);
+                    }, successCallback)
                 }
             },
             controllers: function($scope, service){
                 $scope.syncFromDb = function(id){
-                    confirm_call('确认是否从数据库同步表定义?', function(){
+                    Bage.confirm_call('确认是否从数据库同步表定义?', function(){
                         service.syncFromDb(id, function(res){
-                            alert(res);
+                            Bage.successMsg('同步成功');
                         });
                     });
                 };
@@ -40,7 +44,7 @@
             ]
         }
 
-        var grid = new Grid('bage-table', config, gridConfig);
+        var grid = new Grid('bage-table', config, gridConfig);        
         grid.init();
         
       
@@ -51,7 +55,6 @@
 
     <div id="wrapper">
         <%@include file="../left.inc.jsp"%>
-
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
         </div>

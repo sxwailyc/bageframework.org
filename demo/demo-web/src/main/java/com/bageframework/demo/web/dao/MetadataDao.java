@@ -1,7 +1,10 @@
 package com.bageframework.demo.web.dao;
 
-import com.bageframework.demo.web.model.Metadata;
+import java.util.List;
+
+import com.bageframework.coder.model.Column;
 import com.bageframework.dao.base.IDAO;
+import com.bageframework.demo.web.model.Metadata;
 
 /**
  * 
@@ -11,4 +14,5 @@ import com.bageframework.dao.base.IDAO;
  */
 public interface MetadataDao extends IDAO<Metadata, String> {
 
+	public List<Column> getColumns(String table);
 }

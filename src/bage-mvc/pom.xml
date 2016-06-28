@@ -16,6 +16,18 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>com.bageframework</groupId>
+			<artifactId>bage-util</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bageframework</groupId>
+			<artifactId>bage-dao</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>

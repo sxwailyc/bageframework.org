@@ -108,4 +108,24 @@ public class BaseMysqlDao<T> {
 		return jdbc.getList(select.getSql(), entityClass, select.getParams());
 	}
 
+	public List<T> getList() {
+		return this.getList(0, Integer.MAX_VALUE);
+	}
+
+	public List<T> getList(int parentId) {
+		return this.getList(parentId, 0, Integer.MAX_VALUE);
+	}
+
+	public List<T> getList(String parentId, int start, int size) {
+		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
+		String parentColumn = SQLHelper.getParentColumn(entityClass);
+		select.equal(parentColumn, parentId);
+		select.limit(start, size);
+		return jdbc.getList(select.getSql(), entityClass, select.getParams());
+	}
+
+	public List<T> getList(String parentId) {
+		return this.getList(parentId, 0, Integer.MAX_VALUE);
+	}
+
 }

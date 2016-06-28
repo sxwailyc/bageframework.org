@@ -1,9 +1,15 @@
 package com.bageframework.demo.web.dao.impl.mysql;
 
-import com.bageframework.demo.web.dao.MetadataDao;
-import com.bageframework.dao.base.mysql.BaseMysqlDao;
-import com.bageframework.demo.web.model.Metadata;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.bageframework.coder.model.Column;
+import com.bageframework.dao.base.mysql.BaseMysqlDao;
+import com.bageframework.dao.jdbc.Jdbc;
+import com.bageframework.demo.web.dao.MetadataDao;
+import com.bageframework.demo.web.model.Metadata;
 
 /**
  * 
@@ -14,4 +20,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MetadataDaoMysqlImpl extends BaseMysqlDao<Metadata> implements MetadataDao {
 
+	@Autowired
+	private Jdbc jdbc;
+
+	@Override
+	public List<Column> getColumns(String table) {
+		String sql = "show full columns from `" + table + "`";
+		return jdbc.getList(sql, Column.class);
+	}
 }
