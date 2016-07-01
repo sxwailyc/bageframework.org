@@ -4,6 +4,8 @@ import java.util.Map;
 
 public interface SessionService {
 
+	public void setDistributed(boolean distributed);
+
 	public void delete(String sessionid);
 
 	public Map<String, Object> getMap(String sessionId);

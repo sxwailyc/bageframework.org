@@ -9,9 +9,16 @@
 	<name>demo-web</name>
 	<url>http://maven.apache.org</url>
 
+	<parent>
+		<groupId>com.bageframework</groupId>
+		<artifactId>bage</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
 	<properties>
 		<spring.version>4.3.0.RELEASE</spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<bageframeword.version>1.0-SNAPSHOT</bageframeword.version>
 	</properties>
 
 	<dependencies>
@@ -19,13 +26,19 @@
 		<dependency>
 			<groupId>com.bageframework</groupId>
 			<artifactId>bage-dao</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${bageframeword.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bageframework</groupId>
+			<artifactId>bage-authority</artifactId>
+			<version>${bageframeword.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.bageframework</groupId>
 			<artifactId>bage-service</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${bageframeword.version}</version>
 		</dependency>
 
 		<dependency>

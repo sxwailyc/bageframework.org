@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bageframework.authority.annotation.Authority;
+import com.bageframework.demo.web.model.User;
+
 @Controller
 @RequestMapping(TestController.DIR)
 public class TestController {
@@ -20,11 +23,16 @@ public class TestController {
 
 	@RequestMapping
 	@ResponseBody
+	@Authority(code = "EDIT")
 	public Object test(HttpServletRequest req) {
 
 		Map<String, Object> data = new HashMap<String, Object>();
 
-		req.getSession().setAttribute("username", "sxwailyc");
+//		User user = new User();
+//		user.setNickname("昵称");
+//
+//		req.getSession().setAttribute("username", "sxwailyc");
+//		req.getSession().setAttribute("user", user);
 
 		return data;
 
@@ -38,6 +46,7 @@ public class TestController {
 
 		Object username = req.getSession().getAttribute("username");
 		data.put("username", username);
+		data.put("user", req.getSession().getAttribute("user"));
 
 		return data;
 

@@ -48,6 +48,13 @@ public class SQLHelper {
 		return createGetSql(cls, table, id);
 	}
 
+	public static SelectSQL createGetSqlWithKeyName(Class<?> cls, String keyName, Object key) {
+		String table = getTable(cls);
+		SelectSQL sql = SelectSQL.create(table);
+		sql.equal(keyName, key);
+		return sql;
+	}
+
 	public static SelectSQL createGetSql(Class<?> cls, String table, Object id) {
 
 		SelectSQL sql = SelectSQL.create(table);

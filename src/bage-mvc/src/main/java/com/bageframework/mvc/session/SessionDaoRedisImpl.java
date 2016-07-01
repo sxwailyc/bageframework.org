@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Repository;
 
 import com.bageframework.dao.redis.Redis;
@@ -14,8 +12,11 @@ import com.bageframework.util.JsonSerializer;
 @Repository
 public class SessionDaoRedisImpl implements SessionDao {
 
-	@Resource(name = "session")
 	private Redis redis;
+
+	public void setRedis(Redis redis) {
+		this.redis = redis;
+	}
 
 	private String getSessionKey(String sessionId) {
 		return "sid:" + sessionId;

@@ -19,6 +19,18 @@
 
 	<bean id="exceptionHandler" class="com.bageframework.demo.web.exceptionHandler.ExceptionHandler" />
 
+	<bean id="authorityChecker" class="com.bageframework.authority.impl.AuthorityCheckerImpl"></bean>
+	<bean class="com.bageframework.core.config.BageConfig">
+		<property name="enableDistributedSession" value="0"></property>
+		<property name="loginUrl" value="/admin/user/login.do"></property>
+		<property name="authorityChecker" ref="authorityChecker"></property>
+		<property name="excludeUris">
+			<list>
+				<value>/test.do</value>
+			</list>
+		</property>
+	</bean>
+
 	<import resource="config/applicationContext-dao.xml" />
 	<import resource="config/applicationContext-jdbc.xml" />
 	<import resource="config/applicationContext-service.xml" />

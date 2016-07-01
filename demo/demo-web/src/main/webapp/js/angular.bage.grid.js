@@ -85,7 +85,6 @@ Grid.prototype.initService = function(){
 
     this.app.factory('Service', [function(){
 
-
         console.log('path' + that._config.path);
 		var remote = new rpc.ServiceProxy("/services/" + that._config.path, {
 			asynchronous : false,

@@ -43,6 +43,11 @@ public class BaseMysqlDao<T> {
 		return jdbc.get(select.getSql(), entityClass, select.getParams());
 	}
 
+	public T get(String keyName, String key) {
+		SelectSQL select = SQLHelper.createGetSqlWithKeyName(entityClass, keyName, key);
+		return jdbc.get(select.getSql(), entityClass, select.getParams());
+	}
+
 	public T get(Integer id) {
 		SelectSQL select = SQLHelper.createGetSql(entityClass, id);
 		return jdbc.get(select.getSql(), entityClass, select.getParams());

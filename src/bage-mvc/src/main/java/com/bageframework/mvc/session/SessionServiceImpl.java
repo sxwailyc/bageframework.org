@@ -8,27 +8,44 @@ import org.springframework.stereotype.Service;
 @Service
 public class SessionServiceImpl implements SessionService {
 
+	private boolean distributed = false;
+
 	@Autowired
-	private SessionDao sessionDao;
+	private SessionDao sessionDaoRedisImpl;
+
+	@Autowired
+	private SessionDao sessionDaoJvmImpl;
+
+	private SessionDao getDao() {
+		if (distributed) {
+			return sessionDaoRedisImpl;
+		} else {
+			return sessionDaoJvmImpl;
+		}
+	}
+
+	public void setDistributed(boolean distributed) {
+		this.distributed = distributed;
+	}
 
 	public void delete(String sessionid) {
-		sessionDao.delete(sessionid);
+		getDao().delete(sessionid);
 	}
 
 	public Map<String, Object> getMap(String sessionId) {
-		return sessionDao.getMap(sessionId);
+		return getDao().getMap(sessionId);
 	}
 
 	public Object get(String sessionid, String name) {
-		return sessionDao.get(sessionid, name);
+		return getDao().get(sessionid, name);
 	}
 
 	public void put(String sessionid, String name, Object value) {
-		sessionDao.put(sessionid, name, value);
+		getDao().put(sessionid, name, value);
 	}
 
 	public void remove(String sessionid, String name) {
-		sessionDao.remove(sessionid, name);
+		getDao().remove(sessionid, name);
 	}
 
 }

@@ -7,4 +7,5 @@ import com.bageframework.service.IService;
 
 public interface UserService extends IService<User, UserVO, UserAdminVO, String> {
 
+	public User login(String username, String password);
 }

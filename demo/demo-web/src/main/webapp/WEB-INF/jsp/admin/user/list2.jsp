@@ -16,47 +16,91 @@
         var gridConfig = {
             colNames: ['id', '用户ID', '用户名', '用户昵称', '操作'],
             colModel:[
-                {name:'id',index:'id', editable: true, width:90, sorttype:"int", formatter:"int"},
-                {name:'userId',index:'user_id', editable: true, width:100},
-                {name:'username',index:'username', editable: true, width:80, align:"right",sorttype:"float", formatter:"string"},
-                {name:'nickname',index:'nickname', editable: true, width:80, align:"right",sorttype:"string"}
+                {name:'id',index:'id', editable: true, width:10, sorttype:"int", formatter:"int"},
+                {name:'userId',index:'user_id', editable: true, width:10},
+                {name:'username',index:'username', editable: true, width:10, align:"right",sorttype:"float", formatter:"string"},
+                {name:'nickname',index:'nickname', editable: true, width:10, align:"right",sorttype:"string"}
                 
             ]
         }
 
         var grid = new Grid('bage-table', config, gridConfig);
-        
+        grid.init();
       
     </script>
 </head>
 
-<body ng-app="app" ng-controller="ctrl">
+
+<body class="gray-bg" ng-app="app" ng-controller="ctrl">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>jQuery Grid Plugin – jqGrid</h5>
+                    </div>
+                    <div class="ibox-content">
+
+                        <p>&nbsp;</p>
+                        <h4 class="m-t">高级用法</h4>
+
+
+                        <div class="table_wrapper">
+                            <table id="bage-table"></table>
+                            <div id="pager"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--end-->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">ADD&EDIT</h4>
+                </div>
+                <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">用户名：</label>
+                        <div class="col-sm-9">
+                            <input type="text" placeholder="" class="form-control" ng-model="item.username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">昵称：</label>
+                        <div class="col-sm-9">
+                            <input type="text" placeholder="" class="form-control" ng-model="item.nickname">
+                        </div>
+                    </div>
+                </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" id="close">关闭</button>
+                  <button type="button" class="btn btn-primary" ng-click="submit()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+
+<!--body ng-app="app" ng-controller="ctrl">
 
     <div id="wrapper">
-        <%@include file="../left.inc.jsp"%>
 
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
         </div>
-        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            
-        </div>
-            <ul class="nav navbar-top-links navbar-right">
-                <li>
-                    <span class="m-r-sm text-muted welcome-message">欢迎您:超级管理员</span>
-                </li>
-                
-
-
-                <li>
-                    <a href="login.html">
-                        <i class="fa fa-sign-out"></i> 退出登陆
-                    </a>
-                </li>
-            </ul>
-
-        </nav>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
                 <h2></h2>
@@ -108,40 +152,8 @@
             </div>
         </div>
 
-        <%@include file="../footer.inc.jsp"%>
         </div>
     </div>
-    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="exampleModalLabel">ADD&EDIT</h4>
-                </div>
-                <div class="modal-body">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">用户名：</label>
-                        <div class="col-sm-9">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.username">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">昵称：</label>
-                        <div class="col-sm-9">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.nickname">
-                        </div>
-                    </div>
-                </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal" id="close">关闭</button>
-                  <button type="button" class="btn btn-primary" ng-click="submit()">保存</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </body>
-</html>
+</html-->

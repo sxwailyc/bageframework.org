@@ -51,58 +51,16 @@
     </script>
 </head>
 
-<body ng-app="app" ng-controller="ctrl">
 
-    <div id="wrapper">
-        <%@include file="../left.inc.jsp"%>
-        <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-        </div>
-        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            
-        </div>
-            <ul class="nav navbar-top-links navbar-right">
-                <li>
-                    <span class="m-r-sm text-muted welcome-message">欢迎您:超级管理员</span>
-                </li>
-                
-
-
-                <li>
-                    <a href="login.html">
-                        <i class="fa fa-sign-out"></i> 退出登陆
-                    </a>
-                </li>
-            </ul>
-
-        </nav>
-        <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-10">
-                <h2></h2>
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="index.html">主页</a>
-                    </li>
-                    <li>
-                        <a>权限管理</a>
-                    </li>
-                    <li class="active">
-                        <strong>用户列表</strong>
-                    </li>
-                </ol>
-            </div>
-        </div>
-        <div class="wrapper wrapper-content  animated fadeInRight">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5>
-                               {{ title }}
-                            </h5>
-                        </div>
-                        <div class="ibox-content">
+<body class="gray-bg" ng-app="app" ng-controller="ctrl">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>metadata</h5>
+                    </div>
+                    <div class="ibox-content">
                             <div class="form-horizontal">
                                 <div class="form-group">
                                     <label class="col-md-1 control-label"> 表名: </label>
@@ -112,21 +70,18 @@
                                     <button type="button" class="btn btn-primary" ng-click="search()">查询</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table_wrapper">
-                                <table id="bage-table"></table>
-                                <div id="pager"></div>
-                            </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table_wrapper">
+                            <table id="bage-table"></table>
+                            <div id="pager"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <%@include file="../footer.inc.jsp"%>
-        </div>
     </div>
+    <!--end-->
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -166,4 +121,3 @@
         </div>
     </div>
 </body>
-</html>

@@ -33,4 +33,10 @@ public class UserServiceImpl extends BaseService<User, UserVO, UserAdminVO, Stri
 		return UserAdminVO.create(bean);
 	}
 
+	@Override
+	public User login(String username, String password) {
+		User user = userDao.get("username", username);
+		return user;
+	}
+
 }

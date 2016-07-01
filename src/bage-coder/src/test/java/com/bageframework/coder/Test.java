@@ -20,7 +20,7 @@ public class Test {
 		config.projectDir(projectDir);
 
 		//coderService.generate(config, "role");
-		coderService.generate(config, "metadata");
-		coderService.generate(config, "property");
+		coderService.generate(config, "menu");
+		//coderService.generate(config, "property");
 	}
 }

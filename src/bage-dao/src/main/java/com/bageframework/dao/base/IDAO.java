@@ -13,6 +13,8 @@ public interface IDAO<BEAN, KEYTYPE> {
 
 	public BEAN get(KEYTYPE key);
 
+	public BEAN get(String keyName, String key);
+
 	public boolean delete(KEYTYPE key);
 
 	public Page<BEAN> getPage(int start, int size);

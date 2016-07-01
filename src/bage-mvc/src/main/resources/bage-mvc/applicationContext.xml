@@ -47,5 +47,5 @@
 	</bean>
 
 	<import resource="classpath:/applicationContext.xml" />
-
+    <import resource="classpath*:/bage-authority/applicationContext.xml"/>
 </beans> 

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSessionContext;
 import org.apache.commons.lang.NotImplementedException;
 
 @SuppressWarnings("deprecation")
-public class BageSession implements HttpSession {
+public class BageDistributedSession implements HttpSession {
 
 	private long creationTime;
 
@@ -20,7 +20,7 @@ public class BageSession implements HttpSession {
 
 	private SessionService sessionService;
 
-	public BageSession(String sid, SessionService sessionService) {
+	public BageDistributedSession(String sid, SessionService sessionService) {
 		this.sid = sid;
 		this.sessionService = sessionService;
 		this.creationTime = System.currentTimeMillis();
@@ -60,9 +60,8 @@ public class BageSession implements HttpSession {
 		throw new NotImplementedException();
 	}
 
-	public Object getValue(String arg0) {
-
-		return null;
+	public Object getValue(String name) {
+		return sessionService.get(this.sid, name);
 	}
 
 	public String[] getValueNames() {
