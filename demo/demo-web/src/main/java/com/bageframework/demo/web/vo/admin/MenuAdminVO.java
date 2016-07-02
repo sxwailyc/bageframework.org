@@ -27,9 +27,7 @@ public class MenuAdminVO {
 
 	private String path;
 
-	private Integer isLeaf;
-
-	private Integer isBtn;
+	private String style;
 
 	private List<MenuAdminVO> nodes = new ArrayList<MenuAdminVO>();
 
@@ -89,20 +87,12 @@ public class MenuAdminVO {
 		this.nodes = nodes;
 	}
 
-	public Integer getIsLeaf() {
-		return isLeaf;
+	public String getStyle() {
+		return style;
 	}
 
-	public void setIsLeaf(Integer isLeaf) {
-		this.isLeaf = isLeaf;
-	}
-
-	public Integer getIsBtn() {
-		return isBtn;
-	}
-
-	public void setIsBtn(Integer isBtn) {
-		this.isBtn = isBtn;
+	public void setStyle(String style) {
+		this.style = style;
 	}
 
 	public static MenuAdminVO create(Menu bean) {

@@ -7,7 +7,7 @@
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
-    empty
+      menu: ${menus}
 </body>
 
 </html>

@@ -19,7 +19,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<bean class="com.bageframework.mvc.interceptor.AuthorityInterceptor" />
+			<bean class="com.bageframework.mvc.interceptor.BageFrameworkInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 

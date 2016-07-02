@@ -32,9 +32,7 @@ public class Menu {
 
 	private String path;
 
-	private Integer isLeaf;
-
-	private Integer isBtn;
+	private String style;
 
 	public Integer getId() {
 		return id;
@@ -84,20 +82,12 @@ public class Menu {
 		this.path = path;
 	}
 
-	public Integer getIsLeaf() {
-		return isLeaf;
+	public String getStyle() {
+		return style;
 	}
 
-	public void setIsLeaf(Integer isLeaf) {
-		this.isLeaf = isLeaf;
-	}
-
-	public Integer getIsBtn() {
-		return isBtn;
-	}
-
-	public void setIsBtn(Integer isBtn) {
-		this.isBtn = isBtn;
+	public void setStyle(String style) {
+		this.style = style;
 	}
 
 }

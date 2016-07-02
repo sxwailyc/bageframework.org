@@ -9,7 +9,7 @@ public class BageConfig {
 
 	private AuthorityChecker authorityChecker;
 
-	public boolean enableDistributedSession = false;
+	private boolean enableDistributedSession = false;
 
 	private String loginUrl;
 

@@ -24,13 +24,13 @@ import com.bageframework.mvc.request.BageHttpRequestWrapper;
 import com.bageframework.mvc.session.SessionDaoRedisImpl;
 import com.bageframework.mvc.session.SessionService;
 
-public class BageSessionFilter implements Filter {
+public class BageFilter implements Filter {
 
-	public static final Log logger = LogFactory.getLog(BageSessionFilter.class);
+	public static final Log logger = LogFactory.getLog(BageFilter.class);
 
 	private SessionService sessionService = null;
 
-	private BageConfig bageMvcConfig;
+	private BageConfig bageConfig;
 
 	public void destroy() {
 
@@ -38,7 +38,7 @@ public class BageSessionFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		logger.debug("do filter");
-		BageHttpRequestWrapper wrapper = new BageHttpRequestWrapper((HttpServletRequest) request, (HttpServletResponse) response, sessionService, bageMvcConfig);
+		BageHttpRequestWrapper wrapper = new BageHttpRequestWrapper((HttpServletRequest) request, (HttpServletResponse) response, sessionService, bageConfig);
 		chain.doFilter(wrapper, response);
 	}
 
@@ -48,19 +48,19 @@ public class BageSessionFilter implements Filter {
 		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(context);
 
 		try {
-			bageMvcConfig = ctx.getBean(BageConfig.class);
+			bageConfig = ctx.getBean(BageConfig.class);
 		} catch (BeansException e) {
 			if (logger.isDebugEnabled()) {
 				logger.debug(e.getMessage());
 			}
 		}
 
-		if (bageMvcConfig == null) {
-			bageMvcConfig = new BageConfig();
+		if (bageConfig == null) {
+			bageConfig = new BageConfig();
 		}
 
 		sessionService = ctx.getBean(SessionService.class);
-		if (bageMvcConfig.isEnableDistributedSession()) {
+		if (bageConfig.isEnableDistributedSession()) {
 			SessionDaoRedisImpl sessionDaoRedisImpl = ctx.getBean(SessionDaoRedisImpl.class);
 			Redis session = null;
 			try {

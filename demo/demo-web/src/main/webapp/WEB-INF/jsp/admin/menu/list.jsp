@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/angular-ui-tree.css">
     <link rel="stylesheet" href="/css/tree.app.css">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
     <script src="http://cdn.bootcss.com/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.js"></script>
     <script src="/js/angular-ui-tree.js"></script>
   
@@ -35,6 +36,12 @@
                   '<input type="text" class="form-control" id="sort" value="{sort}" placeholder="">' + 
                 '</div>' + 
               '</div>' + 
+               '<div class="form-group" style="display:none">' +
+                '<label for="sort" class="col-sm-2 control-label">样式</label>' + 
+                '<div class="col-sm-8">' + 
+                  '<input type="text" class="form-control" id="style" value="{style}" placeholder="">' + 
+                '</div>' + 
+               '</div>' + 
             '</form>'; 
 
 
@@ -83,9 +90,13 @@
                 var nodeData = scope.$modelValue
 
                 var name = nodeData.title ;
-                var path = nodeData.path?nodeData.title:'';
+                var path = nodeData.path?nodeData.path:'';
+                var style = nodeData.style?nodeData.style:'';
                 var sort = nodeData.sort?nodeData.sort:1;
-                var s = content.replace('{name}', name).replace('{path}', path).replace('{sort}', sort);
+                var s = content.replace('{name}', name).replace('{path}', path).replace('{sort}', sort).replace('{style}', style);
+                if(nodeData.parentId==0){
+                    s = s.replace('display:none', '');
+                }
                 $.confirm({
                     title: false,
                     confirmButton: '保存',
@@ -97,12 +108,14 @@
                         var name = angular.element('#name').val();
                         var path = angular.element('#path').val();
                         var sort = angular.element('#sort').val();
+                        var style = angular.element('#style').val();
                         $scope.$apply(function(){
                             $scope.submit({
                                 id: nodeData.id,
                                 name: name,
                                 path: path,
-                                sort: sort
+                                sort: sort,
+                                style:style
                             })
                             $scope.query();
                         });
@@ -122,13 +135,17 @@
             $scope.newSubItem = function (scope) {
                 var sort ;
                 var parentId = 0;
+                var style = '';
+                var display = 'display:none';
                 if(!scope){
                     sort = $scope.data.length + 1;
+                    display = '';
                 }else{
                     sort = scope.$modelValue.nodes.length + 1;
                     parentId = scope.$modelValue.id;
                 }
                 var s = content.replace('{name}', '').replace('{path}', '').replace('{sort}', sort);
+                s = s.replace('display:none', display).replace('{style}', style);
                 $.confirm({
                     title: false,
                     confirmButton: '保存',
@@ -140,12 +157,14 @@
                         var name = angular.element('#name').val();
                         var path = angular.element('#path').val();
                         var sort = angular.element('#sort').val();
+                        var style = angular.element('#style').val();
                         $scope.$apply(function(){
                             $scope.submit({
                                 name: name,
                                 parentId: parentId,
                                 path: path,
-                                sort: sort
+                                sort: sort,
+                                style:style
                             })
                             $scope.query();
                         });
@@ -190,20 +209,16 @@
                                         }">
                                     </span>
                                 </a>
-                                <span ng-show="node.isBtn==1"><button class="btn btn-info btn-xs disabled">{{node.title}}</button></span>
-                                <span ng-show="node.isBtn==0">{{node.title}}</span><span ng-show=node.path>[{{node.path}}]</span>
+                                <span>{{node.title}}</span><span ng-show=node.path>[{{node.path}}]</span>
                                 <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="edit(this)">
                                   <span class="glyphicon glyphicon-edit"></span>
                                 </a>
                                 <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="delNode(this)" ng-show="node.nodes.length==0">
                                   <span class="glyphicon glyphicon-remove"></span>
                                 </a>
-                                <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-show="node.depth<2" >
-                                  <span class="glyphicon"
-                                       ng-class="{
-                                           'glyphicon-plus': node.isLeaf==0,
-                                           'glyphicon-plus-sign': node.isLeaf==1
-                                       }">
+                                <a class="pull-right btn btn-primary btn-xs " data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-show="node.depth<2" >
+                                  <span class="glyphicon glyphicon-plus">
+                                      
                                   </span>
                                 </a>
                               </div>
