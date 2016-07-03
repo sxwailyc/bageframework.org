@@ -1,5 +1,8 @@
 package com.bageframework.coder.helper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -146,15 +149,36 @@ public class MetadataHelper {
 
 		if ("PRI".equals(column.getKey())) {
 			field.setKey(true);
+			field.getAnnotations().add("@PrimaryKey");
+		}
+
+		if (column.getField().equals("created_time")) {
+			field.getAnnotations().add("@AutoDate");
 		}
 
 		return field;
 	}
 
-	public static String getImport(Column column) {
+	public static List<String> getImport(Column column) {
 
 		Type type = Type.parse(column.getType());
-		return Type.getImport(type);
+
+		List<String> imports = new ArrayList<String>();
+
+		if ("PRI".equals(column.getKey())) {
+			imports.add("com.bageframework.dao.annotation.PrimaryKey");
+		}
+
+		if (column.getField().equals("created_time")) {
+			imports.add("com.bageframework.dao.annotation.AutoDate");
+		}
+
+		String impt = Type.getImport(type);
+		if (impt != null) {
+			imports.add(impt);
+		}
+
+		return imports;
 
 	}
 

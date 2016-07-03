@@ -9,6 +9,7 @@ import com.bageframework.coder.metadata.ModelMetadata;
 import com.bageframework.coder.metadata.ServiceImplMetadata;
 import com.bageframework.coder.metadata.ServiceMetadata;
 import com.bageframework.coder.metadata.VOMetadata;
+import com.bageframework.coder.metadata.ViewMetadata;
 import com.bageframework.coder.metadata.WebServiceImplMetadata;
 import com.bageframework.coder.metadata.WebServiceMetadata;
 
@@ -33,5 +34,7 @@ public interface MetadataService {
 	public WebServiceImplMetadata createWebServiceImplMetadata(Config config, String table);
 
 	public AdminControllerMetadata createAdminControllerMetadata(Config config, String table);
+
+	public ViewMetadata createViewMetadata(Config config, String table);
 
 }

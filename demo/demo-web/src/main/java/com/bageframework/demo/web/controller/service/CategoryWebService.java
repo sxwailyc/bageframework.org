@@ -1,0 +1,25 @@
+package com.bageframework.demo.web.controller.service;
+
+import com.bageframework.dao.beans.Page;
+import com.bageframework.dao.beans.Query;
+import com.bageframework.demo.web.model.Category;
+import com.bageframework.demo.web.vo.admin.CategoryAdminVO;
+
+/**
+ * 
+ * 
+ * @author shixiangwen03@gmail.com
+ * 
+ */
+public interface CategoryWebService{
+
+    public Page<CategoryAdminVO> page(Query query, int pageNo, int pageSize);
+
+	public Category get(Integer id);
+
+	public boolean update(Category bean);
+
+	public boolean add(Category bean);
+
+	public boolean delete(Integer id);
+}

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bageframework.coder.core.Config;
 import com.bageframework.coder.dao.MetadataDao;
+import com.bageframework.coder.dao.PropertyDao;
 import com.bageframework.coder.helper.MetadataHelper;
 import com.bageframework.coder.metadata.AdminControllerMetadata;
 import com.bageframework.coder.metadata.AdminVOMetadata;
@@ -18,10 +19,17 @@ import com.bageframework.coder.metadata.ModelMetadata;
 import com.bageframework.coder.metadata.ServiceImplMetadata;
 import com.bageframework.coder.metadata.ServiceMetadata;
 import com.bageframework.coder.metadata.VOMetadata;
+import com.bageframework.coder.metadata.ViewMetadata;
 import com.bageframework.coder.metadata.WebServiceImplMetadata;
 import com.bageframework.coder.metadata.WebServiceMetadata;
+import com.bageframework.coder.model.ColModel;
 import com.bageframework.coder.model.Column;
+import com.bageframework.coder.model.Form;
+import com.bageframework.coder.model.Metadata;
+import com.bageframework.coder.model.Property;
 import com.bageframework.coder.service.MetadataService;
+import com.bageframework.coder.type.Formatter;
+import com.bageframework.coder.type.Type;
 
 @Service
 public class MetadataServiceImpl implements MetadataService {
@@ -29,14 +37,17 @@ public class MetadataServiceImpl implements MetadataService {
 	@Autowired
 	private MetadataDao metadataDao;
 
+	@Autowired
+	private PropertyDao propertyDao;
+
 	private void handleColumn(BaseClassMetadata metadata, String table) {
 
 		List<Column> columns = metadataDao.getColumns(table);
 		for (Column column : columns) {
 			Field field = MetadataHelper.column2Field(column);
 			metadata.appendField(field);
-			String impt = MetadataHelper.getImport(column);
-			if (impt != null) {
+			List<String> impts = MetadataHelper.getImport(column);
+			for (String impt : impts) {
 				metadata.appendImport(impt);
 			}
 		}
@@ -255,6 +266,60 @@ public class MetadataServiceImpl implements MetadataService {
 		metadata.setKeyType(keyType);
 
 		return metadata;
+	}
+
+	@Override
+	public ViewMetadata createViewMetadata(Config config, String table) {
+
+		ViewMetadata viewMetadata = new ViewMetadata();
+
+		Metadata metadata = metadataDao.get("table", table);
+		if (metadata != null) {
+			String modelClassName = metadata.getJavaClass();
+			viewMetadata.setModelClassName(modelClassName);
+			viewMetadata.setModelObjectName(modelClassName.substring(0, 1).toLowerCase() + modelClassName.substring(1));
+			viewMetadata.setTitle(metadata.getRemark());
+			viewMetadata.setViewName(modelClassName.toLowerCase() + "/list.jsp");
+
+			List<Property> propertys = propertyDao.getList(metadata.getId());
+			for (Property property : propertys) {
+
+				Type type = Type.parse(property.getType());
+
+				if (property.getShow() == 1) {
+
+					String name = MetadataHelper.columnName2FieldName(property.getName());
+
+					ColModel colModel = new ColModel();
+					colModel.setEditable("false");
+					colModel.setFormatter(Formatter.getFormatter(type));
+					colModel.setIndex(name);
+					colModel.setName(name);
+					colModel.setLabel(property.getRemark());
+					// colModel.setSorttype(sorttype);
+					// colModel.setWidth(width);
+					viewMetadata.addColModel(colModel);
+				}
+
+				if (property.getSearch() == 1 || property.getEdit() == 1) {
+
+					Form form = new Form();
+					form.setName(property.getName());
+					form.setLabel(property.getRemark());
+					form.setFormType(property.getFormType());
+					if (property.getSearch() == 1) {
+						viewMetadata.addSearchForm(form);
+					}
+					if (property.getEdit() == 1) {
+						viewMetadata.addEditForm(form);
+					}
+
+				}
+
+			}
+		}
+
+		return viewMetadata;
 	}
 
 	private String getKeyType(String table) {

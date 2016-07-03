@@ -59,7 +59,7 @@
                 {name:'id', width:5},
                 {name:'name', width:10},
                 {name:'type', width:10},
-                {name:'formType', width:5, align: 'center', filter: 'formType'},
+                {name:'formType', width:5, align: 'center', formatter: 'ng:formType'},
                 {name:'remark', width:10},
                 {name:'search', width:5, formatter: booleanFormatter, align: 'center'},
                 {name:'edit', width:5, formatter: booleanFormatter, align: 'center'},
@@ -75,7 +75,7 @@
     </script>
 </head>
 
-<body class="gray-bg" ng-app="app" ng-controller="ctrl">
+<body class="gray-bg" ng-app="app" ng-controller="ctrl" ng-init="query.metadata_id='${metadataId}'">
     <div class="wrapper wrapper-content  animated fadeInRight">
         <div class="row">
             <div class="col-sm-12">

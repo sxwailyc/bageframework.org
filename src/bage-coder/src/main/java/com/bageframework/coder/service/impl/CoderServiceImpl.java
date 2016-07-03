@@ -15,6 +15,7 @@ import com.bageframework.coder.metadata.ModelMetadata;
 import com.bageframework.coder.metadata.ServiceImplMetadata;
 import com.bageframework.coder.metadata.ServiceMetadata;
 import com.bageframework.coder.metadata.VOMetadata;
+import com.bageframework.coder.metadata.ViewMetadata;
 import com.bageframework.coder.metadata.WebServiceImplMetadata;
 import com.bageframework.coder.metadata.WebServiceMetadata;
 import com.bageframework.coder.render.Render;
@@ -72,6 +73,10 @@ public class CoderServiceImpl implements CoderService {
 		// generate admin controller
 		AdminControllerMetadata adminControllerMetadata = metadataService.createAdminControllerMetadata(config, table);
 		generateAdminController(config, adminControllerMetadata);
+
+		// generate view
+		ViewMetadata viewMetadata = metadataService.createViewMetadata(config, table);
+		generateView(config, viewMetadata);
 	}
 
 	private void generateModel(Config config, ModelMetadata metadata) {
@@ -171,6 +176,16 @@ public class CoderServiceImpl implements CoderService {
 
 		String savePath = config.getDaoMysqlImplClassPath(metadata.getClassName());
 		logger.debug("save class[" + metadata.getClassName() + "], to[" + savePath + "]");
+		CoderHelper.save(savePath, content);
+	}
+
+	private void generateView(Config config, ViewMetadata metadata) {
+
+		Render render = RenderFactory.getInstance().getRender();
+		String content = render.doRender(config.getAdminViewTemplate(), metadata);
+
+		String savePath = config.getAdminViewPath(metadata.getViewName());
+		logger.debug("save view[" + metadata.getViewName() + "], to[" + savePath + "]");
 		CoderHelper.save(savePath, content);
 	}
 

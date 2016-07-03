@@ -1,21 +1,42 @@
 
 
+var Button = function(label, css, style, ngClick, show){
+   this._label = label;
+   this._css= css;
+   this._style = style;
+   this._ngClick = ngClick;
+   this._show = show;
+}
+
+Button.prototype.render = function(row){
+
+    if(this._show && !this._show(row)){
+        return "";
+    }
+
+    var s = '<button type="button"';
+    if(this._css){
+        s = s + ' class="' + this._css + '"';
+    }
+
+    if(this._style){
+        s = s + ' style="' + this._style + '"';
+    }
+    s = s + ' ng-click=' + this._ngClick + '>' + this._label + '</button>';
+    return s;
+}
+
 var Grid = function(tableId, config, gridConfig){
  
     this._tableId = tableId;
     this._setConfig(config);
     this._setGridConfig(gridConfig);
+    this._buttons = new Array();
 }
 
-Grid.prototype.createButtons = function(row){
-   var buttons = this._config.buttons;
-   if(typeof buttons === 'undefined'){
-       return '';
-   }else if(typeof buttons === 'function'){
-       return buttons();
-   }else{
-       return buttons;
-   }
+Grid.prototype.addButton = function(label, css, style, ngClick, show){
+    var btn = new Button(label, css, style, ngClick, show);
+    this._buttons.push(btn);
 }
 
 Grid.prototype._setConfig = function(config){
@@ -24,6 +45,8 @@ Grid.prototype._setConfig = function(config){
        keyName: 'id',
        path: '',
        buttons: undefined,
+       editable: true,
+       removeable: true,
        functions: {},
        services: function(service, remote){},
        controllers: function($scope, service){},
@@ -55,7 +78,7 @@ Grid.prototype._setGridConfig = function(gridConfig){
         shrinkToFit: true,
         rowNum: 20,
         rowList: [10, 20, 30],
-        colNames:[],
+        //colNames:[],
         colModel:[],
         pager: "#pager",
         viewrecords: false,
@@ -279,17 +302,25 @@ Grid.prototype.initCtrl = function(){
             });
         };
 
+        if(that._config.editable){
+            that.addButton("编辑", "btn-xs btn-primary", "margin-left:5px;margin-right:5px;", "edit($id)");
+        }
+
+        if(that._config.removeable){
+            that.addButton("删除", "btn-xs btn-danger", "margin-left:5px;margin-right:5px;", "delete($id)");
+        }
+
         var opCol = {
         	name: 'op', 
         	align: 'center',
         	width: 10, 
         	formatter: function(cellvalue, options, rowObject){
         		var key = rowObject[that._config.keyName];
-                var edit = "<button type=\"button\" class=\"btn-xs btn-primary\" style=\"margin-left:5px;margin-right:5px;\" ng-click=edit('" + key + "')>编辑</button>";
-                var del = "<button type=\"button\" class=\"btn-xs btn-danger\" style=\"margin-left:5px;margin-right:5px;\" ng-click=delete('" + key + "')>删除</button>";
-                var customer = that.createButtons();
-                customer = customer.replace(/\$id/g, key);
-                var s = edit + del + customer;
+                var s = "";
+                for(var i=0; i<that._buttons.length;i++){
+                    s = s + that._buttons[i].render(rowObject);
+                }
+                s = s.replace(/\$id/g, key);
                 return "<span class=\"bage-action\">"  + s + "</span>";
             }
         } 
@@ -302,15 +333,29 @@ Grid.prototype.initCtrl = function(){
         that._config.datas($scope);
 
         for(var i = that._gridConfig.colModel.length; i--;){
-            if(that._gridConfig.colModel[i].formatter === undefined){
-                var filter = that._gridConfig.colModel[i].filter;
-                if(filter != undefined){
-                    that._gridConfig.colModel[i].formatter = (function(filter){
-                        return function(cellvalue, options, rowObject){
-                            return $filter(filter)(cellvalue);
+            var formatter = that._gridConfig.colModel[i].formatter;
+            if(formatter && typeof formatter != 'function' && formatter.startsWith("ng:")){
+                var filters = formatter.replace("ng:", "")
+                that._gridConfig.colModel[i].formatter = (function(filters){
+                    return function(cellvalue, options, rowObject){
+                        var list = filters.split("|");
+                        for(var ind in list){
+                            var filter = list[ind];
+                            var filterName;
+                            var params = [cellvalue]
+                            var tokenInd = filter.indexOf(":");
+                            if(tokenInd>0){
+                                filterName = filter.substring(0, tokenInd);
+                                var param = filter.substring(tokenInd+1);
+                                param = param.replace(/\"/g, "");
+                                params.push(param);
+                            }else{
+                                filterName = filter;
+                            }
+                            return $filter(filterName).apply(null, params);
                         }
-                    })(filter);
-                }
+                    }
+                })(filters);
             }
         }
 

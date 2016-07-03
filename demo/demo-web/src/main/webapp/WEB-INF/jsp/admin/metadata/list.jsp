@@ -44,7 +44,7 @@
             ]
         }
 
-        var grid = new Grid('bage-table', config, gridConfig);        
+        var grid = new Grid('bage-table', config, gridConfig);    
         grid.init();
         
       

@@ -22,6 +22,8 @@ public class Config {
 
 	public final static String DEFAULT_ADMIN_CONTROLLER_TEMPLATE = "web.admin.controller.ftl";
 
+	public final static String DEFAULT_ADMIN_VIEW_TEMPLATE = "web.admin.view.ftl";
+
 	/**
 	 * 是否拆分子项目
 	 */
@@ -148,6 +150,10 @@ public class Config {
 
 	public String getAdminControllerTemplate() {
 		return this.templateDir + "/" + DEFAULT_ADMIN_CONTROLLER_TEMPLATE;
+	}
+
+	public String getAdminViewTemplate() {
+		return this.templateDir + "/" + DEFAULT_ADMIN_VIEW_TEMPLATE;
 	}
 
 	public String getProjectDir() {
@@ -360,6 +366,17 @@ public class Config {
 	 */
 	public String getAdminControllerClassPath(String className) {
 		return this.getClassSavePath(getWebProjectDir(), this.getAdminControllerlPackage(), className);
+	}
+
+	/**
+	 * admin view 的保存路径
+	 * 
+	 * @param className
+	 * @return
+	 */
+	public String getAdminViewPath(String viewName) {
+		String viewSavePath = projectDir + "src" + "/main/webapp/WEB-INF/jsp/admin/" + viewName;
+		return viewSavePath;
 	}
 
 	public String getClassSavePath(String projectDir, String packageName, String className) {
