@@ -181,7 +181,7 @@ Grid.prototype.initCtrl = function(){
 
     this.app.controller('ctrl', ['$scope', '$filter', '$compile', 'Service', function($scope, $filter, $compile, service) {
 	   
-	    $scope.title = "用户管理";
+	    $scope.title = "";
 	    $scope.query = {};
 	    $scope.item = {};
 
@@ -303,11 +303,11 @@ Grid.prototype.initCtrl = function(){
         };
 
         if(that._config.editable){
-            that.addButton("编辑", "btn-xs btn-primary", "margin-left:5px;margin-right:5px;", "edit($id)");
+            that.addButton("编辑", "btn-xs btn-primary", "margin-left:5px;margin-right:5px;", "edit('$id')");
         }
 
         if(that._config.removeable){
-            that.addButton("删除", "btn-xs btn-danger", "margin-left:5px;margin-right:5px;", "delete($id)");
+            that.addButton("删除", "btn-xs btn-danger", "margin-left:5px;margin-right:5px;", "delete('$id')");
         }
 
         var opCol = {
