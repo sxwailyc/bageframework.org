@@ -23,6 +23,7 @@ import com.bageframework.dao.redis.Redis;
 import com.bageframework.mvc.request.BageHttpRequestWrapper;
 import com.bageframework.mvc.session.SessionDaoRedisImpl;
 import com.bageframework.mvc.session.SessionService;
+import com.bageframework.util.ResourcesUtil;
 
 public class BageFilter implements Filter {
 
@@ -36,9 +37,16 @@ public class BageFilter implements Filter {
 
 	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		logger.debug("do filter");
-		BageHttpRequestWrapper wrapper = new BageHttpRequestWrapper((HttpServletRequest) request, (HttpServletResponse) response, sessionService, bageConfig);
+		if (ResourcesUtil.isResource(((HttpServletRequest) request).getRequestURI())) {
+			chain.doFilter(request, response);
+			return;
+		}
+
+		BageHttpRequestWrapper wrapper = new BageHttpRequestWrapper((HttpServletRequest) request,
+				(HttpServletResponse) response, sessionService, bageConfig);
 		chain.doFilter(wrapper, response);
 	}
 

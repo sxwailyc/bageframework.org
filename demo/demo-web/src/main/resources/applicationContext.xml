@@ -27,6 +27,7 @@
 		<property name="excludeUris">
 			<list>
 				<value>/test.do</value>
+				<value>/index.do</value>
 			</list>
 		</property>
 	</bean>

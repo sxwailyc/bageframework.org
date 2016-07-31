@@ -30,15 +30,15 @@ public class AuthorityCheckerImpl implements AuthorityChecker {
 		String uri = request.getRequestURI();
 
 		// 权限验证
-		if (bageConfig.isNeedLogin(uri)) {
-			User user = (User) request.getSession().getAttribute("user");
-			if (user == null) {
-				response.sendRedirect(bageConfig.getLoginUrl() + "?redirect=" + uri);
-				return false;
-			}
-		} else {
-			logger.debug("不需要登陆验证.uri[" + uri + "]");
-		}
+//		if (bageConfig.isNeedLogin(uri)) {
+//			User user = (User) request.getSession().getAttribute("user");
+//			if (user == null) {
+//				response.sendRedirect(bageConfig.getLoginUrl() + "?rdrs=" + uri);
+//				return false;
+//			}
+//		} else {
+//			logger.debug("不需要登陆验证.uri[" + uri + "]");
+//		}
 
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
 		if (handlerMethod.getMethod().isAnnotationPresent(Authority.class)) {

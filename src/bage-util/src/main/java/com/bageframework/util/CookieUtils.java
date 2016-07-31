@@ -33,10 +33,11 @@ public class CookieUtils {
 	 * @param value
 	 * @param time
 	 */
-	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String name, String value, int time) {
+	public static void setCookie(HttpServletRequest request, HttpServletResponse response, String name, String value,
+			int time) {
 		Cookie cookie = new Cookie(name, value);
 		cookie.setMaxAge(time);
-		cookie.setPath(request.getServletContext().getContextPath());
+		cookie.setPath("/");
 		response.addCookie(cookie);
 	}
 }
