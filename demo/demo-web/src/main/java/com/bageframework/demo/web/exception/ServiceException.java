@@ -3,7 +3,7 @@ package com.bageframework.demo.web.exception;
 /**
  * 业务异常
  * 
- * @author CJ
+ * @author shixiangwen
  * 
  */
 public class ServiceException extends RuntimeException {

@@ -28,7 +28,8 @@ public class BageFrameworkInterceptor implements HandlerInterceptor {
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
 
 		if (handler instanceof ResourceHttpRequestHandler) {
 			return true;
@@ -49,7 +50,12 @@ public class BageFrameworkInterceptor implements HandlerInterceptor {
 		return true;
 	}
 
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception {
+
+		if (handler instanceof ResourceHttpRequestHandler || modelAndView == null) {
+			return;
+		}
 
 		Map<String, ContextProcessor> processors = applicationContext.getBeansOfType(ContextProcessor.class);
 		for (Entry<String, ContextProcessor> entry : processors.entrySet()) {
@@ -58,13 +64,17 @@ public class BageFrameworkInterceptor implements HandlerInterceptor {
 				ContextProcessor processor = entry.getValue();
 				processor.process(request, response, modelAndView);
 			} catch (Exception e) {
+				if (logger.isDebugEnabled()) {
+					throw e;
+				}
 				logger.error("context process error." + e.getMessage());
 			}
 		}
 
 	}
 
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+			throws Exception {
 
 	}
 

@@ -33,7 +33,7 @@
         var grid = new Grid('bage-table', config, gridConfig);   
         grid.addButton("EDIT", "btn-xs btn-primary", "margin-left:5px;margin-right:5px;", "edit($id)", function(row){
             if(row.id==2){
-                return true;
+                return false;
             }
             return false;
         });         

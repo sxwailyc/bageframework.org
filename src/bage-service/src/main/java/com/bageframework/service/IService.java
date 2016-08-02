@@ -64,6 +64,13 @@ public interface IService<BEAN, VO_BEAN, ADMIN_VO_BEAN, KEYTYPE> {
 	/**
 	 * 获取列表
 	 * 
+	 * @return
+	 */
+	public List<BEAN> getList();
+
+	/**
+	 * 获取列表
+	 * 
 	 * @param parentId
 	 * @param start
 	 * @param size
@@ -79,6 +86,15 @@ public interface IService<BEAN, VO_BEAN, ADMIN_VO_BEAN, KEYTYPE> {
 	 * @return
 	 */
 	public List<VO_BEAN> getVOList(int start, int size);
+
+	/**
+	 * 获取ViewObject列表
+	 * 
+	 * @param start
+	 * @param size
+	 * @return
+	 */
+	public List<VO_BEAN> getVOList();
 
 	/**
 	 * 取ViewObject列表

@@ -30,7 +30,7 @@ public class CategoryServiceImpl extends BaseService<Category, CategoryVO, Categ
 
 	@Override
 	public CategoryVO model2Vo(Category bean) {
-		return null;
+		return CategoryVO.create(bean);
 	}
 
 	@Override

@@ -275,6 +275,7 @@ public class MetadataServiceImpl implements MetadataService {
 
 		Metadata metadata = metadataDao.get("table", table);
 		if (metadata != null) {
+
 			String modelClassName = metadata.getJavaClass();
 			viewMetadata.setModelClassName(modelClassName);
 			viewMetadata.setModelObjectName(modelClassName.substring(0, 1).toLowerCase() + modelClassName.substring(1));

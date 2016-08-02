@@ -128,11 +128,11 @@ body{
 .logo{
 	overflow: hidden;
 	float: left;
-	width: 137px;
+	width: 107px;
 	margin: 0;
 }
 .logo a{
-	height: 32px;
+	height: 44px;
 	display: block;
 	overflow: hidden;
 	text-indent: -9999px;
@@ -149,12 +149,13 @@ font-size: 14px;
 	line-height: 16px;
 	color: #bbb;
 	padding-left: 10px;
+	padding-top:5px;
 	position: relative;
 	top: 1px;
 	border-left: 2px solid #eaeaea;
 	margin-left: 10px;
 	overflow: hidden;
-	height: 32px;
+	height: 44px;
 }
 
 

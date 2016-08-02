@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="../inc/taglib.inc.jsp"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -33,11 +34,7 @@
 
 <body class="home blog site-layout-2">
     <%@include file="../inc/header.inc.jsp"%>
-    <div class="site-search">
-        <div class="container">
-            <form method="get" class="site-search-form" action="http://www.meiladys.com/"><input class="search-input" name="s" type="text" placeholder="输入关键字" value=""><button class="search-btn" type="submit"><i class="fa fa-search"></i></button></form>
-        </div>
-    </div>
+    <%@include file="../inc/search.inc.jsp"%>
     <section class="container">
         <div class="content-wrap">
             <div class="content">

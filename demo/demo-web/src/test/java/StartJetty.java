@@ -17,7 +17,7 @@ public class StartJetty {
 	private static Logger logger = Logger.getLogger(StartJetty.class);
 
 	public static void main(String[] args) throws Exception {
-		Server server = buildNormalServer(9000, "/");
+		Server server = buildNormalServer(80, "/");
 		server.start();
 	}
 

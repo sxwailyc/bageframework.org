@@ -20,5 +20,5 @@
 <script src="/js/plugins/jquery-confirm.js"></script>
 <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.js"></script>
 <script src="/js/rpc.js"></script>
- <script src="/js/bage/bage.core.js"></script>
+<script src="/js/bage/bage.core.js"></script>
 <script src="/js/angular.bage.grid.js"></script>

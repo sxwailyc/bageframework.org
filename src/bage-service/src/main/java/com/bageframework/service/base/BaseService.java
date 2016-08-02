@@ -51,6 +51,11 @@ public abstract class BaseService<BEAN, VO_BEAN, ADMIN_VO_BEAN, KEYTYPE> impleme
 	}
 
 	@Override
+	public List<BEAN> getList() {
+		return this.getList(0, Integer.MAX_VALUE);
+	}
+
+	@Override
 	public List<BEAN> getList(int parentId, int start, int size) {
 		return getDao().getList(parentId, start, size);
 	}
@@ -58,6 +63,11 @@ public abstract class BaseService<BEAN, VO_BEAN, ADMIN_VO_BEAN, KEYTYPE> impleme
 	@Override
 	public List<VO_BEAN> getVOList(int start, int size) {
 		return getVOList(0, start, size);
+	}
+
+	@Override
+	public List<VO_BEAN> getVOList() {
+		return getVOList(0, Integer.MAX_VALUE);
 	}
 
 	@Override

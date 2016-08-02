@@ -15,12 +15,12 @@ public class Test {
 
 		CoderService coderService = BeanFactory.getInstance().getBean(CoderServiceImpl.class);
 
-		String projectDir = "/Users/jackyshi/Documents/develop/workspace_common/bageframework/demo/demo-web/";
+		String projectDir = "D:/develop/workspace_java/bageframework/bageframework/demo/demo-web/";
 
 		config.projectDir(projectDir);
 
 		//coderService.generate(config, "role");
-		coderService.generate(config, "category");
+		coderService.generate(config, "article");
 		//coderService.generate(config, "property");
 	}
 }

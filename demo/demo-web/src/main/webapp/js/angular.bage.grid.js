@@ -73,7 +73,7 @@ Grid.prototype._setConfig = function(config){
 Grid.prototype._setGridConfig = function(gridConfig){
 
     this._gridConfig = {
-        height: 450,
+        height: 550,
         autowidth: true,
         shrinkToFit: true,
         rowNum: 20,
@@ -191,7 +191,7 @@ Grid.prototype.initCtrl = function(){
 
 	    $scope.pagination = {
 		    pageNo: 1,
-		    pageSize: 10
+		    pageSize: that._gridConfig.rowNum
 		};
 
          $scope.search = function(){

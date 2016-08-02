@@ -8,13 +8,9 @@
     <%@include file="../js.inc.jsp"%>
     <script>
 
-        var buttons = '<button type="button" class="btn-xs btn-info" style="margin-left:5px;margin-right:5px;" ng-click=syncFromDb(\'$id\')>同步数据库</button>';
-        buttons = buttons + '<a href="/admin/property/list.do?metadataId=$id" ><button type="button" class="btn-xs btn-info" style="margin-left:5px;margin-right:5px;" )>字段</button></a>'
-
         var config = {
             path: 'metadata',
             keyName: 'id',
-            buttons: buttons,
             functions: ['syncFromDb'],
             services: function(service, remote){
                 service.syncFromDb = function(id, successCallback){
@@ -31,6 +27,9 @@
                         });
                     });
                 };
+                $scope.propertys = function(id){
+                    window.location = "/admin/property/list.do?metadataId=" + id;
+                }
             }
         }
         
@@ -45,6 +44,9 @@
         }
 
         var grid = new Grid('bage-table', config, gridConfig);    
+        grid.addButton("同步数据库", "btn-xs btn-primary", "margin-left:5px;margin-right:5px;", "syncFromDb('$id')"); 
+        grid.addButton("字段", "btn-xs btn-primary", "margin-left:5px;margin-right:5px;", "propertys('$id')"); 
+
         grid.init();
         
       

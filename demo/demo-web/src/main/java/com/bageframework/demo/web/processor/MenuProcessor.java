@@ -23,13 +23,13 @@ public class MenuProcessor implements ContextProcessor {
 	@Override
 	public void process(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) {
 
-		User user = (User) request.getSession().getAttribute("user");
-		if (user == null) {
-			return;
-		}
+//		User user = (User) request.getSession().getAttribute("user");
+//		if (user == null) {
+//			return;
+//		}
 
-		List<MenuAdminVO> menus = menuService.getAdminVOList();
-
-		modelAndView.addObject("menus", menus);
+//		List<MenuAdminVO> menus = menuService.getAdminVOList();
+//
+//		modelAndView.addObject("menus", menus);
 	}
 }
