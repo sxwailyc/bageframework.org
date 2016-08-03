@@ -41,9 +41,10 @@ public class ArticleAdminController {
 	}
 
 	@RequestMapping
-	public ModelAndView edit(HttpServletRequest req, Number id) {
+	public ModelAndView edit(HttpServletRequest req, Number articleId) {
 
 		ModelAndView model = new ModelAndView("/admin/article/edit");
+		model.addObject("articleId", articleId);
 		return model;
 
 	}

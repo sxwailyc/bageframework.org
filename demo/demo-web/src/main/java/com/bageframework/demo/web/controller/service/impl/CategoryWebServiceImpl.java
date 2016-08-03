@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import com.bageframework.demo.web.vo.CategoryVO;
 import com.bageframework.demo.web.service.CategoryService;
 import com.bageframework.demo.web.vo.admin.CategoryAdminVO;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -18,13 +21,18 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Service
 public class CategoryWebServiceImpl extends BaseWebService<Category, CategoryVO, CategoryAdminVO, Integer> implements CategoryWebService {
-   
-    @Autowired
+
+	@Autowired
 	private CategoryService categoryService;
-	
+
 	@Override
 	public IService<Category, CategoryVO, CategoryAdminVO, Integer> getService() {
 		return categoryService;
 	}
-}
 
+	@Override
+	public List<Category> getList() {
+		return categoryService.getList();
+	}
+
+}

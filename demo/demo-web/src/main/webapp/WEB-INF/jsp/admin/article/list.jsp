@@ -20,6 +20,10 @@
                 $scope.add = function(){
                     window.location = "/admin/article/edit.do";
                 }
+
+                $scope.edit = function(id){
+                    window.location = "/admin/article/edit.do?articleId=" + id;
+                }
             }
         }
         
@@ -34,7 +38,7 @@
                 {"name":"isRecom","label":"是否推荐","width":10,"formatter":"string"},
                 {"name":"commentCount","label":"评论数","width":10,"formatter":"string"},
                 {"name":"viewCount","label":"查看数","width":10,"formatter":"string"},
-                {"name":"createdTime","label":"创建时间","width":10,"formatter":"string"},
+                {"name":"createdTime","label":"创建时间","width":10,"formatter":'ng:date:"yyyy-MM-dd hh:mm:ss"'},
                 {"name":"createdUser","label":"创建用户","width":10,"formatter":"string"},
             ]
         }
@@ -72,78 +76,4 @@
         </div>
     </div>
     <!--end-->
-    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="exampleModalLabel">ADD&EDIT</h4>
-                </div>
-                <div class="modal-body">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">标题：</label>
-                        <div class="col-sm-8">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.title">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">分类：</label>
-                        <div class="col-sm-8">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.category">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">关键字：</label>
-                        <div class="col-sm-8">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.keyword">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">摘要：</label>
-                        <div class="col-sm-8">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.summary">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">静态地址：</label>
-                        <div class="col-sm-8">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.static_name">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">标签：</label>
-                        <div class="col-sm-8">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.tags">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">内容：</label>
-                        <div class="col-sm-8">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.content">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">缩略图：</label>
-                        <div class="col-sm-8">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.thumbnail">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">是否推荐：</label>
-                        <div class="col-sm-8">
-                            <input type="text" placeholder="" class="form-control" ng-model="item.is_recom">
-                        </div>
-                    </div>
-                </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal" id="close">关闭</button>
-                  <button type="button" class="btn btn-primary" ng-click="submit()">保存</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
