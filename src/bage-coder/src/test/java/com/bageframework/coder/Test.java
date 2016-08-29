@@ -20,7 +20,7 @@ public class Test {
 		config.projectDir(projectDir);
 
 		//coderService.generate(config, "role");
-		coderService.generate(config, "article");
+		coderService.generate(config, "spider_task");
 		//coderService.generate(config, "property");
 	}
 }

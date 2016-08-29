@@ -1,21 +1,45 @@
 <div class="pagetitle">
-     <h1>护肤方法</h1>
+     <h1>${categoryName}</h1>
 </div>
-    <article class="excerpt excerpt-1 excerpt-text">
-        <header>
-            <h2><a target="_blank" href="http://www.meiladys.com/325.html" title="推荐更胜于康宝莱奶昔减肥的水果组合-美丽女人">推荐更胜于康宝莱奶昔减肥的水果组合</a></h2>
-        </header>
-        <p class="meta"><time><i class="fa fa-clock-o"></i>2016-04-17</time><span class="author"><i class="fa fa-user"></i>mtime</span><span class="pv"><i class="fa fa-eye"></i>阅读(362)</span><a class="pc" href="http://www.meiladys.com/325.html#comments"><i class="fa fa-comments-o"></i>评论(0)</a></p><p class="note">如果想要健康减肥瘦身，或者可以试一下这几种： 1、木瓜+酸奶&#8212;-木瓜作为常见的丰胸水果，大家应该都不陌生。其实，木瓜不仅可以丰胸，它的热量也非常低，还能饱腹，因此把木瓜榨汁掺到酸奶里一起饮用，是一个不错的选择，这样既减肥又丰胸哦 [&hellip;]</p>
+    <c:forEach items="${list}" var="article" varStatus="current">
+    <article class="excerpt excerpt-${current.count}">
+         <a class="focus" href="/article/${article.staticName}">
+           <img data-src="${article.thumbnail}" class="thumb" src="${article.thumbnail}" style="display: inline;">
+         </a>
+         <header><a class="cat" href="/${categoryName}.html">${categoryName}<i></i></a> <h2>
+           <a href="/article/${article.staticName}" title="${article.title}">${article.title}</a></h2>
+         </header>
+          <p class="meta"><time><i class="fa fa-clock-o"></i><fmt:formatDate value="${item.createdTime}" pattern="yyyy-dd-MM" /></time><span class="author">
+          <i class="fa fa-user"></i>${item.publisher}</span><span class="pv"><i class="fa fa-eye"></i>阅读((${article.viewCount})</span>
+          <a class="pc" href=""><i class="fa fa-comments-o"></i>评论(${article.commentCount})</a></p>
+          <p class="note">${article.summary}</p>
     </article>
-    <article class="excerpt excerpt-2 excerpt-text"><header><h2><a target="_blank" href="http://www.meiladys.com/321.html" title="皮肤好真的是护肤品好吗？-美丽女人">皮肤好真的是护肤品好吗？</a></h2></header><p class="meta"><time><i class="fa fa-clock-o"></i>2016-03-21</time><span class="author"><i class="fa fa-user"></i>mtime</span><span class="pv"><i class="fa fa-eye"></i>阅读(371)</span><a class="pc" href="http://www.meiladys.com/321.html#comments"><i class="fa fa-comments-o"></i>评论(0)</a></p><p class="note">　　从我个人来说，绝不是化妆品功效，我37岁，不熟悉的人见到我觉得我是快三十岁的样子。我生活习惯是常很晚睡，脾气不好爱发火，也不用贵的护肤品，因为比较了解这类东西的生产成本往往占售价的比例相当之低所以花钱买日化类东西觉得非常亏很上当要滴血的 [&hellip;]</p></article><article class="excerpt excerpt-3 excerpt-text"><header><h2><a target="_blank" href="http://www.meiladys.com/317.html" title="你身边那些不知道的美容妙招(祛斑,美白,养生)-美丽女人">你身边那些不知道的美容妙招(祛斑,美白,养生)</a></h2></header><p class="meta"><time><i class="fa fa-clock-o"></i>2016-02-28</time><span class="author"><i class="fa fa-user"></i>mtime</span><span class="pv"><i class="fa fa-eye"></i>阅读(384)</span><a class="pc" href="http://www.meiladys.com/317.html#comments"><i class="fa fa-comments-o"></i>评论(0)</a></p><p class="note">1.  每日防晒，用量一定要够。 2.  雀斑激光可以祛除，涂抹护肤品效果不大。 补充d：需找正规医院和正规医生来操作，正常情况下不会反弹。但是大多数人做了第一次恢复后无法完全满意，过半年以后可以做第二次，医院是免费的。去除率我觉得能到80 [&hellip;]</p></article><article class="excerpt excerpt-4 excerpt-text"><header><h2><a target="_blank" href="http://www.meiladys.com/314.html" title="你身边那些不知道的美容妙招(痘痘肌肤)-美丽女人">你身边那些不知道的美容妙招(痘痘肌肤)</a></h2></header><p class="meta"><time><i class="fa fa-clock-o"></i>2016-02-28</time><span class="author"><i class="fa fa-user"></i>mtime</span><span class="pv"><i class="fa fa-eye"></i>阅读(258)</span><a class="pc" href="http://www.meiladys.com/314.html#comments"><i class="fa fa-comments-o"></i>评论(0)</a></p><p class="note">1. 最重要的，如果有点严重，一定要去看医生。 2. 如果痘痘不严重，务必每日擦防晒，因为紫外线会加剧。如果严重囊肿、发炎、红包，请不要用防晒霜，改用口罩、墨镜、阳伞物理防晒。 3.不严重，化妆无大碍，严重的一定不要化妆！！切记！！尤其不要 [&hellip;]</p></article><article class="excerpt excerpt-5 excerpt-text"><header><h2><a target="_blank" href="http://www.meiladys.com/311.html" title="你身边那些不知道的美容妙招(护肤品)-美丽女人">你身边那些不知道的美容妙招(护肤品)</a></h2></header><p class="meta"><time><i class="fa fa-clock-o"></i>2016-02-28</time><span class="author"><i class="fa fa-user"></i>mtime</span><span class="pv"><i class="fa fa-eye"></i>阅读(246)</span><a class="pc" href="http://www.meiladys.com/311.html#comments"><i class="fa fa-comments-o"></i>评论(0)</a></p><p class="note">1. 护肤品中真正能起到护理、改善皮肤的产品是精华和面霜，原则上不干燥的话，脸上真的不需要涂抹那么多层。 2. 防晒一年四季都需要，关键是脸部用量要用够一个硬币大，否则跟没用似得。（不觉得高原地区的人看起来都老一些么？） 3.不要频繁更换护 [&hellip;]</p></article><article class="excerpt excerpt-6 excerpt-text"><header><h2><a target="_blank" href="http://www.meiladys.com/297.html" title="你是为了什么整容-美丽女人">你是为了什么整容</a></h2></header><p class="meta"><time><i class="fa fa-clock-o"></i>2016-02-18</time><span class="author"><i class="fa fa-user"></i>mtime</span><span class="pv"><i class="fa fa-eye"></i>阅读(315)</span><a class="pc" href="http://www.meiladys.com/297.html#comments"><i class="fa fa-comments-o"></i>评论(0)</a></p><p class="note">高三，来自一个小县城，全校高三带上补习生，大概八百人，我在重点班，一般全校50多名以内，全班稳稳前三，重点大学应该没问题，身材绝对没的说，167，五十公斤，罩杯C，我应该是那种超有自信的女生吧？对啊，我也这样认为。 但是我丑 其实没到那种惨 [&hellip;]</p></article><article class="excerpt excerpt-7 excerpt-text"><header><h2><a target="_blank" href="http://www.meiladys.com/288.html" title="大学生适合的护肤品/化妆品推荐方案-美丽女人">大学生适合的护肤品/化妆品推荐方案</a></h2></header><p class="meta"><time><i class="fa fa-clock-o"></i>2016-02-05</time><span class="author"><i class="fa fa-user"></i>mtime</span><span class="pv"><i class="fa fa-eye"></i>阅读(302)</span><a class="pc" href="http://www.meiladys.com/288.html#comments"><i class="fa fa-comments-o"></i>评论(0)</a></p><p class="note">月生活费1500，算了半天觉得护肤品每月花销要控制在300块钱以内，这样才不会捉襟见肘。 300块一个月，算一算吧，其实也很紧张的。所以好钢要用在刀刃上，把钱投资到精华-水-乳液上。 洗面奶：70g的洗面奶可以用2-2.5个月。最便宜的氨基 [&hellip;]</p></article><article class="excerpt excerpt-8 excerpt-text"><header><h2><a target="_blank" href="http://www.meiladys.com/279.html" title="女生长痘（痤疮）怎么办？-美丽女人">女生长痘（痤疮）怎么办？</a></h2></header><p class="meta"><time><i class="fa fa-clock-o"></i>2016-01-26</time><span class="author"><i class="fa fa-user"></i>mtime</span><span class="pv"><i class="fa fa-eye"></i>阅读(220)</span><a class="pc" href="http://www.meiladys.com/279.html#comments"><i class="fa fa-comments-o"></i>评论(0)</a></p><p class="note">有对比图。观看可能会引起不适。 现在： 别人拍的我：（有黑照） \ &nbsp; 之前脸上就是偶尔蹦一两颗痘，从15年4月份开始大面积爆痘。我认为原因如下： 1.学业压力大 2.心理压力大 3.晚睡 4.不爱运动 5.和当时男朋友成天吃辣的 [&hellip;]</p></article><article class="excerpt excerpt-9 excerpt-text"><header><h2><a target="_blank" href="http://www.meiladys.com/262.html" title="2015年粉底哪家比较好？-美丽女人">2015年粉底哪家比较好？</a></h2></header><p class="meta"><time><i class="fa fa-clock-o"></i>2016-01-18</time><span class="author"><i class="fa fa-user"></i>mtime</span><span class="pv"><i class="fa fa-eye"></i>阅读(570)</span><a class="pc" href="http://www.meiladys.com/262.html#comments"><i class="fa fa-comments-o"></i>评论(0)</a></p><p class="note">隔离就是妆前乳但是为了顺手我还是打隔离了啊 坐标天气也影响底妆啊楼主不说清楚咋能玩耍 我只能自己假设了 一般意义上的底妆全套应该包括了防晒 隔离 粉底 遮瑕 蜜粉。cpb遮瑕一年四季可遮痘印 遮黑眼圈太干 即使是日柜的。 这里假设你是冬天要 [&hellip;]</p></article><article class="excerpt excerpt-10 excerpt-text"><header><h2><a target="_blank" href="http://www.meiladys.com/259.html" title="日本哪些化妆品护肤品特别好？-美丽女人">日本哪些化妆品护肤品特别好？</a></h2></header><p class="meta"><time><i class="fa fa-clock-o"></i>2016-01-17</time><span class="author"><i class="fa fa-user"></i>mtime</span><span class="pv"><i class="fa fa-eye"></i>阅读(582)</span><a class="pc" href="http://www.meiladys.com/259.html#comments"><i class="fa fa-comments-o"></i>评论(0)</a></p><p class="note">日本我认为很多护肤品之所以热销是有他的原因的，日本这个国家，由于自然环境恶劣，所以当地的居民很多都是敏感性皮肤，这就要求他们的护肤品工艺上需要注重天然无添加，而日本人酷爱化妆，为此她们的护肤品和彩妆品都更为安全，让人用着放心。那我就说下我了 [&hellip;]</p>
-    </article>
+    </c:forEach>
     <div class="pagination">
         <ul>
-            <li class="prev-page"></li>
-            <li class="active"><span>1</span></li>
-            <li><a href='http://www.meiladys.com/hufu/page/2'>2</a></li>
-            <li><a href='http://www.meiladys.com/hufu/page/3'>3</a></li>
-            <li class="next-page"><a href="http://www.meiladys.com/hufu/page/2" >下一页</a></li>
-            <li><span>共 3 页</span></li>
+            <li class="prev-page">
+                <c:if test="${page.page != 1}">
+                   <c:if test="${page.page != 2}">
+	                  <a href="/${page.category}-${page.page-1}.html" >上一页</a>
+	               </c:if>
+	               <c:if test="${page.page == 2}">
+	                  <a href="/${page.category}.html" >上一页</a>
+	               </c:if>
+	            </c:if>
+            </li>
+            <c:forEach items="${page.pages}" var="item" varStatus="current">
+                <c:if test="${item == page.page}">
+                   <li class="active"><span>${item}</span></li>
+                </c:if>
+                <c:if test="${item != page.page}">
+                   <li><a href="/${page.category}-${item}.html">${item}</a></li>
+                </c:if>
+            </c:forEach>
+            <li class="next-page">
+	            <c:if test="${page.page < page.totalPage}">
+	             <a href="/${page.category}-${page.page+1}.html" >下一页</a>
+	            </c:if>
+            </li>
+            <li><span>共 ${page.totalPage} 页</span></li>
         </ul>
     </div>		

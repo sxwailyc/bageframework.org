@@ -99,6 +99,20 @@ public class BaseMysqlDao<T> {
 		return new Page<T>(data, count);
 	}
 
+	public int getCount(int parentId) {
+		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
+		String parentColumn = SQLHelper.getParentColumn(entityClass);
+		select.equal(parentColumn, parentId);
+		int count = jdbc.getInt(select.getCountSql(), select.getParams());
+		return count;
+	}
+
+	public int getCount() {
+		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
+		int count = jdbc.getInt(select.getCountSql(), select.getParams());
+		return count;
+	}
+
 	public List<T> getList(int start, int size) {
 		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
 		select.limit(start, size);

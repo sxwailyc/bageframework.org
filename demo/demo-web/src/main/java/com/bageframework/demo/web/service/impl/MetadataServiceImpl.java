@@ -57,16 +57,17 @@ public class MetadataServiceImpl extends BaseService<Metadata, MetadataVO, Metad
 		propertyDao.getList(id);
 
 		List<Column> columns = metadataDaoDao.getColumns(metadata.getTable());
+		int sort = 1;
 		for (Column column : columns) {
 			Property property = new Property();
-			property.setEdit(1);
+			property.setEdit(0);
 			property.setFormType(FormType.TEXT.getValue());
 			property.setMetadataId(id);
 			property.setName(column.getField());
 			property.setRemark(column.getComment());
-			property.setSearch(1);
+			property.setSearch(0);
 			property.setShow(1);
-			property.setSort(1);
+			property.setSort(sort++);
 			property.setType(Type.parse(column.getType()).getValue());
 			propertyDao.add(property);
 		}

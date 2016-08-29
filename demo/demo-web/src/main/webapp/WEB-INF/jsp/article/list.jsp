@@ -14,7 +14,7 @@
     
     <link rel="shortcut icon" href="http://www.meiladys.com/favicon.ico">
     
-    <title>美丽女人-护肤品排行榜前十名 | 日本、韩国护肤品品牌推荐</title>
+    <title>${category.remark}--${siteConfig.name}</title>
     <%@include file="../inc/css.inc.jsp"%>
     <%@include file="../inc/js.inc.jsp"%>
     <script type="text/javascript">

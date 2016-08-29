@@ -87,6 +87,15 @@ public abstract class BaseService<BEAN, VO_BEAN, ADMIN_VO_BEAN, KEYTYPE> impleme
 	}
 
 	@Override
+	public int getCount(int parentId) {
+		if (parentId > 0) {
+			return getDao().getCount(parentId);
+		} else {
+			return getDao().getCount();
+		}
+	}
+
+	@Override
 	public Page<ADMIN_VO_BEAN> getPage(int start, int size) {
 		Page<BEAN> page = getDao().getPage(start, size);
 		return this.getPage(page);

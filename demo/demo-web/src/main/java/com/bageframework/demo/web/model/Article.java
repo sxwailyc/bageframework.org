@@ -1,7 +1,10 @@
 package com.bageframework.demo.web.model;
 
-import com.bageframework.dao.annotation.AutoDate;
 import java.util.Date;
+
+import com.bageframework.dao.annotation.AutoDate;
+import com.bageframework.dao.annotation.OrderDesc;
+import com.bageframework.dao.annotation.ParentID;
 import com.bageframework.dao.annotation.PrimaryKey;
 
 /**
@@ -17,7 +20,8 @@ public class Article {
 
 	private String title;
 
-	private Integer category;
+	@ParentID
+	private int category;
 
 	private String keyword;
 
@@ -39,7 +43,10 @@ public class Article {
 
 	private int viewCount;
 
+	private String publisher;
+
 	@AutoDate
+	@OrderDesc
 	private Date createdTime;
 
 	private String createdUser;
@@ -60,11 +67,11 @@ public class Article {
 		this.title = title;
 	}
 
-	public Integer getCategory() {
+	public int getCategory() {
 		return category;
 	}
 
-	public void setCategory(Integer category) {
+	public void setCategory(int category) {
 		this.category = category;
 	}
 
@@ -128,7 +135,7 @@ public class Article {
 		return isRecom;
 	}
 
-	public void setIsRecom(Integer isRecom) {
+	public void setIsRecom(int isRecom) {
 		this.isRecom = isRecom;
 	}
 
@@ -136,7 +143,7 @@ public class Article {
 		return commentCount;
 	}
 
-	public void setCommentCount(Integer commentCount) {
+	public void setCommentCount(int commentCount) {
 		this.commentCount = commentCount;
 	}
 
@@ -144,7 +151,7 @@ public class Article {
 		return viewCount;
 	}
 
-	public void setViewCount(Integer viewCount) {
+	public void setViewCount(int viewCount) {
 		this.viewCount = viewCount;
 	}
 
@@ -162,6 +169,14 @@ public class Article {
 
 	public void setCreatedUser(String createdUser) {
 		this.createdUser = createdUser;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
 	}
 
 }

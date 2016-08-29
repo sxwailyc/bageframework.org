@@ -107,6 +107,13 @@ public interface IService<BEAN, VO_BEAN, ADMIN_VO_BEAN, KEYTYPE> {
 	public List<VO_BEAN> getVOList(int parentId, int start, int size);
 
 	/**
+	 * 
+	 * @param parentId
+	 * @return
+	 */
+	public int getCount(int parentId);
+
+	/**
 	 * 获取分页列表
 	 * 
 	 * @param start

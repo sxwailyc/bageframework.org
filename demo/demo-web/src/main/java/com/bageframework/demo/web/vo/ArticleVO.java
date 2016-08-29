@@ -1,8 +1,12 @@
 package com.bageframework.demo.web.vo;
 
-import com.bageframework.dao.annotation.AutoDate;
 import java.util.Date;
+
+import org.springframework.beans.BeanUtils;
+
+import com.bageframework.dao.annotation.AutoDate;
 import com.bageframework.dao.annotation.PrimaryKey;
+import com.bageframework.demo.web.model.Article;
 
 /**
  * 
@@ -12,157 +16,182 @@ import com.bageframework.dao.annotation.PrimaryKey;
  */
 public class ArticleVO {
 
-    @PrimaryKey
-    private Integer id;
-    
-    private String title;
-    
-    private Integer category;
-    
-    private String keyword;
-    
-    private String summary;
-    
-    private String staticName;
-    
-    private String tags;
-    
-    private String content;
-    
-    private String thumbnail;
-    
-    private Integer isImg;
-    
-    private Integer isRecom;
-    
-    private Integer commentCount;
-    
-    private Integer viewCount;
-    
-    @AutoDate
-    private Date createdTime;
-    
-    private String createdUser;
-    
-  
-    public Integer getId() {
-        return id;
-    }
+	@PrimaryKey
+	private Integer id;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-  
-    public String getTitle() {
-        return title;
-    }
+	private String title;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-  
-    public Integer getCategory() {
-        return category;
-    }
+	private Integer category;
 
-    public void setCategory(Integer category) {
-        this.category = category;
-    }
-  
-    public String getKeyword() {
-        return keyword;
-    }
+	private String keyword;
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
-  
-    public String getSummary() {
-        return summary;
-    }
+	private String summary;
 
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-  
-    public String getStaticName() {
-        return staticName;
-    }
+	private String staticName;
 
-    public void setStaticName(String staticName) {
-        this.staticName = staticName;
-    }
-  
-    public String getTags() {
-        return tags;
-    }
+	private String tags;
 
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
-  
-    public String getContent() {
-        return content;
-    }
+	private String content;
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-  
-    public String getThumbnail() {
-        return thumbnail;
-    }
+	private String thumbnail;
 
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-  
-    public Integer getIsImg() {
-        return isImg;
-    }
+	private Integer isImg;
 
-    public void setIsImg(Integer isImg) {
-        this.isImg = isImg;
-    }
-  
-    public Integer getIsRecom() {
-        return isRecom;
-    }
+	private Integer isRecom;
 
-    public void setIsRecom(Integer isRecom) {
-        this.isRecom = isRecom;
-    }
-  
-    public Integer getCommentCount() {
-        return commentCount;
-    }
+	private Integer commentCount;
 
-    public void setCommentCount(Integer commentCount) {
-        this.commentCount = commentCount;
-    }
-  
-    public Integer getViewCount() {
-        return viewCount;
-    }
+	private Integer viewCount;
 
-    public void setViewCount(Integer viewCount) {
-        this.viewCount = viewCount;
-    }
-  
-    public Date getCreatedTime() {
-        return createdTime;
-    }
+	@AutoDate
+	private Date createdTime;
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
-    }
-  
-    public String getCreatedUser() {
-        return createdUser;
-    }
+	private String createdUser;
 
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
+	private String publisher;
+
+	private String categoryName;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Integer getCategory() {
+		return category;
+	}
+
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public String getStaticName() {
+		return staticName;
+	}
+
+	public void setStaticName(String staticName) {
+		this.staticName = staticName;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	public Integer getIsImg() {
+		return isImg;
+	}
+
+	public void setIsImg(Integer isImg) {
+		this.isImg = isImg;
+	}
+
+	public Integer getIsRecom() {
+		return isRecom;
+	}
+
+	public void setIsRecom(Integer isRecom) {
+		this.isRecom = isRecom;
+	}
+
+	public Integer getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(Integer commentCount) {
+		this.commentCount = commentCount;
+	}
+
+	public Integer getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(Integer viewCount) {
+		this.viewCount = viewCount;
+	}
+
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public String getCreatedUser() {
+		return createdUser;
+	}
+
+	public void setCreatedUser(String createdUser) {
+		this.createdUser = createdUser;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public static ArticleVO create(Article bean) {
+		ArticleVO vo = new ArticleVO();
+		BeanUtils.copyProperties(bean, vo);
+		return vo;
+	}
 
 }

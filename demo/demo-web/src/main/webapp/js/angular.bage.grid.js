@@ -84,7 +84,6 @@ Grid.prototype._setGridConfig = function(gridConfig){
         viewrecords: false,
         caption: "",
         add: true,
-	    add: true,
 	    edit: false,
 	    del: false,
 	    search: false,
@@ -225,6 +224,16 @@ Grid.prototype.initCtrl = function(){
             });
             $('#addModal').modal();
         };
+
+        $scope.getItem = function(key){
+            var item ;
+            angular.forEach($scope.data, function(data){
+                if(data[that._config.keyName] == key){
+                   item = data;
+                }
+            });
+            return item;
+        }
 
         //delete row 
         $scope.delete = function(key, successCallback, errorCallback){
@@ -386,6 +395,8 @@ Grid.prototype.initCtrl = function(){
             var width = $('.table_wrapper').width();
             $("#" + that._tableId).setGridWidth(width);
         });
+
+        that.app.$scope = $scope;
 
     }]); 
 }

@@ -26,16 +26,30 @@ public class StaticProxyController {
 
 	private static Logger logger = Logger.getLogger(StaticProxyController.class);
 
-	@RequestMapping(value = { "/{date}/{name}" })
-	public ResponseEntity<byte[]> handle(HttpServletRequest req, HttpServletResponse res, @PathVariable("date") String date, @PathVariable("name") String name) throws IOException {
+	@RequestMapping(value = { "/{name}", "/{dir1}/{name}", "/{dir1}/{dir2}/{name}", "/{dir1}/{dir2}/{dir3}/{name}" })
+	public ResponseEntity<byte[]> handle(HttpServletRequest req, HttpServletResponse res, @PathVariable("dir1") String dir1, @PathVariable("dir2") String dir2,
+			@PathVariable("dir3") String dir3, @PathVariable("name") String name) throws IOException {
 
-		String fullFilename = date + "/" + name;
+		String fullFilename = name;
+		if (dir3 != null) {
+			fullFilename = dir1 + "/" + dir2 + "/" + dir3 + "/" + name;
+		} else if (dir2 != null) {
+			fullFilename = dir1 + "/" + dir2 + "/" + name;
+		} else if (dir1 != null) {
+			fullFilename = dir1 + "/" + name;
+		}
 		logger.debug(fullFilename);
 
-		String filename = SiteConfig.getUploadPath() + fullFilename;
+		return _handle(res, fullFilename);
+
+	}
+
+	private ResponseEntity<byte[]> _handle(HttpServletResponse res, String name) throws IOException {
+
+		String filename = SiteConfig.getUploadPath() + name;
 		File file = new File(filename);
 		if (!file.exists()) {
-			logger.warn("file not exist:" + fullFilename);
+			logger.warn("file not exist:" + name);
 			res.sendError(404);
 			return null;
 		}
@@ -43,10 +57,8 @@ public class StaticProxyController {
 		byte[] bytes = FileUtils.readFileToByteArray(file);
 
 		HttpHeaders headers = new HttpHeaders();
-		// headers.setContentDispositionFormData("attachment", name);
 		headers.setContentType(MediaType.IMAGE_JPEG);
 		return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.CREATED);
-
 	}
 
 }

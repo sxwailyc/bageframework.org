@@ -18,7 +18,7 @@
 
             service.remote = new rpc.ServiceProxy("/services/article", {
                 asynchronous: false,
-                methods: ['get', 'update', 'add']
+                methods: ['get', 'update', 'add', 'getStaticName']
             });
 
             service.remoteCategory = new rpc.ServiceProxy("/services/category", {
@@ -38,6 +38,10 @@
                 return service.remote.update(item);
             }
 
+            service.getStaticName = function(date, name){
+                return service.remote.getStaticName(date, name);
+            }
+
             service.getCategorys = function(){
                 return service.remoteCategory.getList();
             }
@@ -45,7 +49,7 @@
             return service;
         }]);
 
-        app.controller('ctrl', ['$scope', 'Service', function($scope, service) {
+        app.controller('ctrl', ['$scope', '$filter', 'Service', function($scope, $filter, service) {
             
             $scope.articleId = ${articleId};
 
@@ -80,6 +84,17 @@
                 }
             }
 
+               
+            $scope.getStaticName = function(){
+                try{
+                   var date = $filter("date")($scope.article.createdTime, "yyyy-MM-dd HH:mm:ss")
+                   var staticName = service.getStaticName(date, $scope.article.title);
+                   $scope.article.staticName = staticName;
+                }catch(error){
+                   Bage.successMsg('获取静态名称失败:' + error.message);   
+                }
+            }
+
             $scope.submit = function(){
                 $scope.article.content = $scope.editor.getContent();
                 if($scope.article.id){
@@ -106,7 +121,7 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>网站设置</h5>
+                        <h5>文章编辑</h5>
                     </div>
                     <div class="ibox-content">
                         <form method="get" class="form-horizontal">
@@ -114,14 +129,14 @@
                                 <label class="col-sm-1 control-label">文章标题</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" ng-model="article.title">
+                                    <input type="text" class="form-control" ng-model="article.title" ng-change="getStaticName()">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label">静态地址</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" ng-model="article.title">
+                                    <input type="text" class="form-control" ng-model="article.staticName">
                                 </div>
                             </div>
                             <div class="form-group">

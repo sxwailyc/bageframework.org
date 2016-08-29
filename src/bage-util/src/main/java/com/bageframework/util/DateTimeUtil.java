@@ -23,6 +23,11 @@ public class DateTimeUtil {
 		}
 	}
 
+	public static String date2String(Date date, String format) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+		return simpleDateFormat.format(date);
+	}
+
 	public static String date2String(Date date) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(FORMAT_STRING);
 		return simpleDateFormat.format(date);

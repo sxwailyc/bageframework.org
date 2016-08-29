@@ -14,7 +14,14 @@
             buttons: '',
             functions: ['syncFromDb'],
             services: function(service, remote){
+                service.remoteCategory = new rpc.ServiceProxy("/services/category", {
+                    asynchronous: false,
+                    methods: ['getList']
+                });
 
+                service.getCategorys = function(){
+                    return service.remoteCategory.getList();
+                }
             },
             controllers: function($scope, service){
                 $scope.add = function(){
@@ -22,24 +29,42 @@
                 }
 
                 $scope.edit = function(id){
-                    window.location = "/admin/article/edit.do?articleId=" + id;
+                    window.open("/admin/article/edit.do?articleId=" + id);
                 }
+
+                $scope.getCategoryName = function(k){
+                    for(var i = $scope.categorys.length; i--;){
+                        if($scope.categorys[i].id == k){
+                            return $scope.categorys[i].remark;
+                        }
+                    } 
+                    return 'unknow';
+                }
+
+                $scope.categorys = service.getCategorys(); 
+            },
+            filters: function(app){
+                app.filter('category', function($sce){
+                    return function(k){
+                        return app.$scope.getCategoryName(k);
+                    }
+                });
             }
         }
         
         var gridConfig = {
             colModel:[
-                {"name":"id","label":"","width":10,"formatter":"string"},
-                {"name":"title","label":"标题","width":10,"formatter":"string"},
-                {"name":"category","label":"分类","width":10,"formatter":"string"},
+                {"name":"id","label":"","width":3,"formatter":"string"},
+                {"name":"title","label":"标题","width":15,"formatter":"string"},
+                {"name":"category","label":"分类","width":5,"formatter":"ng:category"},
                 {"name":"keyword","label":"关键字","width":10,"formatter":"string"},
                 {"name":"staticName","label":"静态地址","width":10,"formatter":"string"},
-                {"name":"isImg","label":"是否图文","width":10,"formatter":"string"},
-                {"name":"isRecom","label":"是否推荐","width":10,"formatter":"string"},
-                {"name":"commentCount","label":"评论数","width":10,"formatter":"string"},
-                {"name":"viewCount","label":"查看数","width":10,"formatter":"string"},
+                {"name":"isImg","label":"是否图文","width":4,"formatter":"string"},
+                {"name":"isRecom","label":"是否推荐","width":4,"formatter":"string"},
+                {"name":"commentCount","label":"评论数","width":4,"formatter":"string"},
+                {"name":"viewCount","label":"查看数","width":4,"formatter":"string"},
                 {"name":"createdTime","label":"创建时间","width":10,"formatter":'ng:date:"yyyy-MM-dd hh:mm:ss"'},
-                {"name":"createdUser","label":"创建用户","width":10,"formatter":"string"},
+                {"name":"publisher","label":"创建用户","width":10,"formatter":"string"},
             ]
         }
 
@@ -61,7 +86,12 @@
                     <div class="ibox-content">
                             <div class="form-horizontal">
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-primary" ng-click="search()">查询</button>
+                                    <label class="col-md-1 control-label"> 分类: </label>
+                                    <div class="col-md-2">
+                                        <select class="form-control m-b" ng-model="query.category" ng-change="search()">
+                                            <option ng-repeat="option in categorys" value={{option.id}}>{{option.remark}}</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                     </div>
