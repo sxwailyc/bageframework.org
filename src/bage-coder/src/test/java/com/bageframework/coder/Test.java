@@ -21,6 +21,7 @@ public class Test {
 
 		//coderService.generate(config, "role");
 		coderService.generate(config, "spider_task");
+		//coderService.generate(config, table);
 		//coderService.generate(config, "property");
 	}
 }

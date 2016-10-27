@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="1608" started-at="2016-06-26T04:06:21Z" finished-at="2016-06-26T04:06:22Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="1608" started-at="2016-06-26T04:06:21Z" finished-at="2016-06-26T04:06:22Z">
+      <class name="com.bageframework.dao.JdbcTest">
+        <test-method status="PASS" signature="springTestContextBeforeTestClass()[pri:0, instance:com.bageframework.dao.JdbcTest@a97388b]" name="springTestContextBeforeTestClass" is-config="true" duration-ms="7" started-at="2016-06-26T12:06:21Z" finished-at="2016-06-26T12:06:21Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestClass -->
+        <test-method status="PASS" signature="springTestContextPrepareTestInstance()[pri:0, instance:com.bageframework.dao.JdbcTest@a97388b]" name="springTestContextPrepareTestInstance" is-config="true" duration-ms="852" started-at="2016-06-26T12:06:21Z" depends-on-methods="org.springframework.test.context.testng.AbstractTestNGSpringContextTests.springTestContextBeforeTestClass" finished-at="2016-06-26T12:06:22Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextPrepareTestInstance -->
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)[pri:0, instance:com.bageframework.dao.JdbcTest@a97388b]" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="1" started-at="2016-06-26T12:06:22Z" finished-at="2016-06-26T12:06:22Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.bageframework.dao.JdbcTest.testAdd()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestMethod -->
+        <test-method status="PASS" signature="testAdd()[pri:0, instance:com.bageframework.dao.JdbcTest@a97388b]" name="testAdd" duration-ms="736" started-at="2016-06-26T12:06:22Z" finished-at="2016-06-26T12:06:22Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAdd -->
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)[pri:0, instance:com.bageframework.dao.JdbcTest@a97388b]" name="springTestContextAfterTestMethod" is-config="true" duration-ms="1" started-at="2016-06-26T12:06:22Z" finished-at="2016-06-26T12:06:22Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.bageframework.dao.JdbcTest.testAdd()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestMethod -->
+        <test-method status="PASS" signature="springTestContextAfterTestClass()[pri:0, instance:com.bageframework.dao.JdbcTest@a97388b]" name="springTestContextAfterTestClass" is-config="true" duration-ms="1" started-at="2016-06-26T12:06:22Z" finished-at="2016-06-26T12:06:22Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestClass -->
+      </class> <!-- com.bageframework.dao.JdbcTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
