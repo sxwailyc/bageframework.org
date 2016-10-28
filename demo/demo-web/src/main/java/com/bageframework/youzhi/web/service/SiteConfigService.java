@@ -1,9 +1,9 @@
-package com.bageframework.demo.web.service;
+package com.bageframework.youzhi.web.service;
 
-import com.bageframework.demo.web.model.SiteConfig;
-import com.bageframework.demo.web.vo.SiteConfigVO;
-import com.bageframework.demo.web.vo.admin.SiteConfigAdminVO;
 import com.bageframework.service.IService;
+import com.bageframework.youzhi.web.model.SiteConfig;
+import com.bageframework.youzhi.web.vo.SiteConfigVO;
+import com.bageframework.youzhi.web.vo.admin.SiteConfigAdminVO;
 
 /**
  * 

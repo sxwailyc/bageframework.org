@@ -1,20 +1,20 @@
-package com.bageframework.demo.web.service.impl;
+package com.bageframework.youzhi.web.service.impl;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bageframework.dao.base.IDAO;
-import com.bageframework.demo.web.dao.WeixinArticleDao;
-import com.bageframework.demo.web.helper.ArticleHelper;
-import com.bageframework.demo.web.model.Article;
-import com.bageframework.demo.web.model.WeixinArticle;
-import com.bageframework.demo.web.service.ArticleService;
-import com.bageframework.demo.web.service.WeixinArticleService;
-import com.bageframework.demo.web.vo.WeixinArticleVO;
-import com.bageframework.demo.web.vo.admin.WeixinArticleAdminVO;
 import com.bageframework.service.base.BaseService;
 import com.bageframework.util.DateTimeUtil;
+import com.bageframework.youzhi.web.dao.WeixinArticleDao;
+import com.bageframework.youzhi.web.helper.ArticleHelper;
+import com.bageframework.youzhi.web.model.Article;
+import com.bageframework.youzhi.web.model.WeixinArticle;
+import com.bageframework.youzhi.web.service.ArticleService;
+import com.bageframework.youzhi.web.service.WeixinArticleService;
+import com.bageframework.youzhi.web.vo.WeixinArticleVO;
+import com.bageframework.youzhi.web.vo.admin.WeixinArticleAdminVO;
 
 /**
  * 

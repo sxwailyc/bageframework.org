@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.controller.admin;
+package com.bageframework.youzhi.web.controller.admin;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestMapping;

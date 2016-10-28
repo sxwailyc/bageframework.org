@@ -1,8 +1,8 @@
-package com.bageframework.demo.web.vo.admin;
+package com.bageframework.youzhi.web.vo.admin;
 
 import org.springframework.beans.BeanUtils;
 
-import com.bageframework.demo.web.model.User;
+import com.bageframework.youzhi.web.model.User;
 
 public class UserAdminVO {
 

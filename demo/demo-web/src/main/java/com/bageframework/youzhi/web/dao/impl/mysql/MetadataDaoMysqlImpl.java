@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.dao.impl.mysql;
+package com.bageframework.youzhi.web.dao.impl.mysql;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.bageframework.coder.model.Column;
 import com.bageframework.dao.base.mysql.BaseMysqlDao;
 import com.bageframework.dao.jdbc.Jdbc;
-import com.bageframework.demo.web.dao.MetadataDao;
-import com.bageframework.demo.web.model.Metadata;
+import com.bageframework.youzhi.web.dao.MetadataDao;
+import com.bageframework.youzhi.web.model.Metadata;
 
 /**
  * 

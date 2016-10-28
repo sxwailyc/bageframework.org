@@ -1,8 +1,9 @@
-package com.bageframework.demo.web.vo.admin;
+package com.bageframework.youzhi.web.vo.admin;
 
 import java.util.Date;
 import com.bageframework.dao.annotation.PrimaryKey;
-import com.bageframework.demo.web.model.WeixinArticle;
+import com.bageframework.youzhi.web.model.WeixinArticle;
+
 import org.springframework.beans.BeanUtils;
 
 /**

@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.controller;
+package com.bageframework.youzhi.web.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bageframework.demo.web.SiteConfig;
+import com.bageframework.youzhi.web.SiteConfig;
 
 @Controller
 @RequestMapping(StaticProxyController.DIR)

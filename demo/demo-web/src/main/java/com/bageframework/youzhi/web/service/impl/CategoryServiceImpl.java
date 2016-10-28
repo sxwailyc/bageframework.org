@@ -1,12 +1,14 @@
-package com.bageframework.demo.web.service.impl;
+package com.bageframework.youzhi.web.service.impl;
 
-import com.bageframework.demo.web.dao.CategoryDao;
-import com.bageframework.demo.web.model.Category;
 import com.bageframework.service.base.BaseService;
+import com.bageframework.youzhi.web.dao.CategoryDao;
+import com.bageframework.youzhi.web.model.Category;
+import com.bageframework.youzhi.web.service.CategoryService;
+import com.bageframework.youzhi.web.vo.CategoryVO;
+import com.bageframework.youzhi.web.vo.admin.CategoryAdminVO;
+
 import org.springframework.stereotype.Service;
-import com.bageframework.demo.web.vo.CategoryVO;
-import com.bageframework.demo.web.service.CategoryService;
-import com.bageframework.demo.web.vo.admin.CategoryAdminVO;
+
 import com.bageframework.dao.base.IDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 

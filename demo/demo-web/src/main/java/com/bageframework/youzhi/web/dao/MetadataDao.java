@@ -1,10 +1,10 @@
-package com.bageframework.demo.web.dao;
+package com.bageframework.youzhi.web.dao;
 
 import java.util.List;
 
 import com.bageframework.coder.model.Column;
 import com.bageframework.dao.base.IDAO;
-import com.bageframework.demo.web.model.Metadata;
+import com.bageframework.youzhi.web.model.Metadata;
 
 /**
  * 

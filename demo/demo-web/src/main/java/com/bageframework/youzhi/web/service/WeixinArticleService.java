@@ -1,9 +1,9 @@
-package com.bageframework.demo.web.service;
+package com.bageframework.youzhi.web.service;
 
-import com.bageframework.demo.web.vo.WeixinArticleVO;
-import com.bageframework.demo.web.vo.admin.WeixinArticleAdminVO;
 import com.bageframework.service.IService;
-import com.bageframework.demo.web.model.WeixinArticle;
+import com.bageframework.youzhi.web.model.WeixinArticle;
+import com.bageframework.youzhi.web.vo.WeixinArticleVO;
+import com.bageframework.youzhi.web.vo.admin.WeixinArticleAdminVO;
 
 /**
  * 

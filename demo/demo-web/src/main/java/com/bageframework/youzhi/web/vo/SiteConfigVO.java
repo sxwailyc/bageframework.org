@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.vo;
+package com.bageframework.youzhi.web.vo;
 
 import com.bageframework.dao.annotation.PrimaryKey;
 

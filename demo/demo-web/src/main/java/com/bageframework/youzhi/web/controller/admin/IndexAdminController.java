@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.controller.admin;
+package com.bageframework.youzhi.web.controller.admin;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bageframework.demo.web.service.MenuService;
-import com.bageframework.demo.web.vo.admin.MenuAdminVO;
+import com.bageframework.youzhi.web.service.MenuService;
+import com.bageframework.youzhi.web.vo.admin.MenuAdminVO;
 
 @Controller
 @RequestMapping(value = IndexAdminController.DIR)

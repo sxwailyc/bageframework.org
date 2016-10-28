@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.controller.admin;
+package com.bageframework.youzhi.web.controller.admin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bageframework.demo.web.service.UploadService;
+import com.bageframework.youzhi.web.service.UploadService;
 
 /**
  * 

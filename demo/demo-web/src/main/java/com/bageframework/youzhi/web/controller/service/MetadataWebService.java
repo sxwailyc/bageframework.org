@@ -1,9 +1,9 @@
-package com.bageframework.demo.web.controller.service;
+package com.bageframework.youzhi.web.controller.service;
 
 import com.bageframework.dao.beans.Page;
 import com.bageframework.dao.beans.Query;
-import com.bageframework.demo.web.vo.admin.MetadataAdminVO;
-import com.bageframework.demo.web.model.Metadata;
+import com.bageframework.youzhi.web.model.Metadata;
+import com.bageframework.youzhi.web.vo.admin.MetadataAdminVO;
 
 /**
  * 

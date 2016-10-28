@@ -1,9 +1,9 @@
-package com.bageframework.demo.web.controller.service;
+package com.bageframework.youzhi.web.controller.service;
 
 import com.bageframework.dao.beans.Query;
-import com.bageframework.demo.web.vo.admin.SpiderTaskAdminVO;
+import com.bageframework.youzhi.web.model.SpiderTask;
+import com.bageframework.youzhi.web.vo.admin.SpiderTaskAdminVO;
 import com.bageframework.dao.beans.Page;
-import com.bageframework.demo.web.model.SpiderTask;
 
 /**
  * 

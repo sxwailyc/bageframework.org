@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.bean;
+package com.bageframework.youzhi.web.bean;
 
 import java.util.ArrayList;
 import java.util.List;

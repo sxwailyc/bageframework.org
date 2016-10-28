@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.controller;
+package com.bageframework.youzhi.web.controller;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bageframework.demo.web.bean.ArticlePage;
-import com.bageframework.demo.web.service.ArticleService;
-import com.bageframework.demo.web.vo.ArticleVO;
+import com.bageframework.youzhi.web.bean.ArticlePage;
+import com.bageframework.youzhi.web.service.ArticleService;
+import com.bageframework.youzhi.web.vo.ArticleVO;
 
 @Controller
 @RequestMapping(IndexController.DIR)

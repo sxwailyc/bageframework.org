@@ -1,14 +1,16 @@
-package com.bageframework.demo.web.service.impl;
+package com.bageframework.youzhi.web.service.impl;
 
-import com.bageframework.demo.web.dao.SpiderTaskDao;
-import com.bageframework.demo.web.vo.SpiderTaskVO;
 import com.bageframework.dao.base.IDAO;
 import org.springframework.stereotype.Service;
-import com.bageframework.demo.web.vo.admin.SpiderTaskAdminVO;
+
 import com.bageframework.service.base.BaseService;
+import com.bageframework.youzhi.web.dao.SpiderTaskDao;
+import com.bageframework.youzhi.web.model.SpiderTask;
+import com.bageframework.youzhi.web.service.SpiderTaskService;
+import com.bageframework.youzhi.web.vo.SpiderTaskVO;
+import com.bageframework.youzhi.web.vo.admin.SpiderTaskAdminVO;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import com.bageframework.demo.web.model.SpiderTask;
-import com.bageframework.demo.web.service.SpiderTaskService;
 
 /**
  * 

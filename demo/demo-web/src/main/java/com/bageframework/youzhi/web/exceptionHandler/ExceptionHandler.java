@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.exceptionHandler;
+package com.bageframework.youzhi.web.exceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

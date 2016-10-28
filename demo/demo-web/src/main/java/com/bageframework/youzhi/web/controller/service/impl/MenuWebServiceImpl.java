@@ -1,17 +1,17 @@
-package com.bageframework.demo.web.controller.service.impl;
+package com.bageframework.youzhi.web.controller.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bageframework.demo.web.controller.service.MenuWebService;
-import com.bageframework.demo.web.model.Menu;
-import com.bageframework.demo.web.service.MenuService;
-import com.bageframework.demo.web.vo.MenuVO;
-import com.bageframework.demo.web.vo.admin.MenuAdminVO;
 import com.bageframework.service.IService;
 import com.bageframework.service.web.base.BaseWebService;
+import com.bageframework.youzhi.web.controller.service.MenuWebService;
+import com.bageframework.youzhi.web.model.Menu;
+import com.bageframework.youzhi.web.service.MenuService;
+import com.bageframework.youzhi.web.vo.MenuVO;
+import com.bageframework.youzhi.web.vo.admin.MenuAdminVO;
 
 /**
  * 

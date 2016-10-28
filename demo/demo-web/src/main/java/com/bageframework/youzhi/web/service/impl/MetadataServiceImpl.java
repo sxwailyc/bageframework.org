@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.service.impl;
+package com.bageframework.youzhi.web.service.impl;
 
 import java.util.List;
 
@@ -9,14 +9,14 @@ import com.bageframework.coder.model.Column;
 import com.bageframework.coder.type.FormType;
 import com.bageframework.coder.type.Type;
 import com.bageframework.dao.base.IDAO;
-import com.bageframework.demo.web.dao.MetadataDao;
-import com.bageframework.demo.web.dao.PropertyDao;
-import com.bageframework.demo.web.model.Metadata;
-import com.bageframework.demo.web.model.Property;
-import com.bageframework.demo.web.service.MetadataService;
-import com.bageframework.demo.web.vo.MetadataVO;
-import com.bageframework.demo.web.vo.admin.MetadataAdminVO;
 import com.bageframework.service.base.BaseService;
+import com.bageframework.youzhi.web.dao.MetadataDao;
+import com.bageframework.youzhi.web.dao.PropertyDao;
+import com.bageframework.youzhi.web.model.Metadata;
+import com.bageframework.youzhi.web.model.Property;
+import com.bageframework.youzhi.web.service.MetadataService;
+import com.bageframework.youzhi.web.vo.MetadataVO;
+import com.bageframework.youzhi.web.vo.admin.MetadataAdminVO;
 
 /**
  * 

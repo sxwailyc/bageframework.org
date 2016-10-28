@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.vo;
+package com.bageframework.youzhi.web.vo;
 
 import java.util.Date;
 import com.bageframework.dao.annotation.PrimaryKey;

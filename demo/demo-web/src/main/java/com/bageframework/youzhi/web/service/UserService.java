@@ -1,9 +1,9 @@
-package com.bageframework.demo.web.service;
+package com.bageframework.youzhi.web.service;
 
-import com.bageframework.demo.web.model.User;
-import com.bageframework.demo.web.vo.UserVO;
-import com.bageframework.demo.web.vo.admin.UserAdminVO;
 import com.bageframework.service.IService;
+import com.bageframework.youzhi.web.model.User;
+import com.bageframework.youzhi.web.vo.UserVO;
+import com.bageframework.youzhi.web.vo.admin.UserAdminVO;
 
 public interface UserService extends IService<User, UserVO, UserAdminVO, String> {
 

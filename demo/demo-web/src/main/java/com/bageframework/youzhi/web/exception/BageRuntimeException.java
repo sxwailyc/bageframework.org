@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.exception;
+package com.bageframework.youzhi.web.exception;
 
 public class BageRuntimeException extends RuntimeException {
 

@@ -1,9 +1,10 @@
-package com.bageframework.demo.web.vo.admin;
+package com.bageframework.youzhi.web.vo.admin;
 
 import org.springframework.beans.BeanUtils;
 import com.bageframework.dao.annotation.AutoDate;
 import com.bageframework.dao.annotation.PrimaryKey;
-import com.bageframework.demo.web.model.Category;
+import com.bageframework.youzhi.web.model.Category;
+
 import java.util.Date;
 
 /**

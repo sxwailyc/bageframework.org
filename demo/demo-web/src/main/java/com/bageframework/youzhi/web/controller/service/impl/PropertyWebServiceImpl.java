@@ -1,11 +1,11 @@
-package com.bageframework.demo.web.controller.service.impl;
+package com.bageframework.youzhi.web.controller.service.impl;
 
-import com.bageframework.demo.web.controller.service.PropertyWebService;
-import com.bageframework.demo.web.model.Property;
 import com.bageframework.service.web.base.BaseWebService;
-import com.bageframework.demo.web.vo.admin.PropertyAdminVO;
-import com.bageframework.demo.web.service.PropertyService;
-import com.bageframework.demo.web.vo.PropertyVO;
+import com.bageframework.youzhi.web.controller.service.PropertyWebService;
+import com.bageframework.youzhi.web.model.Property;
+import com.bageframework.youzhi.web.service.PropertyService;
+import com.bageframework.youzhi.web.vo.PropertyVO;
+import com.bageframework.youzhi.web.vo.admin.PropertyAdminVO;
 import com.bageframework.service.IService;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;

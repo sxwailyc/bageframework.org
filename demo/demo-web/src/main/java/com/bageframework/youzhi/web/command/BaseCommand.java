@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.command;
+package com.bageframework.youzhi.web.command;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

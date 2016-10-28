@@ -1,11 +1,11 @@
-package com.bageframework.demo.web.controller.service;
+package com.bageframework.youzhi.web.controller.service;
 
 import java.util.List;
 
 import com.bageframework.dao.beans.Page;
 import com.bageframework.dao.beans.Query;
-import com.bageframework.demo.web.model.Category;
-import com.bageframework.demo.web.vo.admin.CategoryAdminVO;
+import com.bageframework.youzhi.web.model.Category;
+import com.bageframework.youzhi.web.vo.admin.CategoryAdminVO;
 
 /**
  * 

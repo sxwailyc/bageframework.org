@@ -1,9 +1,9 @@
-package com.bageframework.demo.web.service;
+package com.bageframework.youzhi.web.service;
 
-import com.bageframework.demo.web.vo.MetadataVO;
-import com.bageframework.demo.web.vo.admin.MetadataAdminVO;
-import com.bageframework.demo.web.model.Metadata;
 import com.bageframework.service.IService;
+import com.bageframework.youzhi.web.model.Metadata;
+import com.bageframework.youzhi.web.vo.MetadataVO;
+import com.bageframework.youzhi.web.vo.admin.MetadataAdminVO;
 
 /**
  * 

@@ -1,8 +1,8 @@
-package com.bageframework.demo.web.vo;
+package com.bageframework.youzhi.web.vo;
 
 import com.bageframework.dao.annotation.AutoDate;
 import com.bageframework.dao.annotation.PrimaryKey;
-import com.bageframework.demo.web.model.Category;
+import com.bageframework.youzhi.web.model.Category;
 
 import java.util.Date;
 

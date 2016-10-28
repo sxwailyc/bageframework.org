@@ -1,8 +1,10 @@
-package com.bageframework.demo.web.vo.admin;
+package com.bageframework.youzhi.web.vo.admin;
 
 import org.springframework.beans.BeanUtils;
+
+import com.bageframework.youzhi.web.model.Metadata;
+
 import java.util.Date;
-import com.bageframework.demo.web.model.Metadata;
 
 /**
  * 

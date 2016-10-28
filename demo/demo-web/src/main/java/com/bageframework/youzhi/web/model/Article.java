@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.model;
+package com.bageframework.youzhi.web.model;
 
 import java.util.Date;
 

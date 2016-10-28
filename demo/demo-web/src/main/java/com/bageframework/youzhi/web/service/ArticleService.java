@@ -1,11 +1,11 @@
-package com.bageframework.demo.web.service;
+package com.bageframework.youzhi.web.service;
 
 import java.util.List;
 
-import com.bageframework.demo.web.model.Article;
-import com.bageframework.demo.web.vo.ArticleVO;
-import com.bageframework.demo.web.vo.admin.ArticleAdminVO;
 import com.bageframework.service.IService;
+import com.bageframework.youzhi.web.model.Article;
+import com.bageframework.youzhi.web.vo.ArticleVO;
+import com.bageframework.youzhi.web.vo.admin.ArticleAdminVO;
 
 /**
  * 

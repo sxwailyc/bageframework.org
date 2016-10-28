@@ -1,9 +1,10 @@
-package com.bageframework.demo.web.vo.admin;
+package com.bageframework.youzhi.web.vo.admin;
 
 import com.bageframework.dao.annotation.AutoDate;
 import java.util.Date;
 import com.bageframework.dao.annotation.PrimaryKey;
-import com.bageframework.demo.web.model.SpiderTask;
+import com.bageframework.youzhi.web.model.SpiderTask;
+
 import org.springframework.beans.BeanUtils;
 
 /**

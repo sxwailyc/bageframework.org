@@ -1,11 +1,11 @@
-package com.bageframework.demo.web.vo.admin;
+package com.bageframework.youzhi.web.vo.admin;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 
-import com.bageframework.demo.web.model.Menu;
+import com.bageframework.youzhi.web.model.Menu;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.processor;
+package com.bageframework.youzhi.web.processor;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bageframework.authority.model.User;
-import com.bageframework.demo.web.service.MenuService;
-import com.bageframework.demo.web.vo.admin.MenuAdminVO;
 import com.bageframework.mvc.processor.ContextProcessor;
+import com.bageframework.youzhi.web.service.MenuService;
+import com.bageframework.youzhi.web.vo.admin.MenuAdminVO;
 
 @Component
 public class MenuProcessor implements ContextProcessor {

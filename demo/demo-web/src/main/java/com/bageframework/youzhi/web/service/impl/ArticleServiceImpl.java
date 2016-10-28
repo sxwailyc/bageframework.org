@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.service.impl;
+package com.bageframework.youzhi.web.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bageframework.dao.base.IDAO;
-import com.bageframework.demo.web.dao.ArticleDao;
-import com.bageframework.demo.web.dao.CategoryDao;
-import com.bageframework.demo.web.model.Article;
-import com.bageframework.demo.web.model.Category;
-import com.bageframework.demo.web.service.ArticleService;
-import com.bageframework.demo.web.vo.ArticleVO;
-import com.bageframework.demo.web.vo.admin.ArticleAdminVO;
 import com.bageframework.service.base.BaseService;
+import com.bageframework.youzhi.web.dao.ArticleDao;
+import com.bageframework.youzhi.web.dao.CategoryDao;
+import com.bageframework.youzhi.web.model.Article;
+import com.bageframework.youzhi.web.model.Category;
+import com.bageframework.youzhi.web.service.ArticleService;
+import com.bageframework.youzhi.web.vo.ArticleVO;
+import com.bageframework.youzhi.web.vo.admin.ArticleAdminVO;
 
 /**
  * 

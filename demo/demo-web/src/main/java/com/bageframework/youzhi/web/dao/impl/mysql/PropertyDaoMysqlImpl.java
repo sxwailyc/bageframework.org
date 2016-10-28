@@ -1,8 +1,9 @@
-package com.bageframework.demo.web.dao.impl.mysql;
+package com.bageframework.youzhi.web.dao.impl.mysql;
 
 import com.bageframework.dao.base.mysql.BaseMysqlDao;
-import com.bageframework.demo.web.dao.PropertyDao;
-import com.bageframework.demo.web.model.Property;
+import com.bageframework.youzhi.web.dao.PropertyDao;
+import com.bageframework.youzhi.web.model.Property;
+
 import org.springframework.stereotype.Repository;
 
 /**

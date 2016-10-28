@@ -1,9 +1,9 @@
-package com.bageframework.demo.web.dao;
+package com.bageframework.youzhi.web.dao;
 
 import java.util.List;
 
 import com.bageframework.dao.base.IDAO;
-import com.bageframework.demo.web.model.Article;
+import com.bageframework.youzhi.web.model.Article;
 
 /**
  * 

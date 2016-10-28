@@ -1,14 +1,15 @@
-package com.bageframework.demo.web.controller.service.impl;
+package com.bageframework.youzhi.web.controller.service.impl;
 
-import com.bageframework.demo.web.model.SiteConfig;
-import com.bageframework.demo.web.vo.SiteConfigVO;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.bageframework.demo.web.vo.admin.SiteConfigAdminVO;
+
 import com.bageframework.service.IService;
 import com.bageframework.service.web.base.BaseWebService;
-import com.bageframework.demo.web.service.SiteConfigService;
-import com.bageframework.demo.web.controller.service.SiteConfigWebService;
+import com.bageframework.youzhi.web.controller.service.SiteConfigWebService;
+import com.bageframework.youzhi.web.model.SiteConfig;
+import com.bageframework.youzhi.web.service.SiteConfigService;
+import com.bageframework.youzhi.web.vo.SiteConfigVO;
+import com.bageframework.youzhi.web.vo.admin.SiteConfigAdminVO;
 
 /**
  * 

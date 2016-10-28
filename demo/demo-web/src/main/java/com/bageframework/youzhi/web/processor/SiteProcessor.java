@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.processor;
+package com.bageframework.youzhi.web.processor;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bageframework.demo.web.model.SiteConfig;
-import com.bageframework.demo.web.service.CategoryService;
-import com.bageframework.demo.web.service.SiteConfigService;
-import com.bageframework.demo.web.vo.CategoryVO;
 import com.bageframework.mvc.processor.ContextProcessor;
+import com.bageframework.youzhi.web.model.SiteConfig;
+import com.bageframework.youzhi.web.service.CategoryService;
+import com.bageframework.youzhi.web.service.SiteConfigService;
+import com.bageframework.youzhi.web.vo.CategoryVO;
 
 @Component
 public class SiteProcessor implements ContextProcessor {

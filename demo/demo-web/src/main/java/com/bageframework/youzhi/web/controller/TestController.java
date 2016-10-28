@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.controller;
+package com.bageframework.youzhi.web.controller;
 
 import java.util.HashMap;
 import java.util.Map;

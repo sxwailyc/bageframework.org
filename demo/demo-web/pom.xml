@@ -227,4 +227,15 @@
 		</pluginManagement>
 	</build>
 
+	<repositories>
+		<repository>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>Public</id>
+			<name>Public Repositories</name>
+			<url>http://oss.113388.net/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+
 </project>

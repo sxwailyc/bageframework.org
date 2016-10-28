@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.dao.impl.mysql;
+package com.bageframework.youzhi.web.dao.impl.mysql;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.bageframework.dao.base.mysql.BaseMysqlDao;
 import com.bageframework.dao.jdbc.Jdbc;
 import com.bageframework.dao.jdbc.SqlParameter;
-import com.bageframework.demo.web.dao.CategoryDao;
-import com.bageframework.demo.web.model.Category;
+import com.bageframework.youzhi.web.dao.CategoryDao;
+import com.bageframework.youzhi.web.model.Category;
 
 /**
  * 

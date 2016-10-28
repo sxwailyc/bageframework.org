@@ -1,11 +1,12 @@
-package com.bageframework.demo.web.service.impl;
+package com.bageframework.youzhi.web.service.impl;
 
-import com.bageframework.demo.web.dao.PropertyDao;
-import com.bageframework.demo.web.model.Property;
 import com.bageframework.service.base.BaseService;
-import com.bageframework.demo.web.vo.admin.PropertyAdminVO;
-import com.bageframework.demo.web.service.PropertyService;
-import com.bageframework.demo.web.vo.PropertyVO;
+import com.bageframework.youzhi.web.dao.PropertyDao;
+import com.bageframework.youzhi.web.model.Property;
+import com.bageframework.youzhi.web.service.PropertyService;
+import com.bageframework.youzhi.web.vo.PropertyVO;
+import com.bageframework.youzhi.web.vo.admin.PropertyAdminVO;
+
 import org.springframework.stereotype.Service;
 import com.bageframework.dao.base.IDAO;
 import org.springframework.beans.factory.annotation.Autowired;

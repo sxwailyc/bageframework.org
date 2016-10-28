@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.controller.admin;
+package com.bageframework.youzhi.web.controller.admin;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;

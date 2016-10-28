@@ -1,9 +1,10 @@
-package com.bageframework.demo.web.dao.impl.mysql;
+package com.bageframework.youzhi.web.dao.impl.mysql;
 
-import com.bageframework.demo.web.dao.SpiderTaskDao;
 import com.bageframework.dao.base.mysql.BaseMysqlDao;
+import com.bageframework.youzhi.web.dao.SpiderTaskDao;
+import com.bageframework.youzhi.web.model.SpiderTask;
+
 import org.springframework.stereotype.Repository;
-import com.bageframework.demo.web.model.SpiderTask;
 
 /**
  * 

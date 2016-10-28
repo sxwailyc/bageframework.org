@@ -1,9 +1,9 @@
-package com.bageframework.demo.web.controller.service;
+package com.bageframework.youzhi.web.controller.service;
 
 import com.bageframework.dao.beans.Page;
 import com.bageframework.dao.beans.Query;
-import com.bageframework.demo.web.model.User;
-import com.bageframework.demo.web.vo.admin.UserAdminVO;
+import com.bageframework.youzhi.web.model.User;
+import com.bageframework.youzhi.web.vo.admin.UserAdminVO;
 
 public interface UserWebService {
 

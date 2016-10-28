@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.controller;
+package com.bageframework.youzhi.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 

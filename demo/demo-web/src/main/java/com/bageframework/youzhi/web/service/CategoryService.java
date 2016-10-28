@@ -1,9 +1,9 @@
-package com.bageframework.demo.web.service;
+package com.bageframework.youzhi.web.service;
 
-import com.bageframework.demo.web.model.Category;
 import com.bageframework.service.IService;
-import com.bageframework.demo.web.vo.CategoryVO;
-import com.bageframework.demo.web.vo.admin.CategoryAdminVO;
+import com.bageframework.youzhi.web.model.Category;
+import com.bageframework.youzhi.web.vo.CategoryVO;
+import com.bageframework.youzhi.web.vo.admin.CategoryAdminVO;
 
 /**
  * 

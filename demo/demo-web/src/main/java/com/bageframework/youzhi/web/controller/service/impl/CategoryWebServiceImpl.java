@@ -1,13 +1,13 @@
-package com.bageframework.demo.web.controller.service.impl;
+package com.bageframework.youzhi.web.controller.service.impl;
 
-import com.bageframework.demo.web.model.Category;
 import com.bageframework.service.web.base.BaseWebService;
-import com.bageframework.demo.web.controller.service.CategoryWebService;
+import com.bageframework.youzhi.web.controller.service.CategoryWebService;
+import com.bageframework.youzhi.web.model.Category;
+import com.bageframework.youzhi.web.service.CategoryService;
+import com.bageframework.youzhi.web.vo.CategoryVO;
+import com.bageframework.youzhi.web.vo.admin.CategoryAdminVO;
 import com.bageframework.service.IService;
 import org.springframework.stereotype.Service;
-import com.bageframework.demo.web.vo.CategoryVO;
-import com.bageframework.demo.web.service.CategoryService;
-import com.bageframework.demo.web.vo.admin.CategoryAdminVO;
 
 import java.util.List;
 

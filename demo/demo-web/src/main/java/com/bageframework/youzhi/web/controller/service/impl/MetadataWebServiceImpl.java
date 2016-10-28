@@ -1,11 +1,11 @@
-package com.bageframework.demo.web.controller.service.impl;
+package com.bageframework.youzhi.web.controller.service.impl;
 
-import com.bageframework.demo.web.controller.service.MetadataWebService;
-import com.bageframework.demo.web.service.MetadataService;
-import com.bageframework.demo.web.vo.MetadataVO;
-import com.bageframework.demo.web.vo.admin.MetadataAdminVO;
 import com.bageframework.service.web.base.BaseWebService;
-import com.bageframework.demo.web.model.Metadata;
+import com.bageframework.youzhi.web.controller.service.MetadataWebService;
+import com.bageframework.youzhi.web.model.Metadata;
+import com.bageframework.youzhi.web.service.MetadataService;
+import com.bageframework.youzhi.web.vo.MetadataVO;
+import com.bageframework.youzhi.web.vo.admin.MetadataAdminVO;
 import com.bageframework.service.IService;
 
 import org.springframework.stereotype.Service;

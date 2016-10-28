@@ -1,9 +1,9 @@
-package com.bageframework.demo.web.service;
+package com.bageframework.youzhi.web.service;
 
-import com.bageframework.demo.web.vo.SpiderTaskVO;
-import com.bageframework.demo.web.vo.admin.SpiderTaskAdminVO;
 import com.bageframework.service.IService;
-import com.bageframework.demo.web.model.SpiderTask;
+import com.bageframework.youzhi.web.model.SpiderTask;
+import com.bageframework.youzhi.web.vo.SpiderTaskVO;
+import com.bageframework.youzhi.web.vo.admin.SpiderTaskAdminVO;
 
 /**
  * 

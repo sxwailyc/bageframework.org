@@ -1,7 +1,8 @@
-package com.bageframework.demo.web.vo.admin;
+package com.bageframework.youzhi.web.vo.admin;
 
-import com.bageframework.demo.web.model.SiteConfig;
 import com.bageframework.dao.annotation.PrimaryKey;
+import com.bageframework.youzhi.web.model.SiteConfig;
+
 import org.springframework.beans.BeanUtils;
 
 /**

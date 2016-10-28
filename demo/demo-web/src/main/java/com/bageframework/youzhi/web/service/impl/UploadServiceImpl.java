@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.service.impl;
+package com.bageframework.youzhi.web.service.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,11 +8,11 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bageframework.demo.web.SiteConfig;
-import com.bageframework.demo.web.exception.BageRuntimeException;
-import com.bageframework.demo.web.service.UploadService;
 import com.bageframework.util.DateTimeUtil;
 import com.bageframework.util.DigestUtil;
+import com.bageframework.youzhi.web.SiteConfig;
+import com.bageframework.youzhi.web.exception.BageRuntimeException;
+import com.bageframework.youzhi.web.service.UploadService;
 
 @Service
 public class UploadServiceImpl implements UploadService {

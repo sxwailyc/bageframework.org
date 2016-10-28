@@ -1,8 +1,9 @@
-package com.bageframework.demo.web.dao.impl.mysql;
+package com.bageframework.youzhi.web.dao.impl.mysql;
 
 import com.bageframework.dao.base.mysql.BaseMysqlDao;
-import com.bageframework.demo.web.model.Menu;
-import com.bageframework.demo.web.dao.MenuDao;
+import com.bageframework.youzhi.web.dao.MenuDao;
+import com.bageframework.youzhi.web.model.Menu;
+
 import org.springframework.stereotype.Repository;
 
 /**

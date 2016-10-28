@@ -1,14 +1,14 @@
-package com.bageframework.demo.web.controller.service.impl;
+package com.bageframework.youzhi.web.controller.service.impl;
 
-import com.bageframework.demo.web.controller.service.WeixinArticleWebService;
-import com.bageframework.demo.web.vo.WeixinArticleVO;
 import org.springframework.stereotype.Service;
-import com.bageframework.demo.web.vo.admin.WeixinArticleAdminVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.bageframework.service.IService;
 import com.bageframework.service.web.base.BaseWebService;
-import com.bageframework.demo.web.model.WeixinArticle;
-import com.bageframework.demo.web.service.WeixinArticleService;
+import com.bageframework.youzhi.web.controller.service.WeixinArticleWebService;
+import com.bageframework.youzhi.web.model.WeixinArticle;
+import com.bageframework.youzhi.web.service.WeixinArticleService;
+import com.bageframework.youzhi.web.vo.WeixinArticleVO;
+import com.bageframework.youzhi.web.vo.admin.WeixinArticleAdminVO;
 
 /**
  * 

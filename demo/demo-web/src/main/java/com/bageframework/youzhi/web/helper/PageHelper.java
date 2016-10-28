@@ -1,4 +1,4 @@
-package com.bageframework.demo.web.helper;
+package com.bageframework.youzhi.web.helper;
 
 public class PageHelper {
 
