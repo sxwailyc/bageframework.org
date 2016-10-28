@@ -9,7 +9,7 @@
 	<modules>
 		<module>bage-core</module>
 		<module>bage-util</module>
-		<module>bage-dao</module>
+		<module>bage-data</module>
 		<module>bage-service</module>
 		<module>bage-mvc</module>
 		<module>bage-authority</module>
