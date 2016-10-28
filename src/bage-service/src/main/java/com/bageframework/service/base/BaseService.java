@@ -3,9 +3,9 @@ package com.bageframework.service.base;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bageframework.dao.base.IDAO;
-import com.bageframework.dao.beans.Page;
-import com.bageframework.dao.beans.Query;
+import com.bageframework.data.base.IDAO;
+import com.bageframework.data.beans.Page;
+import com.bageframework.data.beans.Query;
 import com.bageframework.service.IService;
 
 /**

@@ -2,8 +2,8 @@ package com.bageframework.service;
 
 import java.util.List;
 
-import com.bageframework.dao.beans.Page;
-import com.bageframework.dao.beans.Query;
+import com.bageframework.data.beans.Page;
+import com.bageframework.data.beans.Query;
 
 /**
  * 

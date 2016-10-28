@@ -19,7 +19,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.bageframework.core.config.BageConfig;
-import com.bageframework.dao.redis.Redis;
+import com.bageframework.data.redis.Redis;
 import com.bageframework.mvc.request.BageHttpRequestWrapper;
 import com.bageframework.mvc.session.SessionDaoRedisImpl;
 import com.bageframework.mvc.session.SessionService;

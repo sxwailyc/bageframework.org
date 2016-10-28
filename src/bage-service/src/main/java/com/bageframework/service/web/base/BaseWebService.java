@@ -1,7 +1,7 @@
 package com.bageframework.service.web.base;
 
-import com.bageframework.dao.beans.Page;
-import com.bageframework.dao.beans.Query;
+import com.bageframework.data.beans.Page;
+import com.bageframework.data.beans.Query;
 import com.bageframework.service.IService;
 import com.bageframework.util.PageUtil;
 

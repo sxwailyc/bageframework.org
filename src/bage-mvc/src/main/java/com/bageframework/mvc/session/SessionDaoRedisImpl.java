@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import org.springframework.stereotype.Repository;
 
-import com.bageframework.dao.redis.Redis;
+import com.bageframework.data.redis.Redis;
 import com.bageframework.util.JsonSerializer;
 
 @Repository

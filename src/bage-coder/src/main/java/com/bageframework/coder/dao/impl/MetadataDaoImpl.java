@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.bageframework.coder.dao.MetadataDao;
 import com.bageframework.coder.model.Column;
 import com.bageframework.coder.model.Metadata;
-import com.bageframework.dao.base.mysql.BaseMysqlDao;
-import com.bageframework.dao.jdbc.Jdbc;
+import com.bageframework.data.base.mysql.BaseMysqlDao;
+import com.bageframework.data.jdbc.Jdbc;
 
 @Repository
 public class MetadataDaoImpl extends BaseMysqlDao<Metadata> implements MetadataDao {

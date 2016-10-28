@@ -2,9 +2,9 @@ package com.bageframework.coder.model;
 
 import java.util.Date;
 
-import com.bageframework.dao.annotation.OrderAsc;
-import com.bageframework.dao.annotation.ParentID;
-import com.bageframework.dao.annotation.PrimaryKey;
+import com.bageframework.data.annotation.OrderAsc;
+import com.bageframework.data.annotation.ParentID;
+import com.bageframework.data.annotation.PrimaryKey;
 
 /**
  * 

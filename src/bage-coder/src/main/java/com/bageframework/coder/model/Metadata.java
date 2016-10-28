@@ -2,9 +2,9 @@ package com.bageframework.coder.model;
 
 import java.util.Date;
 
-import com.bageframework.dao.annotation.AutoDate;
-import com.bageframework.dao.annotation.AutoUUID;
-import com.bageframework.dao.annotation.PrimaryKey;
+import com.bageframework.data.annotation.AutoDate;
+import com.bageframework.data.annotation.AutoUUID;
+import com.bageframework.data.annotation.PrimaryKey;
 
 /**
  * 

@@ -9,8 +9,8 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.bageframework.dao.beans.Page;
-import com.bageframework.dao.beans.Query;
+import com.bageframework.data.beans.Page;
+import com.bageframework.data.beans.Query;
 import com.bageframework.model.User;
 import com.bageframework.util.UUIDGenerator;
 

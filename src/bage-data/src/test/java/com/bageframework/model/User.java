@@ -1,9 +1,9 @@
 package com.bageframework.model;
 
-import com.bageframework.dao.annotation.OrderAsc;
-import com.bageframework.dao.annotation.OrderDesc;
-import com.bageframework.dao.annotation.ParentID;
-import com.bageframework.dao.annotation.PrimaryKey;
+import com.bageframework.data.annotation.OrderAsc;
+import com.bageframework.data.annotation.OrderDesc;
+import com.bageframework.data.annotation.ParentID;
+import com.bageframework.data.annotation.PrimaryKey;
 
 public class User {
 
