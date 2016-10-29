@@ -29,7 +29,7 @@
 
 		<dependency>
 			<groupId>com.bageframework</groupId>
-			<artifactId>bage-dao</artifactId>
+			<artifactId>bage-data</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 

@@ -1,4 +1,4 @@
-package com.bageframework.dao;
+package com.bageframework.data;
 
 import com.bageframework.data.base.IDAO;
 import com.bageframework.model.User;

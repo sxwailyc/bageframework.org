@@ -138,7 +138,7 @@ public class MetadataServiceImpl implements MetadataService {
 		metadata.appendImport("org.springframework.beans.factory.annotation.Autowired");
 		metadata.appendImport("org.springframework.stereotype.Service");
 		metadata.appendImport("com.bageframework.service.base.BaseService");
-		metadata.appendImport("com.bageframework.dao.base.IDAO");
+		metadata.appendImport("com.bageframework.data.base.IDAO");
 		metadata.appendImport(config.getModelPackage() + "." + metadata.getModelClassName());
 		metadata.appendImport(config.getVOPackage() + "." + metadata.getModelClassName() + "VO");
 		metadata.appendImport(config.getAdminVOPackage() + "." + metadata.getModelClassName() + "AdminVO");
@@ -164,8 +164,8 @@ public class MetadataServiceImpl implements MetadataService {
 		metadata.setClassName(MetadataHelper.tableName2ClassName(table) + "WebService");
 		metadata.setPackageName(config.getWebServicePackage());
 
-		metadata.appendImport("com.bageframework.dao.beans.Page");
-		metadata.appendImport("com.bageframework.dao.beans.Query");
+		metadata.appendImport("com.bageframework.data.beans.Page");
+		metadata.appendImport("com.bageframework.data.beans.Query");
 		metadata.appendImport(config.getModelPackage() + "." + metadata.getModelClassName());
 		metadata.appendImport(config.getAdminVOPackage() + "." + metadata.getModelClassName() + "AdminVO");
 
@@ -238,7 +238,7 @@ public class MetadataServiceImpl implements MetadataService {
 		metadata.setClassName(MetadataHelper.tableName2ClassName(table) + "Dao");
 		metadata.setPackageName(config.getDaoPackage());
 
-		metadata.appendImport("com.bageframework.dao.base.IDAO");
+		metadata.appendImport("com.bageframework.data.base.IDAO");
 		metadata.appendImport(config.getModelPackage() + "." + metadata.getModelClassName());
 
 		String keyType = getKeyType(table);
@@ -258,7 +258,7 @@ public class MetadataServiceImpl implements MetadataService {
 		metadata.setPackageName(config.getDaoMysqlImplPackage());
 
 		metadata.appendImport("org.springframework.stereotype.Repository");
-		metadata.appendImport("com.bageframework.dao.base.mysql.BaseMysqlDao");
+		metadata.appendImport("com.bageframework.data.base.mysql.BaseMysqlDao");
 		metadata.appendImport(config.getModelPackage() + "." + metadata.getModelClassName());
 		metadata.appendImport(config.getDaoPackage() + "." + metadata.getModelClassName() + "Dao");
 

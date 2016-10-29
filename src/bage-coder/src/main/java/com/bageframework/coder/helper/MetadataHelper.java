@@ -166,11 +166,11 @@ public class MetadataHelper {
 		List<String> imports = new ArrayList<String>();
 
 		if ("PRI".equals(column.getKey())) {
-			imports.add("com.bageframework.dao.annotation.PrimaryKey");
+			imports.add("com.bageframework.data.annotation.PrimaryKey");
 		}
 
 		if (column.getField().equals("created_time")) {
-			imports.add("com.bageframework.dao.annotation.AutoDate");
+			imports.add("com.bageframework.data.annotation.AutoDate");
 		}
 
 		String impt = Type.getImport(type);

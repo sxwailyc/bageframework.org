@@ -1,4 +1,4 @@
-package com.bageframework.dao;
+package com.bageframework.data;
 
 import org.springframework.stereotype.Repository;
 
