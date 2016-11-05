@@ -8,7 +8,9 @@ public class Env {
 
 	public final static String DEV = "dev";
 
-	public final static String PROP = "prop";
+	public final static String PROD = "prod";
+
+	public final static String TEST = "test";
 
 	private final static String BAGE_ENV;
 
@@ -25,7 +27,60 @@ public class Env {
 		}
 	}
 
+	/**
+	 * 是否测试环境
+	 * 
+	 * @return
+	 */
+	public static boolean isTest() {
+		if (StringUtils.isEmpty(BAGE_ENV)) {
+			return false;
+		}
+		return TEST.equalsIgnoreCase(BAGE_ENV);
+	}
+
+	/**
+	 * 是否开发环境
+	 * 
+	 * @return
+	 */
+	public static boolean isProd() {
+		if (StringUtils.isEmpty(BAGE_ENV)) {
+			return false;
+		}
+		return PROD.equalsIgnoreCase(BAGE_ENV);
+	}
+
+	/**
+	 * 是否开发环境
+	 * 
+	 * @return
+	 */
+	public static boolean isDev() {
+		if (StringUtils.isEmpty(BAGE_ENV)) {
+			return true;
+		}
+		return false;
+	}
+
 	public static String getEnv() {
 		return BAGE_ENV;
+	}
+
+	/**
+	 * 获取log4j配置文件名
+	 * 
+	 * @return
+	 */
+	public static String getLog4jConfigFile() {
+		if (isDev()) {
+			return "log4j-dev.properties";
+		} else if (isTest()) {
+			return "log4j-test.properties";
+		} else if (isProd()) {
+			return "log4j-prod.properties";
+		} else {
+			return "log4j.properties";
+		}
 	}
 }

@@ -20,9 +20,11 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.bageframework.core.config.BageConfig;
 import com.bageframework.data.redis.Redis;
+import com.bageframework.mvc.constants.BageMvcConstant;
 import com.bageframework.mvc.request.BageHttpRequestWrapper;
 import com.bageframework.mvc.session.SessionDaoRedisImpl;
 import com.bageframework.mvc.session.SessionService;
+import com.bageframework.util.RequestUtil;
 import com.bageframework.util.ResourcesUtil;
 
 public class BageFilter implements Filter {
@@ -37,16 +39,19 @@ public class BageFilter implements Filter {
 
 	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
 		logger.debug("do filter");
-		if (ResourcesUtil.isResource(((HttpServletRequest) request).getRequestURI())) {
+
+		String uri = RequestUtil.getRequestContextUri((HttpServletRequest) request);
+		request.setAttribute(BageMvcConstant.RAW_REQUEST_URI, uri);
+
+		if (ResourcesUtil.isResource(uri)) {
 			chain.doFilter(request, response);
 			return;
 		}
 
-		BageHttpRequestWrapper wrapper = new BageHttpRequestWrapper((HttpServletRequest) request,
-				(HttpServletResponse) response, sessionService, bageConfig);
+		BageHttpRequestWrapper wrapper = new BageHttpRequestWrapper((HttpServletRequest) request, (HttpServletResponse) response, sessionService, bageConfig);
 		chain.doFilter(wrapper, response);
 	}
 
