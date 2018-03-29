@@ -21,6 +21,7 @@
 		<module>bage-mvc</module>
 		<module>bage-authority</module>
 		<module>bage-coder</module>
+		<module>bage-jsrpc</module>
 	</modules>
 
 	<properties>
