@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: bage-jsrpc
+Implementation-Version: 1.0-SNAPSHOT
+Built-By: jackyshi
+Implementation-Vendor-Id: com.bageframework
+Build-Jdk: 1.8.0_121
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/bage/bage-jsrpc
+Created-By: Maven Integration for Eclipse
+

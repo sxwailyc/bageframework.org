@@ -41,10 +41,10 @@ public class BageFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-		logger.debug("do filter");
-
 		String uri = RequestUtil.getRequestContextUri((HttpServletRequest) request);
 		request.setAttribute(BageMvcConstant.RAW_REQUEST_URI, uri);
+
+		logger.debug("do filter.uri[" + uri + "]");
 
 		if (ResourcesUtil.isResource(uri)) {
 			chain.doFilter(request, response);

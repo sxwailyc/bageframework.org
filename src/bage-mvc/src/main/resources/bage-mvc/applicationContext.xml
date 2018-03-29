@@ -19,6 +19,7 @@
 
 	<context:component-scan base-package="com.bageframework.mvc.session"></context:component-scan>
 	<context:component-scan base-package="com.bageframework.mvc.advice"></context:component-scan>
+	<context:component-scan base-package="com.bageframework.mvc.error"></context:component-scan>
 	
 	<mvc:interceptors>
 		<mvc:interceptor>

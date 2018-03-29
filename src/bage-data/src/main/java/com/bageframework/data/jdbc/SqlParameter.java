@@ -18,6 +18,14 @@ public class SqlParameter {
 
 	private Map<Integer, Object> params = new HashMap<Integer, Object>();
 
+	public static SqlParameter fromObjects(Object... objs) {
+		SqlParameter sqlParameter = new SqlParameter();
+		for (Object o : objs) {
+			sqlParameter.setObject(o);
+		}
+		return sqlParameter;
+	}
+
 	public static SqlParameter fromList(List<?> list) {
 		SqlParameter sqlParameter = new SqlParameter();
 		for (Object o : list) {
