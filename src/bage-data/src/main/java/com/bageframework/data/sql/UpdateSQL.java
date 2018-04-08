@@ -3,6 +3,7 @@ package com.bageframework.data.sql;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bageframework.data.DB;
 import com.bageframework.data.jdbc.SqlParameter;
 import com.bageframework.data.util.SqlUtil;
 
@@ -43,14 +44,16 @@ public class UpdateSQL extends WhereBaseSQL implements SQL {
 		return sb.toString();
 	}
 
-	public String getSql() {
+	@Override
+	public String getSql(DB db) {
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("UPDATE ");
 		sb.append(SqlUtil.getSafeName(table));
 		sb.append(getUpdateColumnSql());
 		sb.append("WHERE");
-		sb.append(where.getSql());
+		sb.append(where.getSql(db));
 
 		return sb.toString();
 	}

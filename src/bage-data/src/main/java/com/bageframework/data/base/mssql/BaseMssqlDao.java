@@ -1,4 +1,4 @@
-package com.bageframework.data.base.mysql;
+package com.bageframework.data.base.mssql;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Iterator;
@@ -18,65 +18,79 @@ import com.bageframework.data.jdbc.SqlParameter;
 import com.bageframework.data.sql.DeleteSQL;
 import com.bageframework.data.sql.SelectSQL;
 
-public class BaseMysqlDao<T> {
+public abstract class BaseMssqlDao<T> {
 
-	protected static Log logger = LogFactory.getLog(BaseMysqlDao.class);
+	protected static Log logger = LogFactory.getLog(BaseMssqlDao.class);
 
-	private final DB db = DB.MYSQL;
+	private final static DB db = DB.MSSQL;
 
 	private Class<T> entityClass;
 
 	@SuppressWarnings("unchecked")
-	public BaseMysqlDao() {
+	public BaseMssqlDao() {
 		entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+	}
+
+	protected Jdbc getJdbc() {
+		return jdbc;
 	}
 
 	@Autowired
 	private Jdbc jdbc;
 
 	public boolean add(T t) {
-		return jdbc.insert(t) > 0;
+		return getJdbc().insert(t) > 0;
 	}
 
 	public boolean update(T t) {
-		return jdbc.update(t) > 0;
+		return getJdbc().update(t) > 0;
 	}
 
 	public T get(String id) {
 		SelectSQL select = SQLHelper.createGetSql(entityClass, id);
-		return jdbc.get(select.getSql(db), entityClass, select.getParams());
+		return getJdbc().get(select.getSql(db), entityClass, select.getParams());
 	}
 
 	public T get(String keyName, String key) {
 		SelectSQL select = SQLHelper.createGetSqlWithKeyName(entityClass, keyName, key);
-		return jdbc.get(select.getSql(db), entityClass, select.getParams());
+		return getJdbc().get(select.getSql(db), entityClass, select.getParams());
 	}
 
 	public T get(Integer id) {
 		SelectSQL select = SQLHelper.createGetSql(entityClass, id);
-		return jdbc.get(select.getSql(db), entityClass, select.getParams());
+		return getJdbc().get(select.getSql(db), entityClass, select.getParams());
+	}
+
+	public T get(Long id) {
+		SelectSQL select = SQLHelper.createGetSql(entityClass, id);
+		return getJdbc().get(select.getSql(db), entityClass, select.getParams());
 	}
 
 	public boolean delete(Integer key) {
 		DeleteSQL delete = SQLHelper.createDeleteSql(entityClass, key);
-		return jdbc.update(delete.getSql(db), delete.getParams()) > 0;
+		return getJdbc().update(delete.getSql(db), delete.getParams()) > 0;
+	}
+
+	public boolean delete(Long key) {
+		DeleteSQL delete = SQLHelper.createDeleteSql(entityClass, key);
+		return getJdbc().update(delete.getSql(db), delete.getParams()) > 0;
 	}
 
 	public boolean delete(String key) {
 		DeleteSQL delete = SQLHelper.createDeleteSql(entityClass, key);
-		return jdbc.update(delete.getSql(db), delete.getParams()) > 0;
+		return getJdbc().update(delete.getSql(db), delete.getParams()) > 0;
 	}
 
 	public boolean delete(String table, String key) {
 		DeleteSQL delete = SQLHelper.createDeleteSql(entityClass, table, key);
-		return jdbc.update(delete.getSql(db), delete.getParams()) > 0;
+		return getJdbc().update(delete.getSql(db), delete.getParams()) > 0;
 	}
 
 	public Page<T> getPage(int start, int size) {
 		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
 		select.limit(start, size);
-		List<T> data = jdbc.getList(select.getSql(db), entityClass, select.getParams());
-		int count = jdbc.getInt(select.getCountSql(db), select.getParams());
+		List<T> data = getJdbc().getList(select.getSql(db), entityClass, select.getParams());
+		int count = getJdbc().getInt(select.getCountSql(db), select.getParams());
 		return new Page<T>(data, count);
 	}
 
@@ -85,21 +99,22 @@ public class BaseMysqlDao<T> {
 		String parentColumn = SQLHelper.getParentColumn(entityClass);
 		select.equal(parentColumn, parentId);
 		select.limit(start, size);
-		List<T> data = jdbc.getList(select.getSql(db), entityClass, select.getParams());
-		int count = jdbc.getInt(select.getCountSql(db), select.getParams());
+		List<T> data = getJdbc().getList(select.getSql(db), entityClass, select.getParams());
+		int count = getJdbc().getInt(select.getCountSql(db), select.getParams());
 		return new Page<T>(data, count);
 	}
 
 	public Page<T> getPage(Query query, int start, int size) {
 		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
 		select.limit(start, size);
+		select.customOrder(query.getOrder());
 		Iterator<QueryItem> iterator = query.iterator();
 		while (iterator.hasNext()) {
 			QueryItem queryItem = iterator.next();
 			select.condition(queryItem.getColumn(), queryItem.getOperate(), queryItem.getValue());
 		}
-		List<T> data = jdbc.getList(select.getSql(db), entityClass, select.getParams());
-		int count = jdbc.getInt(select.getCountSql(db), select.getParams());
+		List<T> data = getJdbc().getList(select.getSql(db), entityClass, select.getParams());
+		int count = getJdbc().getInt(select.getCountSql(db), select.getParams());
 		return new Page<T>(data, count);
 	}
 
@@ -107,20 +122,20 @@ public class BaseMysqlDao<T> {
 		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
 		String parentColumn = SQLHelper.getParentColumn(entityClass);
 		select.equal(parentColumn, parentId);
-		int count = jdbc.getInt(select.getCountSql(db), select.getParams());
+		int count = getJdbc().getInt(select.getCountSql(db), select.getParams());
 		return count;
 	}
 
 	public int getCount() {
 		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
-		int count = jdbc.getInt(select.getCountSql(db), select.getParams());
+		int count = getJdbc().getInt(select.getCountSql(db), select.getParams());
 		return count;
 	}
 
 	public List<T> getList(int start, int size) {
 		SelectSQL select = SQLHelper.createQueryListSql(entityClass);
 		select.limit(start, size);
-		return jdbc.getList(select.getSql(db), entityClass, select.getParams());
+		return getJdbc().getList(select.getSql(db), entityClass, select.getParams());
 	}
 
 	public List<T> getList(int parentId, int start, int size) {
@@ -128,7 +143,7 @@ public class BaseMysqlDao<T> {
 		String parentColumn = SQLHelper.getParentColumn(entityClass);
 		select.equal(parentColumn, parentId);
 		select.limit(start, size);
-		return jdbc.getList(select.getSql(db), entityClass, select.getParams());
+		return getJdbc().getList(select.getSql(db), entityClass, select.getParams());
 	}
 
 	public List<T> getList() {
@@ -144,7 +159,7 @@ public class BaseMysqlDao<T> {
 		String parentColumn = SQLHelper.getParentColumn(entityClass);
 		select.equal(parentColumn, parentId);
 		select.limit(start, size);
-		return jdbc.getList(select.getSql(db), entityClass, select.getParams());
+		return getJdbc().getList(select.getSql(db), entityClass, select.getParams());
 	}
 
 	public List<T> getList(String parentId) {
@@ -156,7 +171,7 @@ public class BaseMysqlDao<T> {
 		String keyColumn = SQLHelper.getKeyColumnName(entityClass);
 		keyColumn = keyColumn == null ? "id" : keyColumn;
 		String sql = "SELECT MAX(" + keyColumn + ") FROM " + table;
-		return jdbc.getInt(sql, new SqlParameter());
+		return getJdbc().getInt(sql, new SqlParameter());
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.bageframework.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
@@ -9,7 +9,7 @@ import com.github.stuxuhai.jpinyin.PinyinHelper;
 
 public class PinyinUtil {
 
-	private static final Log logger = LogFactory.getLog(PinyinUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(PinyinUtil.class);
 
 	public static boolean isChineseChar(char oneChar) {
 		if ((oneChar >= '\u4e00' && oneChar <= '\u9fa5') || (oneChar >= '\uf900' && oneChar <= '\ufa2d')) {

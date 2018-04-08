@@ -1,5 +1,7 @@
 package com.bageframework.data.helper;
 
+import com.bageframework.data.annotation.Table;
+
 public class DBHelper {
 
 	/**
@@ -33,6 +35,11 @@ public class DBHelper {
 	 * @return
 	 */
 	public static String className2TableName(Class<?> cls) {
+
+		if (cls.isAnnotationPresent(Table.class)) {
+			Table table = cls.getAnnotation(Table.class);
+			return table.value();
+		}
 
 		String className = cls.getName();
 		className = className.substring(className.lastIndexOf(".") + 1, className.length());

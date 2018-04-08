@@ -26,6 +26,7 @@ import com.bageframework.data.annotation.TableHash;
 import com.bageframework.data.beans.Query;
 import com.bageframework.data.exception.ParentIdFieldNotFoundException;
 import com.bageframework.data.exception.PrimaryKeyNotFoundException;
+import com.bageframework.data.jdbc.SqlHelper;
 import com.bageframework.data.sql.DeleteSQL;
 import com.bageframework.data.sql.InsertSQL;
 import com.bageframework.data.sql.Order;
@@ -302,7 +303,7 @@ public class SQLHelper {
 	 */
 	public static String getTable(Class<?> cls) {
 		String table = DBHelper.className2TableName(cls);
-		return "`" + table + "`";
+		return SqlHelper.getSafeName(table);
 	}
 
 	public static String getTable(String table, String id, int tableCount) {
@@ -389,6 +390,17 @@ public class SQLHelper {
 		}
 
 		return parentColumn;
+	}
+
+	public static String getKeyColumnName(Class<?> cls) {
+		Field[] fields = cls.getDeclaredFields();
+		for (int i = 0; i < fields.length; i++) {
+			Field field = fields[i];
+			if (field.isAnnotationPresent(PrimaryKey.class)) {
+				return DBHelper.fieldName2ColumnName(field.getName());
+			}
+		}
+		return null;
 	}
 
 	static class OrderSort {

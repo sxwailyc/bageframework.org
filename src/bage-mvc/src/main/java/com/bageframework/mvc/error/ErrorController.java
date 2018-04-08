@@ -3,7 +3,8 @@ package com.bageframework.mvc.error;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,7 +15,7 @@ import com.bageframework.mvc.view.TextView;
 @Controller
 public class ErrorController {
 
-	public static Logger logger = Logger.getLogger(ErrorController.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value = "/error.do")
 	public ModelAndView error(HttpServletRequest request, HttpServletResponse response) throws Exception {

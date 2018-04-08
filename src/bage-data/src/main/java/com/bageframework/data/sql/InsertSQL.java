@@ -3,6 +3,7 @@ package com.bageframework.data.sql;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bageframework.data.DB;
 import com.bageframework.data.jdbc.SqlParameter;
 import com.bageframework.data.util.SqlUtil;
 
@@ -33,6 +34,11 @@ public class InsertSQL implements SQL {
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO " + SqlUtil.getSafeName(table) + "(" + SqlUtil.joinColumn(columns) + ") VALUES(" + SqlUtil.getPlaceholder(columns.size(), '?') + ")");
 		return sb.toString();
+	}
+
+	@Override
+	public String getSql(DB db) {
+		return getSql();
 	}
 
 	public SqlParameter getParams() {

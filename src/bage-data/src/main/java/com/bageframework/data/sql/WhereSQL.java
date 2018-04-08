@@ -3,6 +3,7 @@ package com.bageframework.data.sql;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bageframework.data.DB;
 import com.bageframework.data.jdbc.SqlParameter;
 import com.bageframework.data.util.SqlUtil;
 
@@ -22,7 +23,7 @@ public class WhereSQL implements SQL {
 	}
 
 	@Override
-	public String getSql() {
+	public String getSql(DB db) {
 		StringBuilder sb = new StringBuilder();
 		int size = columns.size();
 		for (int i = 0; i < size; i++) {
@@ -33,7 +34,13 @@ public class WhereSQL implements SQL {
 			sb.append(operates.get(i).getValue());
 			sb.append(" ? ");
 		}
-		return sb.toString();
+
+		if (db == DB.MSSQL) {
+			return sb.toString().replaceAll("@\\[", "[").replaceAll("@\\]", "]");
+		} else {
+			return sb.toString().replaceAll("@\\[", "`").replaceAll("@\\]", "`");
+		}
+
 	}
 
 	@Override
