@@ -36,4 +36,6 @@ public interface IDAO<BEAN, KEYTYPE> {
 	public List<BEAN> getList(String parentId);
 
 	public List<BEAN> getList();
+
+	public int getMaxId();
 }

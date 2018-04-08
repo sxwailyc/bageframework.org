@@ -6,20 +6,28 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
+import com.bageframework.data.DB;
 import com.bageframework.data.helper.SQLHelper;
 import com.bageframework.data.sql.SQL;
 
 public class JdbcImpl implements Jdbc {
 
-	private static Logger logger = Logger.getLogger(JdbcImpl.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private JdbcTemplate jdbcTemplate;
+
+	private DB db;
+
+	public JdbcImpl(DB db) {
+		this.db = db;
+	}
 
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
@@ -101,6 +109,10 @@ public class JdbcImpl implements Jdbc {
 		ColumnBeanRowMapper<T> mapper = new ColumnBeanRowMapper<T>();
 		mapper.setMappedClass(cls);
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("sql[" + getSql(sql, parameter) + "]");
+		}
+
 		List<T> list = this.jdbcTemplate.query(sql, new PreparedStatementSetter() {
 
 			public void setValues(PreparedStatement ps) throws SQLException {
@@ -119,7 +131,7 @@ public class JdbcImpl implements Jdbc {
 
 		if (logger.isDebugEnabled()) {
 			long time = System.currentTimeMillis() - start;
-			logger.debug("execute.time[" + time + "], sql[" + getSql(sql, parameter) + "]");
+			logger.debug("execute.time[" + time + "]");
 		}
 
 		return list;
@@ -163,11 +175,11 @@ public class JdbcImpl implements Jdbc {
 		long start = System.currentTimeMillis();
 
 		SQL sql = SQLHelper.createInsertSQL(t);
-		int effectCount = this.update(sql.getSql(), sql.getParams());
+		int effectCount = this.update(sql.getSql(db), sql.getParams());
 
 		if (logger.isDebugEnabled()) {
 			long time = System.currentTimeMillis() - start;
-			logger.debug("execute.time[" + time + "], sql[" + getSql(sql.getSql(), sql.getParams()) + "]");
+			logger.debug("execute.time[" + time + "], sql[" + getSql(sql.getSql(db), sql.getParams()) + "]");
 		}
 
 		return effectCount;
@@ -179,11 +191,11 @@ public class JdbcImpl implements Jdbc {
 		long start = System.currentTimeMillis();
 
 		SQL sql = SQLHelper.createUpdateSQL(t);
-		int effectCount = this.update(sql.getSql(), sql.getParams());
+		int effectCount = this.update(sql.getSql(db), sql.getParams());
 
 		if (logger.isDebugEnabled()) {
 			long time = System.currentTimeMillis() - start;
-			logger.debug("execute.time[" + time + "], sql[" + getSql(sql.getSql(), sql.getParams()) + "]");
+			logger.debug("execute.time[" + time + "], sql[" + getSql(sql.getSql(db), sql.getParams()) + "]");
 		}
 
 		return effectCount;
@@ -195,11 +207,11 @@ public class JdbcImpl implements Jdbc {
 		long start = System.currentTimeMillis();
 
 		SQL sql = SQLHelper.createInsertSQL(t, tableName);
-		int effectCount = this.update(sql.getSql(), sql.getParams());
+		int effectCount = this.update(sql.getSql(db), sql.getParams());
 
 		if (logger.isDebugEnabled()) {
 			long time = System.currentTimeMillis() - start;
-			logger.debug("execute.time[" + time + "], sql[" + getSql(sql.getSql(), sql.getParams()) + "]");
+			logger.debug("execute.time[" + time + "], sql[" + getSql(sql.getSql(db), sql.getParams()) + "]");
 		}
 
 		return effectCount;
@@ -209,7 +221,7 @@ public class JdbcImpl implements Jdbc {
 
 		long start = System.currentTimeMillis();
 
-		BeanSQL beanSql = SqlHelper.createBeanSql(t, "REPLACE");
+		BeanSQL beanSql = SqlHelper.createBeanSql(t, "REPLACE", db);
 		int effectCount = this.update(beanSql.getSql(), beanSql.getParams());
 
 		if (logger.isDebugEnabled()) {
@@ -225,7 +237,7 @@ public class JdbcImpl implements Jdbc {
 
 		long start = System.currentTimeMillis();
 
-		BeansSQL beansSql = SqlHelper.crateBeanSql(list);
+		BeansSQL beansSql = SqlHelper.crateBeanSql(list, db);
 		final List<SqlParameter> parameters = beansSql.getParams();
 
 		int[] effectCounts = this.jdbcTemplate.batchUpdate(beansSql.getSql(), new BatchPreparedStatementSetter() {
@@ -254,7 +266,7 @@ public class JdbcImpl implements Jdbc {
 
 		long start = System.currentTimeMillis();
 
-		BeansSQL beansSql = SqlHelper.crateBeanSql(tableName, list);
+		BeansSQL beansSql = SqlHelper.crateBeanSql(tableName, list, db);
 		final List<SqlParameter> parameters = beansSql.getParams();
 
 		int[] effectCounts = this.jdbcTemplate.batchUpdate(beansSql.getSql(), new BatchPreparedStatementSetter() {

@@ -1,16 +1,16 @@
 package com.bageframework.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Json {
 
 	private static ObjectMapper mapper = new ObjectMapper(); // can reuse, share
 	private static ObjectMapper mapperIgnoreUnknownField = new ObjectMapper(); // 忽略不存在的字段.
-	private static final Log logger = LogFactory.getLog(Json.class);
+	private static final Logger logger = LoggerFactory.getLogger(Json.class);
 
 	static {
 		mapperIgnoreUnknownField.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);

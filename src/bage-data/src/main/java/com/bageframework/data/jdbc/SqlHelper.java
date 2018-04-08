@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
+import com.bageframework.data.DB;
+
 public class SqlHelper {
 
 	/**
@@ -13,7 +15,7 @@ public class SqlHelper {
 	 * @param objs
 	 * @return
 	 */
-	public static <T> BeansSQL crateBeanSql(List<T> objs) {
+	public static <T> BeansSQL crateBeanSql(List<T> objs, DB db) {
 
 		BeansSQL beansSql = new BeansSQL();
 
@@ -26,7 +28,7 @@ public class SqlHelper {
 		insert.append("INSERT INTO ");
 		String tableName = className2TableName(first);
 
-		insert.append("`" + tableName + "`");
+		insert.append(getSafeName(tableName));
 
 		Field[] fields = first.getClass().getDeclaredFields();
 
@@ -51,7 +53,7 @@ public class SqlHelper {
 
 				if (i == 0 && value != null) {
 					attribute.append(",");
-					attribute.append(fieldName2ColumnName(field.getName()));
+					attribute.append(fieldName2ColumnName(field.getName(), db));
 					parameters.append(",?");
 				}
 
@@ -79,8 +81,8 @@ public class SqlHelper {
 		return beansSql;
 	}
 
-	public static BeanSQL createBeanSql(Object obj) {
-		return createBeanSql(obj, "INSERT");
+	public static BeanSQL createBeanSql(Object obj, DB db) {
+		return createBeanSql(obj, "INSERT", db);
 	}
 
 	/**
@@ -89,7 +91,7 @@ public class SqlHelper {
 	 * @param obj
 	 * @return
 	 */
-	public static BeanSQL createBeanSql(Object obj, String operate) {
+	public static BeanSQL createBeanSql(Object obj, String operate, DB db) {
 
 		BeanSQL beanSql = new BeanSQL();
 
@@ -100,7 +102,7 @@ public class SqlHelper {
 		insert.append(operate + " INTO ");
 		String tableName = className2TableName(obj);
 
-		insert.append("`" + tableName + "`");
+		insert.append(getSafeName(tableName));
 
 		Field[] fields = obj.getClass().getDeclaredFields();
 
@@ -119,7 +121,7 @@ public class SqlHelper {
 
 			if (value != null) {
 				attribute.append(",");
-				attribute.append(fieldName2ColumnName(field.getName()));
+				attribute.append(fieldName2ColumnName(field.getName(), db));
 				parameters.append(",?");
 				beanSql.AddParam(value);
 			}
@@ -148,7 +150,7 @@ public class SqlHelper {
 	 * @param objs
 	 * @return
 	 */
-	public static <T> BeansSQL crateBeanSql(String tableName, List<T> objs) {
+	public static <T> BeansSQL crateBeanSql(String tableName, List<T> objs, DB db) {
 
 		BeansSQL beansSql = new BeansSQL();
 
@@ -185,7 +187,7 @@ public class SqlHelper {
 
 				if (i == 0 && value != null) {
 					attribute.append(",");
-					attribute.append(fieldName2ColumnName(field.getName()));
+					attribute.append(fieldName2ColumnName(field.getName(), db));
 					parameters.append(",?");
 				}
 
@@ -219,7 +221,7 @@ public class SqlHelper {
 	 * @param obj
 	 * @return
 	 */
-	public static BeanSQL createBeanSql(String tableName, Object obj) {
+	public static BeanSQL createBeanSql(String tableName, Object obj, DB db) {
 
 		BeanSQL beanSql = new BeanSQL();
 
@@ -248,7 +250,7 @@ public class SqlHelper {
 
 			if (value != null) {
 				attribute.append(",");
-				attribute.append(fieldName2ColumnName(field.getName()));
+				attribute.append(fieldName2ColumnName(field.getName(), db));
 				parameters.append(",?");
 				beanSql.AddParam(value);
 			}
@@ -305,7 +307,7 @@ public class SqlHelper {
 	 * @param fieldName
 	 * @return
 	 */
-	public static String fieldName2ColumnName(String fieldName) {
+	public static String fieldName2ColumnName(String fieldName, DB db) {
 
 		char[] chs = fieldName.toCharArray();
 
@@ -320,7 +322,11 @@ public class SqlHelper {
 				columnName.append(chs[i]);
 			}
 		}
-		return "`" + columnName.toString().toLowerCase() + "`";
+		return getSafeName(columnName.toString().toLowerCase());
+	}
+
+	public static String getSafeName(String name) {
+		return "@[" + name + "@]";
 	}
 
 	public static String getShortName(Object obj) {

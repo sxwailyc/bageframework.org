@@ -3,6 +3,7 @@ package com.bageframework.data.sql;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bageframework.data.DB;
 import com.bageframework.data.jdbc.SqlParameter;
 
 public class OrderSQL implements SQL {
@@ -18,7 +19,7 @@ public class OrderSQL implements SQL {
 	}
 
 	@Override
-	public String getSql() {
+	public String getSql(DB db) {
 		StringBuilder sb = new StringBuilder();
 		int size = columns.size();
 		for (int i = 0; i < size; i++) {

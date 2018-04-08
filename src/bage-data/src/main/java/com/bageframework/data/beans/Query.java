@@ -12,7 +12,9 @@ public class Query implements Serializable, Iterable<QueryItem> {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<QueryItem> data = new ArrayList<QueryItem>();;
+	private String order;
+
+	private List<QueryItem> data = new ArrayList<QueryItem>();
 
 	public List<QueryItem> getData() {
 		return data;
@@ -55,6 +57,14 @@ public class Query implements Serializable, Iterable<QueryItem> {
 	@Override
 	public Iterator<QueryItem> iterator() {
 		return data.iterator();
+	}
+
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
 	}
 
 	public static void main(String[] args) throws Exception {

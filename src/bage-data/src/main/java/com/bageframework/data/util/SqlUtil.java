@@ -58,7 +58,7 @@ public class SqlUtil {
 		if (name.startsWith("`")) {
 			return name;
 		}
-		return "`" + name + "`";
+		return "@[" + name + "@]";
 	}
 
 	/**

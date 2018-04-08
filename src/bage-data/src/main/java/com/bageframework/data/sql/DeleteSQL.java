@@ -1,5 +1,6 @@
 package com.bageframework.data.sql;
 
+import com.bageframework.data.DB;
 import com.bageframework.data.jdbc.SqlParameter;
 
 public class DeleteSQL extends WhereBaseSQL implements SQL {
@@ -20,13 +21,13 @@ public class DeleteSQL extends WhereBaseSQL implements SQL {
 		return insertSQL;
 	}
 
-	public String getSql() {
+	public String getSql(DB db) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("DELETE ");
 		sb.append(" FROM ");
 		sb.append(table);
 
-		String w = where.getSql();
+		String w = where.getSql(db);
 		if (w.length() > 0) {
 			sb.append(" WHERE ");
 			sb.append(w);
