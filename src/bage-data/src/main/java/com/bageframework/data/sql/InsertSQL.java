@@ -33,7 +33,8 @@ public class InsertSQL implements SQL {
 	public String getSql() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO " + SqlUtil.getSafeName(table) + "(" + SqlUtil.joinColumn(columns) + ") VALUES(" + SqlUtil.getPlaceholder(columns.size(), '?') + ")");
-		return sb.toString();
+		String s = sb.toString();
+		return s.replaceAll("@\\[", "`").replaceAll("@\\]", "`");
 	}
 
 	@Override

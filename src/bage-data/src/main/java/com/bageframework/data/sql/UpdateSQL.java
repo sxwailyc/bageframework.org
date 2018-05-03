@@ -47,15 +47,31 @@ public class UpdateSQL extends WhereBaseSQL implements SQL {
 	@Override
 	public String getSql(DB db) {
 
+		switch (db) {
+		case MSSQL:
+			return getMssqlSql();
+		case MYSQL:
+		default:
+			return getMysqlSql();
+		}
+	}
+
+	private String getMssqlSql() {
+		return "";
+	}
+
+	private String getMysqlSql() {
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("UPDATE ");
 		sb.append(SqlUtil.getSafeName(table));
 		sb.append(getUpdateColumnSql());
 		sb.append("WHERE");
-		sb.append(where.getSql(db));
+		sb.append(where.getSql(DB.MYSQL));
 
-		return sb.toString();
+		String s = sb.toString();
+		return s.replaceAll("@\\[", "`").replaceAll("@\\]", "`");
 	}
 
 	public SqlParameter getParams() {

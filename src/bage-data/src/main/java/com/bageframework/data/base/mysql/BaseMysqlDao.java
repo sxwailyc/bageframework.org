@@ -156,6 +156,9 @@ public class BaseMysqlDao<T> {
 		String keyColumn = SQLHelper.getKeyColumnName(entityClass);
 		keyColumn = keyColumn == null ? "id" : keyColumn;
 		String sql = "SELECT MAX(" + keyColumn + ") FROM " + table;
+		if (db == DB.MYSQL) {
+			sql = sql.replaceAll("@\\[", "`").replaceAll("@\\]", "`");
+		}
 		return jdbc.getInt(sql, new SqlParameter());
 	}
 

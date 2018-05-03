@@ -21,19 +21,30 @@ public class DeleteSQL extends WhereBaseSQL implements SQL {
 		return insertSQL;
 	}
 
+	@Override
 	public String getSql(DB db) {
+
+		switch (db) {
+		case MSSQL:
+		case MYSQL:
+		default:
+			return getMysqlSql();
+		}
+	}
+
+	public String getMysqlSql() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("DELETE ");
 		sb.append(" FROM ");
 		sb.append(table);
 
-		String w = where.getSql(db);
+		String w = where.getSql(DB.MYSQL);
 		if (w.length() > 0) {
 			sb.append(" WHERE ");
 			sb.append(w);
 		}
-
-		return sb.toString();
+		String s = sb.toString();
+		return s.replaceAll("@\\[", "`").replaceAll("@\\]", "`");
 	}
 
 	public SqlParameter getParams() {
