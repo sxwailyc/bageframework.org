@@ -70,6 +70,9 @@ public class JdbcImpl implements Jdbc {
 			if (obj == null) {
 				obj = "null";
 			}
+			if (obj.toString().length() > 100) {
+				obj = "...";
+			}
 			sql = sql.replaceFirst("\\?", "`" + obj.toString() + "`");
 		}
 

@@ -40,4 +40,16 @@ public class DateTimeUtil {
 
 	}
 
+	public static Date addTime(final Date startDate, final int minute) {
+		long millis = startDate.getTime();
+		millis = millis + (minute * 60L * 1000L);
+		Date date = new Date(millis);
+		return date;
+	}
+
+	public static Date addDate(final Date date, final int daynum) {
+		int minute = daynum * 60 * 24;
+		return addTime(date, minute);
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.bageframework.jsrpc.util;
 
+import java.util.Date;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.DeserializationConfig;
@@ -102,5 +104,10 @@ public class Json {
 			logger.warn(e.getMessage());
 			throw new JsonException(e.getMessage(), e);
 		}
+	}
+
+	public static void main(String[] args) {
+		Date now = null;
+		System.out.println(Json.toJson(now));
 	}
 }
