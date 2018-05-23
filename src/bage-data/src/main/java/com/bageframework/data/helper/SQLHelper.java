@@ -137,7 +137,8 @@ public class SQLHelper {
 		for (int i = 0; i < fields.length; i++) {
 
 			Field field = fields[i];
-			String column = DBHelper.fieldName2ColumnName(field.getName());
+
+			String column = DBHelper.filed2ColumnName(field);
 
 			if ("serialVersionUID".equals(field.getName())) {
 				continue;

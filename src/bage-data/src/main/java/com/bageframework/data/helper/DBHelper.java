@@ -1,8 +1,20 @@
 package com.bageframework.data.helper;
 
+import java.lang.reflect.Field;
+
+import com.bageframework.data.annotation.Column;
 import com.bageframework.data.annotation.Table;
 
 public class DBHelper {
+
+	public static String filed2ColumnName(Field field) {
+		if (field.isAnnotationPresent(Column.class)) {
+			Column column = field.getAnnotation(Column.class);
+			return column.value();
+		} else {
+			return fieldName2ColumnName(field.getName());
+		}
+	}
 
 	/**
 	 * 属性名(对象)转字段名(db)
