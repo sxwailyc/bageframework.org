@@ -170,21 +170,19 @@ public class SelectSQL implements SQL {
 		}
 		sb.append(" FROM ");
 
-		sb.append(String.format(" (SELECT *, ROW_NUMBER() OVER(ORDER BY %s) AS RowId from %s)t ", StringUtils.isEmpty(this.customOrder) ? order.getSql(DB.MSSQL) : this.customOrder, table));
-
 		String w = where.getSql(DB.MSSQL);
+		StringBuilder whereSb = new StringBuilder();
 		if (w.length() > 0) {
-			sb.append(" WHERE ");
-			sb.append(w);
+			whereSb.append(" WHERE ");
+			whereSb.append(w);
 		}
+
+		sb.append(
+				String.format(" (SELECT *, ROW_NUMBER() OVER(ORDER BY %s) AS RowId from %s %s)t ", StringUtils.isEmpty(this.customOrder) ? order.getSql(DB.MSSQL) : this.customOrder, table, whereSb));
 
 		String l = limit.getSql(DB.MSSQL);
 		if (l.length() > 0) {
-			if (w.length() > 0) {
-				sb.append(" AND ");
-			} else {
-				sb.append(" WHERE ");
-			}
+			sb.append(" WHERE ");
 			sb.append(l);
 		}
 
