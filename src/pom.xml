@@ -48,7 +48,7 @@
 		<repository>
 			<id>snapshots</id>
 			<name>snapshots</name>
-			<url>http://oss.113388.net/nexus/content/repositories/snapshots</url>
+			<url>http://oss.youzhi.net/nexus/content/repositories/snapshots</url>
 		</repository>
 	</distributionManagement>
 
