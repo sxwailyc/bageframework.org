@@ -88,8 +88,8 @@ public class SelectSQL implements SQL {
 	}
 
 	public static SelectSQL create(String table) {
-		SelectSQL insertSQL = new SelectSQL(table);
-		return insertSQL;
+		SelectSQL selectSQL = new SelectSQL(table);
+		return selectSQL;
 	}
 
 	/**
